@@ -325,3 +325,82 @@ section.main_container {
     }
   }
 }
+
+/* mobile */
+/* progress mobile */
+@media (max-width: 1023px) {
+  .progress_container {
+    @apply z-50 fixed top-[60px] left-[16px] right-[16px] -translate-x-0 w-[calc(100%-32px)] h-[30px];
+
+    .progress_barLine {
+      @apply h-[6px];
+    }
+
+    .progress_barLine_active {
+      @apply h-[6px];
+    }
+
+    .page_infoList {
+      > div {
+        &:first-of-type {
+          @apply h-auto;
+        }
+
+        &:last-of-type {
+          @apply left-[80%];
+        }
+
+        p:first-of-type {
+          @apply w-[14px] h-[14px] rounded-full bg-[#EDEDED];
+
+          span {
+            @apply text-[14px] hidden;
+          }
+        }
+
+        &.on {
+          @apply mt-[0px];
+          > p:first-of-type {
+            @apply w-[30px] h-[30px];
+          }
+
+          > p:last-of-type {
+            @apply hidden;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* 발표교정 mobile */
+@media (max-width: 1023px) {
+  .slider-container.announce_mobile {
+    @apply h-full px-4 pb-4 pt-[80px];
+
+    > form {
+      @apply h-full pt-[50px];
+
+      > div {
+        @apply h-full;
+
+        /* GuideMent */
+        .ment_box {
+          @apply w-full pb-4;
+
+          p {
+            @apply text-sm font-normal gray_colorTxt;
+
+            &:first-of-type {
+              @apply text-lg font-bold;
+            }
+          }
+        }
+
+        .detailSetting {
+          @apply h-full;
+        }
+      }
+    }
+  }
+}

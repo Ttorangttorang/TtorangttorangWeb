@@ -69,7 +69,7 @@
 
     .slick-list,
     .slick-track {
-      @apply w-full h-full;
+      @apply w-full h-full overflow-x-hidden;
     }
 
     .slick-track {

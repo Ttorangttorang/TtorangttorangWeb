@@ -3,7 +3,7 @@ import { ANNOUNCE_TXT } from '@/utils/constants';
 
 const PROGRESS_BAR_WIDTH = {
   default: 'w-1/2',
-  active: 'w-[51.56vmax]',
+  active: 'w-[80%]',
 };
 
 const STEP_INFO = [
