@@ -30,6 +30,9 @@ const onboardingContent = [
     height: 152,
     imgClass: 'qna_q_img',
     imgTwo: LocalImages.ImageGateway_qna_a,
+    widthTwo: 334,
+    heightTwo: 62,
+    imgClassTwo: 'qna_a_img',
     mentOne: '발표문을 기반으로 예상되는 질문을 분석하고',
     mentTwo: '모범 답변을 제안하여 발표에 대한 자신감을 높이도록 도와줘요',
   },
@@ -67,6 +70,17 @@ export default function Onboarding() {
                 height={item.height}
                 quality={100}
               />
+              {item.img === LocalImages.ImageGateway_qna_q && (
+                <div className={item.imgClassTwo}>
+                  <Image
+                    src={item.imgTwo}
+                    alt={'ImageGateway'}
+                    width={item.widthTwo}
+                    height={item.heightTwo}
+                    quality={100}
+                  />
+                </div>
+              )}
             </div>
             <p className="ment">
               {item.mentOne}

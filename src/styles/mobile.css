@@ -110,7 +110,7 @@
     }
 
     > div.img_area {
-      @apply ml-4 flex_center;
+      @apply relative ml-4 flex_center;
 
       img {
         @apply object-cover w-full;
@@ -126,6 +126,10 @@
 
       &.qna_q_img {
         @apply w-[317px] h-[152px];
+      }
+
+      .qna_a_img {
+        @apply absolute top-[24px] w-[350px] h-[62px];
       }
     }
 
