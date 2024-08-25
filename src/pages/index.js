@@ -179,7 +179,7 @@ export default function Home() {
                 </div>
                 <span>카카오로 시작하기</span>
               </div>
-              <Link href={'/announce'}>로그인없이 체험할게요</Link>
+              <Link href={'/onboarding'}>로그인없이 체험할게요</Link>
             </div>
           </div>
         </section>

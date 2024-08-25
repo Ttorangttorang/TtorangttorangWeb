@@ -38,6 +38,9 @@ import ImageGatewayRightBg from '@/public/images/gatewayGuide/gateway_rightBg.sv
 import ImageGateway_one from '@/public/images/gatewayGuide/gateway_one.svg';
 import ImageGateway_two from '@/public/images/gatewayGuide/gateway_two.svg';
 import ImageGateway_three from '@/public/images/gatewayGuide/gateway_three.svg';
+import ImageGateway_setting from '@/public/images/gatewayGuide/onboarding_setting.svg';
+import ImageGateway_modify from '@/public/images/gatewayGuide/onboarding_modify.svg';
+import ImageGateway_qna_q from '@/public/images/gatewayGuide/onboarding_qna_q.svg';
 import ImageGateway_qna_a from '@/public/images/gatewayGuide/onboarding_qna_a.svg';
 
 // icon
@@ -69,4 +72,4 @@ export { ImageTtorangHi, ImageTtorangWithdrawal, ImageTtorangArch, ImageTtorangN
 export { ImageGatewayOctagon, ImageGatewayRound, ImageGatewayFlower, ImageGatewayHexagon };
 
 // gateway
-export { ImageGatwayMain, ImageGateway_one, ImageGateway_two, ImageGateway_three, ImageGateway_qna_a, ImageGatewayRightBg };
+export { ImageGatwayMain, ImageGateway_one, ImageGateway_two, ImageGateway_three, ImageGateway_setting, ImageGateway_modify, ImageGateway_qna_q, ImageGateway_qna_a, ImageGatewayRightBg };

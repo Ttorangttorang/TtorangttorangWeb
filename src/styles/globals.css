@@ -41,7 +41,7 @@ textarea {
 }
 
 /* header */
-header {
+header.h_pc {
   @apply absolute top-0 left-0 right-0 z-20 flex_center w-full h-[5.64vmin] main_colorBg;
 
   > .header_container {
@@ -142,6 +142,19 @@ footer {
 }
 
 /* mobile */
+/* mobile header */
+header.h_mobile {
+  @apply absolute top-0 left-0 right-0 z-20 flex_center w-full h-10 main_colorBg;
+
+  .logo_area {
+    @apply block w-[98px] h-[30px];
+
+    img {
+      @apply w-full h-full;
+    }
+  }
+}
+
 .moblie_noneService_container {
   @apply flex_center flex-col w-full h-screen bg-[#FEFEFE];
 

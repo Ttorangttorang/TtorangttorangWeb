@@ -34,7 +34,7 @@ export default function Header() {
 
   return (
     <>
-      <header>
+      <header className="h_pc">
         <div className="header_container">
           <div className="header_menu">
             <h1>

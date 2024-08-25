@@ -55,3 +55,86 @@
     }
   }
 }
+
+/* step 온보딩 */
+.onboarding_container {
+  @apply relative w-full h-full text-center;
+
+  .slick-slider {
+    @apply relative w-full h-full;
+
+    .slick-arrow {
+      @apply !hidden;
+    }
+
+    .slick-list,
+    .slick-track {
+      @apply w-full h-full;
+    }
+
+    .slick-track {
+      @apply flex;
+    }
+
+    .slick-slide {
+      > div {
+        @apply w-full h-full flex_center;
+      }
+    }
+  }
+
+  .dots_custom {
+    @apply absolute w-full bottom-[130px] flex_center;
+
+    ul {
+      @apply gap-3 flex_vertical_center;
+      li {
+        @apply w-3 h-3 rounded-full bg-[#D9D9D9];
+
+        &.slick-active {
+          @apply bg-[#509BF8];
+        }
+
+        button {
+          @apply opacity-0;
+        }
+      }
+    }
+  }
+
+  .board_area {
+    @apply flex-col w-full h-[378px] mb-[25%] px-4 !flex_vertical_center justify-between;
+
+    > span {
+      @apply text-lg font-semibold text-[#3D6BE1];
+    }
+
+    > div.img_area {
+      @apply ml-4 flex_center;
+
+      img {
+        @apply object-cover w-full;
+      }
+
+      &.setting_img {
+        @apply w-[258px] h-[282px];
+      }
+
+      &.modify_img {
+        @apply w-[311px] h-[185px];
+      }
+
+      &.qna_q_img {
+        @apply w-[317px] h-[152px];
+      }
+    }
+
+    .ment {
+      @apply text-[13px] gray_colorTxt;
+    }
+  }
+
+  .gotoAnnounce {
+    @apply flex_center w-4/5 h-[48px] rounded-lg text-sm font-medium text-white main_colorBg absolute_xHalf bottom-10;
+  }
+}
