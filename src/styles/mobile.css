@@ -1,0 +1,57 @@
+/* 로그인 온보딩 */
+.login_onboarding {
+  @apply w-full overflow-y-hidden text-center realmobile_screen;
+  touch-action: none;
+
+  > div.total_area {
+    @apply flex_xBetween flex-col relative w-4/5 h-full pt-[15%] pb-[10%] mx-auto;
+    touch-action: none;
+  }
+
+  .top {
+    @apply text-base;
+
+    > p:last-of-type {
+      @apply mt-3 text-[22px] leading-8 font-bold text-[#3D6BE1];
+    }
+  }
+
+  .center {
+    @apply absolute_center;
+
+    img {
+      @apply object-cover w-full h-full;
+    }
+
+    .logo_area {
+      @apply w-[196px] h-[72px];
+    }
+
+    .character_area {
+      @apply w-[196px] h-[196px];
+    }
+  }
+
+  .bottom {
+    @apply flex flex-col w-full gap-[10px];
+    > p {
+      @apply text-sm;
+    }
+
+    > div.kakoLogin {
+      @apply flex_center relative w-full h-[48px] bg-[#FEE404] rounded-lg;
+
+      .kakoLogo {
+        @apply absolute_yHalf left-3 w-[21px] h-[21px];
+      }
+
+      span {
+        @apply text-lg font-normal text-[#000000];
+      }
+    }
+
+    > a {
+      @apply text-base;
+    }
+  }
+}

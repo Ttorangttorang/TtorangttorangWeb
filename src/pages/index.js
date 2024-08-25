@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as LocalImages from '@/utils/imageImports';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useLoginModalStore, useUserStore, useNextMoveBtnStore, useSettingStore, useFinalScriptStore } from '@/store/store';
+import { useLoginModalStore, useUserStore, useNextMoveBtnStore, useSettingStore, useFinalScriptStore, useIsMobileStore } from '@/store/store';
 
 const guideContent = [
   {
@@ -19,13 +19,17 @@ const guideContent = [
   },
   {
     img: LocalImages.ImageGateway_three,
+    imgTwo: LocalImages.ImageGateway_qna_a,
     imgAlt: 'ImageGateway_three',
     width: 1277,
     height: 362,
+    widthTwo: 720,
+    heightTwo: 147,
   },
 ];
 
 export default function Home() {
+  const { isMobileDevice } = useIsMobileStore();
   const { userEmail } = useUserStore();
   const { setLogin } = useLoginModalStore();
   const outerDivRef = useRef();
@@ -132,88 +136,150 @@ export default function Home() {
   }, [currentPage, isScrolling, scrollTimeout]);
 
   return (
-    <main
-      ref={outerDivRef}
-      className="gateway_container outer"
-    >
-      <div className="inner">
-        <div className="gate_main">
-          <div>
-            <div className="gatewayMent_area">
-              <p>아무리 해도 어려운 발표!</p>
-              <h2>
-                AI 발표 도우미
-                <br />
-                또랑또랑과 함께 준비해요
-              </h2>
+    <>
+      {isMobileDevice ? (
+        <section className="login_onboarding">
+          <div className="total_area">
+            <div className="top">
+              <p>아무리 해도 익숙해지지 않는 발표!</p>
               <p>
-                단 10초, 발표에 대한 정보를 입력하면
-                <br /> 단 한 번의 클릭으로 쉽고 빠르게 준비할 수 있어요
+                AI 발표 도우미 또랑또랑과 함께
+                <br />
+                쉽고 빠르게 발표를 준비해요
               </p>
-              {userEmail ? (
-                <Link
-                  href={'/announce'}
-                  className="start_btn"
-                >
-                  시작하기
-                </Link>
-              ) : (
-                <div
-                  onClick={() => setLogin(true)}
-                  className="start_btn"
-                >
-                  시작하기
-                </div>
-              )}
             </div>
-            <div className="moveToGuide_area">
-              <div
-                onClick={() => setCurrentPage(2)}
-                className="guideArrow"
-              >
-                <div className="activeArrow_area">
+            <div className="center">
+              <div className="logo_area">
+                <Image
+                  src={LocalImages.ImageMobileLogo}
+                  alt="ImageMobileLogo"
+                  width={196}
+                  height={72}
+                />
+              </div>
+              <div className="character_area">
+                <Image
+                  src={LocalImages.ImageTtorangHi}
+                  alt="ImageTtorangHi"
+                  width={208}
+                  height={204}
+                />
+              </div>
+            </div>
+            <div className="bottom">
+              <p>로그인 시 작성한 발표문을 저장할 수 있어요!</p>
+              <div className="kakoLogin">
+                <div className="kakoLogo">
                   <Image
-                    src={LocalImages.ImageActiveArrow}
-                    alt="ImageActiveArrow"
-                    width={39}
-                    height={35}
+                    src={LocalImages.ImageKakoLogo}
+                    alt="ImageKakoLogo"
+                    width={21}
+                    height={21}
                   />
                 </div>
+                <span>카카오로 시작하기</span>
               </div>
-              <p>아래에 가이드가 있어요</p>
+              <Link href={'/announce'}>로그인없이 체험할게요</Link>
             </div>
           </div>
-          <div className="gate_mainImg">
-            <Image
-              src={LocalImages.ImageGatwayMain}
-              alt="ImageGatewayRightBg"
-              width={524}
-              height={714}
-            />
-          </div>
-        </div>
-      </div>
-      {guideContent.map((item, index) => (
-        <div
-          key={index}
-          className="inner"
+        </section>
+      ) : (
+        <main
+          ref={outerDivRef}
+          className="gateway_container outer"
         >
-          <div>
-            <Image
-              src={item.img}
-              alt={item.imgAlt}
-              width={item.width}
-              height={item.height}
-            />
+          <div className="inner">
+            <div className="gate_main">
+              <div>
+                <div className="gatewayMent_area">
+                  <p>아무리 해도 어려운 발표!</p>
+                  <h2>
+                    AI 발표 도우미
+                    <br />
+                    또랑또랑과 함께 준비해요
+                  </h2>
+                  <p>
+                    단 10초, 발표에 대한 정보를 입력하면
+                    <br /> 단 한 번의 클릭으로 쉽고 빠르게 준비할 수 있어요
+                  </p>
+                  {userEmail ? (
+                    <Link
+                      href={'/announce'}
+                      className="start_btn"
+                    >
+                      시작하기
+                    </Link>
+                  ) : (
+                    <div
+                      onClick={() => setLogin(true)}
+                      className="start_btn"
+                    >
+                      시작하기
+                    </div>
+                  )}
+                </div>
+                <div className="moveToGuide_area">
+                  <div
+                    onClick={() => setCurrentPage(2)}
+                    className="guideArrow"
+                  >
+                    <div className="activeArrow_area">
+                      <Image
+                        src={LocalImages.ImageActiveArrow}
+                        alt="ImageActiveArrow"
+                        width={39}
+                        height={35}
+                      />
+                    </div>
+                  </div>
+                  <p>아래에 가이드가 있어요</p>
+                </div>
+              </div>
+              <div className="gate_mainImg">
+                <Image
+                  src={LocalImages.ImageGatwayMain}
+                  alt="ImageGatewayRightBg"
+                  width={524}
+                  height={714}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
-      <div
-        onClick={() => setCurrentPage(1)}
-        className="moveToTop_area"
-      >
-        TOP
-      </div>
-    </main>
+          {guideContent.map((item, index) => (
+            <div
+              key={index}
+              className="inner"
+            >
+              <div>
+                <div className="relative">
+                  <Image
+                    src={item.img}
+                    alt={item.imgAlt}
+                    width={item.width}
+                    height={item.height}
+                  />
+                  {item.img === LocalImages.ImageGateway_three && (
+                    <div className="answerImg_area">
+                      <Image
+                        src={item.imgTwo}
+                        alt={item.imgAlt}
+                        width={item.widthTwo}
+                        height={item.heightTwo}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+          <div
+            onClick={() => setCurrentPage(1)}
+            className="moveToTop_area"
+          >
+            TOP
+          </div>
+        </main>
+      )}
+    </>
   );
 }

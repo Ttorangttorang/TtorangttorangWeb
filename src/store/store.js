@@ -1,6 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// 모바일디바이스 여부
+export const useIsMobileStore = create((set) => ({
+  isMobileDevice: false,
+  setIsMobileDevice: (value) => set({ isMobileDevice: value }),
+}));
+
 // 교정하기 현재 페이지
 export const useCurrentSlideStore = create((set) => ({
   currentSlide: 0,

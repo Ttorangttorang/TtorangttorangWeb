@@ -4,9 +4,10 @@ import ShapeBg from './ShapeBg';
 import Header from './Header';
 import Footer from './Footer';
 import MoblieNoneService from './MoblieNoneService';
+import { useIsMobileStore } from '@/store/store';
 
 export default function Layout({ children }) {
-  const [isMobileDevice, setIsMobileDevice] = useState(false);
+  const { isMobileDevice, setIsMobileDevice } = useIsMobileStore();
 
   useEffect(() => {
     setIsMobileDevice(isMobile);
@@ -15,7 +16,12 @@ export default function Layout({ children }) {
   return (
     <>
       {isMobileDevice ? (
-        <MoblieNoneService />
+        <>
+          <div className="shapeBg_container">
+            <ShapeBg />
+          </div>
+          <section className="mobile_layout">{children}</section>
+        </>
       ) : (
         <>
           <Header />

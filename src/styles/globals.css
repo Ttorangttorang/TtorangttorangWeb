@@ -20,6 +20,11 @@ body,
   @apply w-full h-full bg-[#fefefe];
 }
 
+.mobile_layout {
+  @apply w-full bg-[#FEFEFE] overflow-hidden;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
 input,
 input:focus,
 textarea,
@@ -137,7 +142,7 @@ footer {
 }
 
 /* mobile */
-.moblie_container {
+.moblie_noneService_container {
   @apply flex_center flex-col w-full h-screen bg-[#FEFEFE];
 
   .logo_area {
