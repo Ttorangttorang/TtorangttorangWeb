@@ -12,7 +12,7 @@ export default function HeaderMobile() {
           className="logo_area"
         >
           <Image
-            src={LocalImages.ImageTtorangWhiteLogo}
+            src={LocalImages.ImageMobileLogo}
             alt="ImageTtorangWhiteLogo"
             width={98}
             height={33}

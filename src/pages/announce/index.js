@@ -4,9 +4,11 @@ import Slider from 'react-slick';
 import ModifyAnnounce from '@/components/announce/ModifyAnnounce';
 import SaveAnnounce from '@/components/announce/SaveAnnounce';
 import ProgressBar from '@/components/announce/ProgressBar';
-import { useNextMoveBtnStore, useScriptLoadingStore, useQaLoadingStore, useUserStore, useCurrentSlideStore, useIsMobileStore } from '@/store/store';
+import { useNextMoveBtnStore, useScriptLoadingStore, useQaLoadingStore, useUserStore, useCurrentSlideStore, useIsMobileStore, useSettingStore, useCurrentSlideMobileStore } from '@/store/store';
 import Modal from '@/components/layout/Modal';
 import Setting from '@/components/announce/Setting';
+import { cls } from '@/utils/config';
+import { useRef } from 'react';
 
 export default function Announce() {
   const { isMobileDevice } = useIsMobileStore();
@@ -15,6 +17,8 @@ export default function Announce() {
   const { qaLoading } = useQaLoadingStore();
   const { scriptLoading } = useScriptLoadingStore();
   const { currentSlide, setCurrentSlide } = useCurrentSlideStore();
+  const { currentMobileSlide, setCurrentMobileSlide } = useCurrentSlideMobileStore();
+  const { subject } = useSettingStore();
 
   function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -89,19 +93,52 @@ export default function Announce() {
     },
   };
 
+  const sliderMobileRef = useRef(null);
+  const settingsMobile = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    draggable: false,
+    swipe: false,
+    beforeChange: (current, next) => {
+      setCurrentMobileSlide(next);
+    },
+  };
+
   return (
     <>
       {isMobileDevice ? (
         <div className="slider-container announce_mobile">
-          <ProgressBar currentSlide={currentSlide} />
+          <ProgressBar />
           <form>
-            <Setting />
+            <Slider
+              ref={sliderMobileRef}
+              {...settingsMobile}
+            >
+              <div className="step_area">
+                <Setting />
+                <div
+                  onClick={() => {
+                    setCurrentMobileSlide(1);
+                    sliderMobileRef.current.slickGoTo(1);
+                  }}
+                  className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
+                >
+                  발표문 초안 작성하기
+                </div>
+              </div>
+              <div className="step_area"></div>
+              <div className="step_area"></div>
+              <div className="step_area"></div>
+            </Slider>
           </form>
         </div>
       ) : (
         <>
           <div className="slider-container">
-            <ProgressBar currentSlide={currentSlide} />
+            <ProgressBar />
             <Slider {...settings}>
               <ModifyAnnounce userEmail={userEmail} />
               <SaveAnnounce

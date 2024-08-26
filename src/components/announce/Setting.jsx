@@ -8,7 +8,7 @@ export default function Setting() {
   const [subjectCharCount, setSubjectCharCount] = useState(0);
 
   return (
-    <div>
+    <div className="setting_area">
       <GuideMent
         firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.right.firstMent}
         secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.right.secondMent}

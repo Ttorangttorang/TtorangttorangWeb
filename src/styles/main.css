@@ -333,39 +333,56 @@ section.main_container {
     @apply z-50 fixed top-[55px] left-[16px] right-[16px] -translate-x-0 w-[calc(100%-32px)] h-[30px];
 
     .progress_barLine {
-      @apply h-[6px];
+      @apply h-[6px] rounded-sm;
     }
 
     .progress_barLine_active {
-      @apply h-[6px];
+      @apply h-[6px] rounded-sm;
+      /*  @apply absolute_yHalf left-0 h-[0.22vmin] main_colorBg; */
     }
 
     .page_infoList {
       > div {
-        &:first-of-type {
-          @apply h-auto;
+        @apply absolute_yHalf;
+
+        &.step0 {
+          @apply left-[20%];
+        }
+        &.step1 {
+          @apply left-[50%];
+        }
+        &.step2 {
+          @apply left-[70%];
+        }
+        &.step3 {
+          @apply left-[calc(100%-12px)];
         }
 
+        &:first-of-type,
         &:last-of-type {
-          @apply left-[80%];
+          @apply absolute_yHalf h-auto;
         }
 
-        p:first-of-type {
-          @apply w-[14px] h-[14px] rounded-full bg-[#EDEDED];
+        p.step_dot:first-of-type {
+          @apply w-[14px] h-[14px] rounded-full;
 
           span {
             @apply text-[14px] hidden;
           }
         }
 
+        p.step_dot:last-of-type {
+          @apply block;
+        }
+
         &.on {
           @apply mt-[0px];
-          > p:first-of-type {
-            @apply w-[30px] h-[30px];
-          }
+          > p.step_dot:first-of-type {
+            @apply w-[14px] h-[14px];
 
-          > p:last-of-type {
-            @apply hidden;
+            span {
+              @apply block;
+            }
           }
         }
       }
@@ -376,84 +393,96 @@ section.main_container {
 /* 발표교정 mobile */
 @media (max-width: 1023px) {
   .slider-container.announce_mobile {
-    @apply h-full px-4 pb-4 pt-[80px] overflow-y-auto overflow-x-hidden;
+    @apply pb-4 pt-[80px] overflow-y-auto overflow-x-hidden;
+    height: calc(var(--vh, 1vh) * 100);
+
+    .slick-arrow {
+      @apply !hidden;
+    }
 
     > form {
       @apply h-full pt-[20px];
 
-      > div {
-        @apply h-full;
+      div.step_area {
+        @apply !flex flex-col justify-between h-full px-4 pb-[5px];
+        > div.setting_area {
+          @apply pb-[20px];
 
-        /* GuideMent */
-        .ment_box {
-          @apply w-full pb-4;
+          /* GuideMent */
+          .ment_box {
+            @apply w-full pb-4;
 
-          p {
-            @apply text-sm font-normal gray_colorTxt;
+            p {
+              @apply text-sm font-normal gray_colorTxt;
 
-            &:first-of-type {
-              @apply text-lg font-bold;
+              &:first-of-type {
+                @apply text-lg font-bold;
+              }
+            }
+          }
+
+          .detailSetting {
+            @apply flex flex-col h-full gap-5;
+
+            p.title {
+              @apply mb-3 text-sm font-medium gray_colorTxt;
+            }
+
+            > div:first-of-type {
+              @apply flex flex-col justify-between h-[160px];
+
+              .subject_box {
+                @apply relative w-full h-[calc(100%-20px)] pb-[20px] area_border rounded overflow-hidden;
+                textarea {
+                  @apply w-full h-full pt-[10px] px-[10px] text-[14px] font-medium;
+
+                  /* scrollbar */
+                  &::-webkit-scrollbar {
+                    width: 4px;
+                  }
+
+                  &::-webkit-scrollbar-thumb {
+                    background: #509bf8;
+                  }
+
+                  &::-webkit-scrollbar-track {
+                    background: #ededed;
+                  }
+                }
+
+                .subject_charCount {
+                  @apply absolute bottom-[2px] right-[10px] font-medium text-[12px] gray_colorTxt;
+                }
+              }
+            }
+
+            .purposeCheck,
+            .endingTxtCheck {
+              @apply flex_vertical_center gap-2 w-full h-[36px];
+
+              > p {
+                @apply flex_center w-[326px] h-full text-[14px] font-medium text-center rounded cursor-pointer;
+              }
+            }
+
+            .repeat_box {
+              @apply mt-4;
+              > div {
+                @apply w-auto gap-2 cursor-pointer flex_vertical_center;
+                .checkbox {
+                  @apply flex_center w-[25px] h-[25px] rounded cursor-pointer;
+                }
+
+                > p {
+                  @apply text-[14px] select-none font-medium gray_colorTxt;
+                }
+              }
             }
           }
         }
 
-        .detailSetting {
-          @apply flex flex-col h-full gap-5;
-
-          p.title {
-            @apply mb-3 text-sm font-medium gray_colorTxt;
-          }
-
-          > div:first-of-type {
-            @apply flex flex-col justify-between h-[160px];
-
-            .subject_box {
-              @apply relative w-full h-[calc(100%-20px)] pb-[20px] area_border rounded overflow-hidden;
-              textarea {
-                @apply w-full h-full pt-[10px] px-[10px] text-[14px] font-medium;
-
-                /* scrollbar */
-                &::-webkit-scrollbar {
-                  width: 4px;
-                }
-
-                &::-webkit-scrollbar-thumb {
-                  background: #509bf8;
-                }
-
-                &::-webkit-scrollbar-track {
-                  background: #ededed;
-                }
-              }
-
-              .subject_charCount {
-                @apply absolute bottom-[2px] right-[10px] font-medium text-[12px] gray_colorTxt;
-              }
-            }
-          }
-
-          .purposeCheck,
-          .endingTxtCheck {
-            @apply flex_vertical_center gap-2 w-full h-[36px];
-
-            > p {
-              @apply flex_center w-[326px] h-full text-[14px] font-medium text-center rounded cursor-pointer;
-            }
-          }
-
-          .repeat_box {
-            @apply mt-4;
-            > div {
-              @apply w-auto gap-2 cursor-pointer flex_vertical_center;
-              .checkbox {
-                @apply flex_center w-[25px] h-[25px] rounded cursor-pointer;
-              }
-
-              > p {
-                @apply text-[14px] select-none font-medium gray_colorTxt;
-              }
-            }
-          }
+        .next_step {
+          @apply flex_center w-full h-[45px] mx-auto text-sm rounded-lg;
         }
       }
     }

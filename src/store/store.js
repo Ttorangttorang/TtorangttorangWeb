@@ -13,6 +13,11 @@ export const useCurrentSlideStore = create((set) => ({
   setCurrentSlide: (value) => set({ currentSlide: value }),
 }));
 
+export const useCurrentSlideMobileStore = create((set) => ({
+  currentMobileSlide: 0,
+  setCurrentMobileSlide: (value) => set({ currentMobileSlide: value }),
+}));
+
 // 초안 정보
 export const useSettingStore = create(
   persist(

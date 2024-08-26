@@ -144,13 +144,13 @@ footer {
 /* mobile */
 /* mobile header */
 header.h_mobile {
-  @apply absolute top-0 left-0 right-0 z-20 flex_center w-full h-10 main_colorBg;
+  @apply absolute top-0 left-0 right-0 z-20 flex_center w-full h-10 bg-white;
 
   .logo_area {
     @apply block w-[98px] h-[30px];
 
     img {
-      @apply w-full h-full;
+      @apply w-full h-full scale-[1.2];
     }
   }
 }
