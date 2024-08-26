@@ -203,20 +203,42 @@ export default function Announce() {
                 </div>
               </div>
               <div className="step_area">
-                <div
-                  onClick={() => {
-                    if (subject.length > 0) {
-                      setCurrentMobileSlide(3);
-                      sliderMobileRef.current.slickGoTo(3);
-                    }
-                  }}
-                  className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
-                >
-                  예상 질문 받기
+                <div className="slideMove_btn_area">
+                  <div
+                    className="active_color small_btn"
+                    onClick={() => {
+                      setCurrentMobileSlide(1);
+                      sliderMobileRef.current.slickGoTo(1);
+                    }}
+                  >
+                    이전
+                  </div>
+                  <div
+                    onClick={() => {
+                      if (subject.length > 0) {
+                        setCurrentMobileSlide(3);
+                        sliderMobileRef.current.slickGoTo(3);
+                      }
+                    }}
+                    className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
+                  >
+                    예상 질문 받기
+                  </div>
                 </div>
               </div>
               <div className="step_area">
-                <div className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}>저장하기</div>
+                <div className="slideMove_btn_area">
+                  <div
+                    className="active_color small_btn"
+                    onClick={() => {
+                      setCurrentMobileSlide(2);
+                      sliderMobileRef.current.slickGoTo(2);
+                    }}
+                  >
+                    이전
+                  </div>
+                  <div className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}>저장하기</div>
+                </div>
               </div>
             </Slider>
           </form>
