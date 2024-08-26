@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
-import { useSettingStore } from '@/store/store';
+import { useSettingStore, useSubjectCharCountStore } from '@/store/store';
 import { cls } from '@/utils/config';
 import { ANNOUNCE_TXT, GLOBAL_TXT } from '@/utils/constants';
 
-export default function DetailSetting(props) {
-  const { subjectCharCount, setSubjectCharCount } = props;
+export default function DetailSetting() {
+  const { subjectCharCount, setSubjectCharCount } = useSubjectCharCountStore();
   const MAX_SUBJECT_LENGTH = 100;
   const { subject, setSubject, presentPurpose, setPresentPurpose, endingTxt, setEndingTxt, repeat, setRepeat } = useSettingStore();
 

@@ -1,9 +1,10 @@
-import { useCompareScriptStore, useFinalScriptStore, useSettingStore } from '@/store/store';
-import { formatNumber } from '@/utils/config';
+import { useCompareScriptStore, useFinalScriptStore, useIsMobileStore, useSettingStore } from '@/store/store';
+import { cls, formatNumber } from '@/utils/config';
 import { ANNOUNCE_TXT, GLOBAL_TXT } from '@/utils/constants';
 import HighlightWithinTextarea from 'react-highlight-within-textarea';
 
 export default function AnnouncContent(props) {
+  const { isMobileDevice } = useIsMobileStore();
   const { scriptWriteBoxRef, writeOriginScript, charCountOrigin, highlightedText, charCountNew, setCharCountNew } = props;
   const { compareScriptToggle } = useCompareScriptStore();
   const { originScript, newScript, setNewScript } = useSettingStore();
@@ -59,13 +60,15 @@ export default function AnnouncContent(props) {
     </>
   );
 
+  const textareaHeight = isMobileDevice ? 'h-[calc(100%-32px)]' : 'h-[calc(100%-3.06vmin)]';
+
   return (
     <>
       <p className="title">
         <span className="required">{GLOBAL_TXT.required}</span>
         {ANNOUNCE_TXT.scriptWrite.title}
       </p>
-      <div className="scriptTxt h-[calc(100%-3.06vmin)]">{!compareScriptToggle ? normalTxtArea() : modifyTxtArea()}</div>
+      <div className={cls('scriptTxt', textareaHeight)}>{!compareScriptToggle ? normalTxtArea() : modifyTxtArea()}</div>
     </>
   );
 }

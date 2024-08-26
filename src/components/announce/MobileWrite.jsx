@@ -1,38 +1,29 @@
-import { useEffect, useState, useRef } from 'react';
-import GuideMent from './GuideMent';
-import { cls } from '@/utils/config';
-import { fetchAnnounceData } from '@/api/fetchData';
-import { diffChars } from 'diff';
-import { useNextMoveBtnStore, useSettingStore, useInitialSettingStore, useFinalScriptStore, useScriptLoadingStore, useCompareScriptStore, useSubjectCharCountStore } from '@/store/store';
-import AnnouncContent from './Draft/AnnouncContent';
-import ScriptInfo from './Draft/ScriptInfo';
-import ScriptFunc from './Draft/ScriptFunc';
-import DetailSetting from './Draft/DetailSetting';
 import { ANNOUNCE_TXT } from '@/utils/constants';
+import GuideMent from './GuideMent';
+import AnnouncContent from './Draft/AnnouncContent';
+import ScriptFunc from './Draft/ScriptFunc';
+import ScriptInfo from './Draft/ScriptInfo';
+import { useEffect, useRef, useState } from 'react';
+import { useCharCountOriginStore, useCompareScriptStore, useEstimatedPresentTimeStore, useFinalScriptStore, useInitialSettingStore, useScriptLoadingStore, useSettingStore } from '@/store/store';
 
-export default function ModifyAnnounce({ userEmail }) {
-  const { setNextMoveBtn } = useNextMoveBtnStore();
+export default function MobileWrite({ userEmail }) {
+  const scriptWriteBoxRef = useRef(null);
   const { setFinalScript } = useFinalScriptStore();
   const { setScriptLoading } = useScriptLoadingStore();
-  // setting
+
   const { clearSettings, originScript, setOriginScript, newScript, setNewScript, subject, setSubject, presentPurpose, setPresentPurpose, endingTxt, setEndingTxt, repeat, setRepeat } =
     useSettingStore();
   const { initialSubject, setInitialSubject, initialPresentPurpose, setInitialPresentPurpose, initialEndingTxt, setInitialEndingTxt, initialrepeat, setInitialRepeat } = useInitialSettingStore();
-  // 초안
-  const [charCountOrigin, setCharCountOrigin] = useState(0);
-  const [modifyBtn, setModifyBtn] = useState(false);
-  // 주제
-  const { subjectCharCount, setSubjectCharCount } = useSubjectCharCountStore();
-  // 개선내용
-  const [improvementMent, setImprovementMent] = useState('없음');
+  const { compareScriptToggle, setcompareScriptToggle } = useCompareScriptStore();
+  const { charCountOrigin, setCharCountOrigin } = useCharCountOriginStore();
+  const [charCountNew, setCharCountNew] = useState(0);
+  const [highlightedText, setHighlightedText] = useState([]);
   //교정문
   const [initialNewScript, setInitialNewScript] = useState('');
-  const [charCountNew, setCharCountNew] = useState(0);
-  const { compareScriptToggle, setcompareScriptToggle } = useCompareScriptStore();
-  const [highlightedText, setHighlightedText] = useState([]);
-  const scriptWriteBoxRef = useRef(null);
+  // 개선내용
+  const [improvementMent, setImprovementMent] = useState('없음');
   // 예상 발표 시간
-  const [estimatedPresentTime, setEstimatedPresentTime] = useState('0분 0초');
+  const { estimatedPresentTime, setEstimatedPresentTime } = useEstimatedPresentTimeStore();
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
@@ -74,32 +65,6 @@ export default function ModifyAnnounce({ userEmail }) {
     const seconds = estimatedTime % 60;
     setEstimatedPresentTime(`${minutes < 10 ? '0' + minutes : minutes}분 ${seconds < 10 ? '0' + seconds : seconds}초`);
   }, [charCountOrigin, charCountNew, originScript, compareScriptToggle]);
-
-  // script 초기화 버튼
-  const deleteAllScript = () => {
-    clearSettings();
-    setCharCountOrigin(0);
-    setSubjectCharCount(0);
-    setEstimatedPresentTime('0분 0초');
-    setcompareScriptToggle(false);
-  };
-
-  // 교정하기 버튼 활성화
-  useEffect(() => {
-    if (compareScriptToggle) {
-      // 초안, 교정문 변경,세팅값 변경 있을경우 true
-      setModifyBtn(
-        (originScript && newScript && initialNewScript !== newScript) ||
-          initialSubject !== subject ||
-          initialPresentPurpose !== presentPurpose ||
-          initialEndingTxt !== endingTxt ||
-          initialrepeat !== repeat,
-      );
-    } else {
-      // 초안, 주제 있을경우 true
-      setModifyBtn(originScript && subject);
-    }
-  }, [originScript, subject, newScript, initialNewScript, initialSubject, compareScriptToggle, initialPresentPurpose, presentPurpose, initialEndingTxt, endingTxt, initialrepeat, repeat]);
 
   const highlightDiffs = (oldStr, newStr) => {
     const diff = diffChars(oldStr, newStr);
@@ -214,74 +179,30 @@ export default function ModifyAnnounce({ userEmail }) {
     }
   };
 
-  // 버튼활성화 조건
-  const getButtonClass = (condition) => cls(condition ? 'active_color cursor-pointer' : 'cursor-default');
-
   return (
-    <section className="main_container">
-      <div className="progress_bar"></div>
-      <section className="correction_area">
-        <form>
-          <div className="scriptWrite_box">
-            <GuideMent
-              firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.firstMent}
-              secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.secondMent}
-            />
-            <div>
-              <div className="scriptMain_area">
-                <AnnouncContent
-                  scriptWriteBoxRef={scriptWriteBoxRef}
-                  writeOriginScript={writeOriginScript}
-                  charCountOrigin={charCountOrigin}
-                  highlightedText={highlightedText}
-                  charCountNew={charCountNew}
-                  setCharCountNew={setCharCountNew}
-                />
-              </div>
-              <div className="contentInfo_area">
-                <ScriptFunc />
-                <ScriptInfo
-                  improvementMent={improvementMent}
-                  estimatedPresentTime={estimatedPresentTime}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="scriptSetting_box">
-            <GuideMent
-              firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.right.firstMent}
-              secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.right.secondMent}
-            />
-            <div>
-              <DetailSetting />
-              <div className="modifyBtn_box">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (originScript.length > 0 || subject.length > 0) {
-                      deleteAllScript();
-                    }
-                  }}
-                  className={getButtonClass(originScript.length > 0 || subject.length > 0)}
-                >
-                  {ANNOUNCE_TXT.modifyBtn.reset}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (modifyBtn) {
-                      modifyScript();
-                    }
-                  }}
-                  className={getButtonClass(modifyBtn)}
-                >
-                  {ANNOUNCE_TXT.modifyBtn.modify}
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </section>
-    </section>
+    <div className="scriptWrite_box">
+      <GuideMent
+        firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.firstMent}
+        secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.secondMent}
+      />
+      <div>
+        <div className="scriptMain_area">
+          <AnnouncContent
+            scriptWriteBoxRef={scriptWriteBoxRef}
+            writeOriginScript={writeOriginScript}
+            charCountOrigin={charCountOrigin}
+            highlightedText={highlightedText}
+            charCountNew={charCountNew}
+            setCharCountNew={setCharCountNew}
+          />
+        </div>
+        <div className="contentInfo_area">
+          <p className="estimatedPresentTime">
+            {estimatedPresentTime} ({ANNOUNCE_TXT.scriptWrite.estimatedPresentTime})
+          </p>
+          <ScriptFunc />
+        </div>
+      </div>
+    </div>
   );
 }

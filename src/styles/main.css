@@ -405,21 +405,28 @@ section.main_container {
 
       div.step_area {
         @apply !flex flex-col justify-between h-full px-4 pb-[5px];
-        > div.setting_area {
-          @apply pb-[20px];
 
-          /* GuideMent */
-          .ment_box {
-            @apply w-full pb-4;
+        /* common */
+        .required {
+          @apply text-[#FD8889] pr-[2px];
+        }
 
-            p {
-              @apply text-sm font-normal gray_colorTxt;
+        /* GuideMent */
+        .ment_box {
+          @apply w-full pb-4;
 
-              &:first-of-type {
-                @apply text-lg font-bold;
-              }
+          p {
+            @apply text-sm font-normal gray_colorTxt;
+
+            &:first-of-type {
+              @apply text-lg font-bold;
             }
           }
+        }
+
+        /* setting */
+        > div.setting_area {
+          @apply pb-[20px];
 
           .detailSetting {
             @apply flex flex-col h-full gap-5;
@@ -481,6 +488,121 @@ section.main_container {
           }
         }
 
+        /* 초안 작성 */
+        .scriptWrite_box {
+          @apply w-full h-full pb-[20px];
+
+          > div:last-of-type {
+            @apply flex flex-col w-full h-[calc(100%-84px)] py-[8px] px-3 area_border;
+
+            .scriptMain_area {
+              @apply h-auto flex-1;
+            }
+
+            p.title {
+              @apply mb-2 text-[14px] font-medium gray_colorTxt;
+            }
+
+            .scriptTxt {
+              @apply relative w-full pl-0 pb-0;
+
+              .textSize {
+                @apply relative w-full h-full overflow-hidden;
+              }
+              textarea {
+                @apply w-full h-full text-[14px] leading-[1.6] pr-[0] pt-[0] font-medium gray_colorTxt;
+                &::-webkit-input-placeholder {
+                  font-size: 14px;
+                }
+                &::-webkit-textarea {
+                  font-size: 14px;
+                }
+                /* scrollbar */
+                &::-webkit-scrollbar {
+                  width: 4px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                  background: #509bf8;
+                }
+
+                &::-webkit-scrollbar-track {
+                  background: #ededed;
+                }
+              }
+
+              > p {
+                @apply absolute right-[-4px] top-[-28px] flex justify-end text-[12px] pr-3 font-medium gray_colorTxt;
+              }
+
+              .newScript {
+                @apply w-full h-full pr-[14px] pt-3 overflow-y-auto;
+
+                span {
+                  @apply text-[14px] leading-[1.6] font-medium gray_colorTxt;
+                }
+
+                mark {
+                  @apply text-[14px];
+                }
+
+                /* scrollbar */
+                &::-webkit-scrollbar {
+                  width: 4px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                  background: #509bf8;
+                }
+
+                &::-webkit-scrollbar-track {
+                  background: #ededed;
+                }
+              }
+            }
+
+            /* 복사하기, 예상 발표시간 */
+            .contentInfo_area {
+              @apply flex_xBetween w-full pt-3 pb-2 border-t border-[#C4C4C4] mt-[0];
+
+              .script_fun {
+                @apply w-1/2 flex_vertical_center justify-end gap-3 h-full mb-[0];
+
+                > div {
+                  @apply flex_vertical_center gap-3 cursor-pointer;
+                  .icon {
+                    @apply w-3 h-3;
+
+                    img {
+                      @apply object-cover w-full h-full;
+                    }
+                  }
+
+                  p {
+                    @apply text-[12px] font-medium gray_colorTxt;
+                  }
+                }
+              }
+
+              .estimatedPresentTime {
+                @apply !text-xs;
+              }
+            }
+          }
+        }
+
+        /* 다음 슬라이드 이동하는 버튼 */
+        .slideMove_btn_area {
+          @apply flex gap-2 flex_center h-[45px];
+
+          > div {
+            @apply flex_center h-full text-sm rounded-lg;
+
+            &.small_btn {
+              @apply w-[80px];
+            }
+          }
+        }
         .next_step {
           @apply flex_center w-full h-[45px] mx-auto text-sm rounded-lg;
         }

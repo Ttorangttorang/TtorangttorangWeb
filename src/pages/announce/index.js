@@ -4,11 +4,25 @@ import Slider from 'react-slick';
 import ModifyAnnounce from '@/components/announce/ModifyAnnounce';
 import SaveAnnounce from '@/components/announce/SaveAnnounce';
 import ProgressBar from '@/components/announce/ProgressBar';
-import { useNextMoveBtnStore, useScriptLoadingStore, useQaLoadingStore, useUserStore, useCurrentSlideStore, useIsMobileStore, useSettingStore, useCurrentSlideMobileStore } from '@/store/store';
+import {
+  useNextMoveBtnStore,
+  useSettingStore,
+  useScriptLoadingStore,
+  useQaLoadingStore,
+  useUserStore,
+  useCurrentSlideStore,
+  useIsMobileStore,
+  useCurrentSlideMobileStore,
+  useEstimatedPresentTimeStore,
+  useCompareScriptStore,
+  useCharCountOriginStore,
+  useSubjectCharCountStore,
+} from '@/store/store';
 import Modal from '@/components/layout/Modal';
-import Setting from '@/components/announce/Setting';
 import { cls } from '@/utils/config';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import MobileSetting from '@/components/announce/MobileSetting';
+import MobileWrite from '@/components/announce/MobileWrite';
 
 export default function Announce() {
   const { isMobileDevice } = useIsMobileStore();
@@ -16,9 +30,14 @@ export default function Announce() {
   const { nextMoveBtn } = useNextMoveBtnStore();
   const { qaLoading } = useQaLoadingStore();
   const { scriptLoading } = useScriptLoadingStore();
-  const { currentSlide, setCurrentSlide } = useCurrentSlideStore();
-  const { currentMobileSlide, setCurrentMobileSlide } = useCurrentSlideMobileStore();
+  const { clearSettings, originScript, newScript } = useSettingStore();
+  const { setCurrentSlide } = useCurrentSlideStore();
+  const { setCurrentMobileSlide } = useCurrentSlideMobileStore();
+  const { setcompareScriptToggle } = useCompareScriptStore();
   const { subject } = useSettingStore();
+  const { setEstimatedPresentTime } = useEstimatedPresentTimeStore();
+  const { setCharCountOrigin } = useCharCountOriginStore();
+  const { setSubjectCharCount } = useSubjectCharCountStore();
 
   function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -107,6 +126,20 @@ export default function Announce() {
     },
   };
 
+  // 진입시 첫번째 슬라이드 시작
+  useEffect(() => {
+    setCurrentMobileSlide(0);
+  }, []);
+
+  // script 초기화 버튼
+  const deleteAllScript = () => {
+    clearSettings();
+    setCharCountOrigin(0);
+    setSubjectCharCount(0);
+    setEstimatedPresentTime('0분 0초');
+    setcompareScriptToggle(false);
+  };
+
   return (
     <>
       {isMobileDevice ? (
@@ -118,7 +151,7 @@ export default function Announce() {
               {...settingsMobile}
             >
               <div className="step_area">
-                <Setting />
+                <MobileSetting />
                 <div
                   onClick={() => {
                     if (subject.length > 0) {
@@ -131,9 +164,60 @@ export default function Announce() {
                   발표문 초안 작성하기
                 </div>
               </div>
-              <div className="step_area"></div>
-              <div className="step_area"></div>
-              <div className="step_area"></div>
+              <div className="step_area">
+                <MobileWrite />
+                <div className="slideMove_btn_area">
+                  <div
+                    className="active_color small_btn"
+                    onClick={() => {
+                      setCurrentMobileSlide(0);
+                      sliderMobileRef.current.slickGoTo(0);
+                    }}
+                  >
+                    이전
+                  </div>
+
+                  <div
+                    onClick={() => {
+                      if (subject.length > 0) {
+                        setCurrentMobileSlide(2);
+                        sliderMobileRef.current.slickGoTo(2);
+                      }
+                    }}
+                    className={cls('next_step', originScript.length > 0 ? 'active_color' : 'disabled_color')}
+                  >
+                    {newScript.length > 0 ? '완성 발표문 확인하기' : '교정하기'}
+                  </div>
+                  <div
+                    className={cls('small_btn', originScript.length > 0 ? 'active_color' : 'disabled_color')}
+                    onClick={() => {
+                      if (originScript.length > 0) {
+                        deleteAllScript();
+                        setCurrentMobileSlide(0);
+                        sliderMobileRef.current.slickGoTo(0);
+                      }
+                    }}
+                  >
+                    초기화
+                  </div>
+                </div>
+              </div>
+              <div className="step_area">
+                <div
+                  onClick={() => {
+                    if (subject.length > 0) {
+                      setCurrentMobileSlide(3);
+                      sliderMobileRef.current.slickGoTo(3);
+                    }
+                  }}
+                  className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
+                >
+                  예상 질문 받기
+                </div>
+              </div>
+              <div className="step_area">
+                <div className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}>저장하기</div>
+              </div>
             </Slider>
           </form>
         </div>
