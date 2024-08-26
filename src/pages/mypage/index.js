@@ -236,7 +236,7 @@ export default function Mypage() {
                         href={`/mypage/announce/${item.id}`}
                         className="announce_content flex_xBetween"
                       >
-                        <p>{sliceMyScript(item.content)}</p>
+                        <p>{configs.sliceMyScript(item.content)}</p>
                         <p className="date">{configs.sliceMyScriptDateOnly(item.regTime)}</p>
                       </Link>
                     </div>

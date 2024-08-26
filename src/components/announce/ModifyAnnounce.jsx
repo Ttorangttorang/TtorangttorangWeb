@@ -22,6 +22,7 @@ export default function ModifyAnnounce({ userEmail }) {
   // 개선내용
   const [improvementMent, setImprovementMent] = useState('없음');
   //교정문
+  const [initialNewScript, setInitialNewScript] = useState('');
   const [charCountNew, setCharCountNew] = useState(0);
   const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
   const [highlightedText, setHighlightedText] = useState([]);
@@ -133,18 +134,18 @@ export default function ModifyAnnounce({ userEmail }) {
     setScriptLoading(true);
     try {
       const data = {
-        topic: subject,
-        purpose: presentPurpose,
-        content: originScript,
-        word: endingTxt,
-        duplicate: repeat === true ? 'Y' : 'N',
+        topic: settings.subject,
+        purpose: settings.presentPurpose,
+        content: settings.originScript,
+        word: settings.endingTxt,
+        duplicate: settings.repeat === true ? 'Y' : 'N',
       };
 
       // 비교값 저장
-      initialSettings.setInitialSubject(subject);
-      initialSettings.setInitialPresentPurpose(presentPurpose);
-      initialSettings.setInitialEndingTxt(endingTxt);
-      initialSettings.setInitialRepeat(repeat);
+      initialSettings.setInitialSubject(settings.subject);
+      initialSettings.setInitialPresentPurpose(settings.presentPurpose);
+      initialSettings.setInitialEndingTxt(settings.endingTxt);
+      initialSettings.setInitialRepeat(settings.repeat);
       //data
       const response = await fetchAnnounceData(data);
       const redData = response.data.replace(/data:/g, '');
@@ -195,20 +196,20 @@ export default function ModifyAnnounce({ userEmail }) {
       }
 
       // 재교정 시 (2회차 이상)
-      if (newScript.length > 0 && modifyBtn && compareScriptToggle) {
+      if (settings.newScript.length > 0 && modifyBtn && compareScriptToggle) {
         const oldScript = newScript.slice(0, 3000);
         const updatedScript = extractedScriptText;
 
         // 2회차 새로운 교정본을 newScript로 설정 1회차는 구
         settings.setOriginScript(oldScript);
-        initialSettings.setInitialNewScript(updatedScript);
+        setInitialNewScript(updatedScript);
         settings.setNewScript(updatedScript);
         setFinalScript(updatedScript);
         highlightDiffs(oldScript, updatedScript);
       } else {
         // 첫 번째 교정
-        highlightDiffs(originScript, extractedScriptText);
-        initialSettings.setInitialNewScript(extractedScriptText);
+        highlightDiffs(settings.originScript, extractedScriptText);
+        setInitialNewScript(extractedScriptText);
         settings.setNewScript(extractedScriptText);
         setFinalScript(extractedScriptText);
       }
@@ -267,7 +268,7 @@ export default function ModifyAnnounce({ userEmail }) {
                 <button
                   type="button"
                   onClick={() => {
-                    if (originScript.length > 0 || subject.length > 0) {
+                    if (settings.originScript.length > 0 || settings.subject.length > 0) {
                       deleteAllScript();
                     }
                   }}
