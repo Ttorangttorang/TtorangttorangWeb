@@ -150,7 +150,7 @@ header.h_mobile {
     @apply block w-[98px] h-[30px];
 
     img {
-      @apply w-full h-full scale-[1.2];
+      @apply w-full h-full scale-[1.4];
     }
   }
 }

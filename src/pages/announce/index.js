@@ -121,8 +121,10 @@ export default function Announce() {
                 <Setting />
                 <div
                   onClick={() => {
-                    setCurrentMobileSlide(1);
-                    sliderMobileRef.current.slickGoTo(1);
+                    if (subject.length > 0) {
+                      setCurrentMobileSlide(1);
+                      sliderMobileRef.current.slickGoTo(1);
+                    }
                   }}
                   className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
                 >
