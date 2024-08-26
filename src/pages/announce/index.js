@@ -163,18 +163,6 @@ export default function Announce() {
                   >
                     이전
                   </div>
-
-                  <div
-                    onClick={() => {
-                      if (subject.length > 0) {
-                        setCurrentMobileSlide(2);
-                        sliderMobileRef.current.slickGoTo(2);
-                      }
-                    }}
-                    className={cls('next_step', originScript.length > 0 ? 'active_color' : 'disabled_color')}
-                  >
-                    {newScript.length > 0 ? '완성 발표문 확인하기' : '교정하기'}
-                  </div>
                   <div
                     className={cls('small_btn', originScript.length > 0 ? 'active_color' : 'disabled_color')}
                     onClick={() => {
@@ -187,6 +175,30 @@ export default function Announce() {
                   >
                     초기화
                   </div>
+                  <div
+                    onClick={() => {
+                      if (subject.length > 0) {
+                        setCurrentMobileSlide(2);
+                        sliderMobileRef.current.slickGoTo(2);
+                      }
+                    }}
+                    className={cls('next_step', originScript.length > 0 ? 'active_color' : 'disabled_color')}
+                  >
+                    {newScript.length > 0 ? '재 교정하기' : '교정하기'}
+                  </div>
+                  {newScript.length > 0 && (
+                    <div
+                      onClick={() => {
+                        if (subject.length > 0) {
+                          setCurrentMobileSlide(2);
+                          sliderMobileRef.current.slickGoTo(2);
+                        }
+                      }}
+                      className="next_step active_color"
+                    >
+                      완성 발표문 확인하기
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="step_area">

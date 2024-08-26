@@ -73,6 +73,9 @@ export default function MobileWrite({ userEmail }) {
             charCountNew={charCountNew}
             setCharCountNew={setCharCountNew}
           />
+          <div className="improve_area">
+            <span>개선내용(0)</span>
+          </div>
         </div>
         <div className="contentInfo_area">
           <p className="estimatedPresentTime">

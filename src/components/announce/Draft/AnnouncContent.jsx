@@ -60,7 +60,7 @@ export default function AnnouncContent(props) {
     </>
   );
 
-  const textareaHeight = isMobileDevice ? 'h-[calc(100%-32px)]' : 'h-[calc(100%-3.06vmin)]';
+  const textareaHeight = isMobileDevice ? 'h-[calc(100%-60px)]' : 'h-[calc(100%-3.06vmin)]';
 
   return (
     <>

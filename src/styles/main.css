@@ -360,7 +360,7 @@ section.main_container {
 
         &:first-of-type,
         &:last-of-type {
-          @apply absolute_yHalf h-auto;
+          @apply h-auto absolute_yHalf;
         }
 
         p.step_dot:first-of-type {
@@ -496,7 +496,7 @@ section.main_container {
             @apply flex flex-col w-full h-[calc(100%-84px)] py-[8px] px-3 area_border;
 
             .scriptMain_area {
-              @apply h-auto flex-1;
+              @apply flex-1 h-auto;
             }
 
             p.title {
@@ -504,7 +504,7 @@ section.main_container {
             }
 
             .scriptTxt {
-              @apply relative w-full pl-0 pb-0;
+              @apply relative w-full pb-0 pl-0;
 
               .textSize {
                 @apply relative w-full h-full overflow-hidden;
@@ -561,6 +561,15 @@ section.main_container {
               }
             }
 
+            /* 개선내용 */
+            .improve_area {
+              @apply h-[31px] flex_vertical_center;
+
+              span {
+                @apply text-sm;
+              }
+            }
+
             /* 복사하기, 예상 발표시간 */
             .contentInfo_area {
               @apply flex_xBetween w-full pt-3 pb-2 border-t border-[#C4C4C4] mt-[0];
@@ -569,7 +578,7 @@ section.main_container {
                 @apply w-1/2 flex_vertical_center justify-end gap-3 h-full mb-[0];
 
                 > div {
-                  @apply flex_vertical_center gap-3 cursor-pointer;
+                  @apply gap-3 cursor-pointer flex_vertical_center;
                   .icon {
                     @apply w-3 h-3;
 
@@ -596,7 +605,7 @@ section.main_container {
           @apply flex gap-2 flex_center h-[45px];
 
           > div {
-            @apply flex_center h-full text-sm rounded-lg;
+            @apply h-full text-sm rounded-lg flex_center;
 
             &.small_btn {
               @apply w-[80px];
