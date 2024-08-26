@@ -4,20 +4,7 @@ import Slider from 'react-slick';
 import ModifyAnnounce from '@/components/announce/ModifyAnnounce';
 import SaveAnnounce from '@/components/announce/SaveAnnounce';
 import ProgressBar from '@/components/announce/ProgressBar';
-import {
-  useNextMoveBtnStore,
-  useSettingStore,
-  useScriptLoadingStore,
-  useQaLoadingStore,
-  useUserStore,
-  useCurrentSlideStore,
-  useIsMobileStore,
-  useCurrentSlideMobileStore,
-  useEstimatedPresentTimeStore,
-  useCompareScriptStore,
-  useCharCountOriginStore,
-  useSubjectCharCountStore,
-} from '@/store/store';
+import * as stores from '@/store/store';
 import Modal from '@/components/layout/Modal';
 import { cls } from '@/utils/config';
 import { useEffect, useRef } from 'react';
@@ -25,19 +12,19 @@ import MobileSetting from '@/components/announce/MobileSetting';
 import MobileWrite from '@/components/announce/MobileWrite';
 
 export default function Announce() {
-  const { isMobileDevice } = useIsMobileStore();
-  const { userEmail, userAccessToken } = useUserStore();
-  const { nextMoveBtn } = useNextMoveBtnStore();
-  const { qaLoading } = useQaLoadingStore();
-  const { scriptLoading } = useScriptLoadingStore();
-  const { clearSettings, originScript, newScript } = useSettingStore();
-  const { setCurrentSlide } = useCurrentSlideStore();
-  const { setCurrentMobileSlide } = useCurrentSlideMobileStore();
-  const { setcompareScriptToggle } = useCompareScriptStore();
-  const { subject } = useSettingStore();
-  const { setEstimatedPresentTime } = useEstimatedPresentTimeStore();
-  const { setCharCountOrigin } = useCharCountOriginStore();
-  const { setSubjectCharCount } = useSubjectCharCountStore();
+  const { isMobileDevice } = stores.useIsMobileStore();
+  const { userEmail, userAccessToken } = stores.useUserStore();
+  const { nextMoveBtn } = stores.useNextMoveBtnStore();
+  const { qaLoading } = stores.useQaLoadingStore();
+  const { scriptLoading } = stores.useScriptLoadingStore();
+  const { clearSettings, originScript, newScript } = stores.useSettingStore();
+  const { setCurrentSlide } = stores.useCurrentSlideStore();
+  const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
+  const { setcompareScriptToggle } = stores.useCompareScriptStore();
+  const { subject } = stores.useSettingStore();
+  const { setEstimatedPresentTime } = stores.useEstimatedPresentTimeStore();
+  const { setCharCountOrigin } = stores.useCharCountOriginStore();
+  const { setSubjectCharCount } = stores.useSubjectCharCountStore();
 
   function NextArrow(props) {
     const { className, style, onClick } = props;

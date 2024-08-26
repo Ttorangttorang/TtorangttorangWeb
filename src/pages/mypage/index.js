@@ -5,9 +5,9 @@ import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
 import { useQuery } from '@tanstack/react-query';
 import Slider from 'react-slick';
-import { useUserStore, useFinalScriptStore, useSettingStore, useNextMoveBtnStore } from '@/store/store';
-import { sliceMyScript, sliceMyScriptDateOnly, sliceMyScriptTitle, reverseData } from '@/utils/config';
-import { fetchKakaoLogOut, getUserScript, deleteUserScript, fetchTtorangWithdrawal } from '@/api/fetchData';
+import * as stores from '@/store/store';
+import * as configs from '@/utils/config';
+import * as apis from '@/api/fetchData';
 import { MYPAGE_TXT } from '@/utils/constants';
 import Modal from '@/components/layout/Modal';
 
@@ -15,11 +15,11 @@ export default function Mypage() {
   const router = useRouter();
   const [deleteAnnounce, setDeleteAnnounce] = useState({ show: false, id: '' });
   const [withdrawal, setWithdrawal] = useState(false);
-  const { userEmail, accessToken, userAccessToken, clearUser } = useUserStore();
   const [addListLength, setAddListLength] = useState(0);
-  const { setNextMoveBtn } = useNextMoveBtnStore();
-  const { clearSettings } = useSettingStore();
-  const { clearFinal } = useFinalScriptStore();
+  const { userEmail, accessToken, userAccessToken, clearUser } = stores.useUserStore();
+  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
+  const { clearSettings } = stores.useSettingStore();
+  const { clearFinal } = stores.useFinalScriptStore();
 
   // 초기화
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function Mypage() {
     refetch,
   } = useQuery({
     queryKey: ['myScriptsData'],
-    queryFn: () => getUserScript(userAccessToken),
+    queryFn: () => apis.getUserScript(userAccessToken),
     refetchOnWindowFocus: true,
   });
 
@@ -58,7 +58,7 @@ export default function Mypage() {
   // 내 발표문 삭제
   const deleteMyScript = async (id) => {
     try {
-      await deleteUserScript(userAccessToken, id);
+      await apis.deleteUserScript(userAccessToken, id);
       refetch();
     } catch (error) {
       console.error('Failed:', error);
@@ -136,7 +136,7 @@ export default function Mypage() {
   // 카카오 로그아웃
   const kakaoLogOut = async () => {
     try {
-      const res = await fetchKakaoLogOut(accessToken);
+      const res = await apis.fetchKakaoLogOut(accessToken);
       if (res) {
         router.push('/');
         clearUser();
@@ -155,11 +155,11 @@ export default function Mypage() {
   // 또랑또랑 서비스 탈퇴
   const ttorangWithdrawal = async () => {
     try {
-      const res = await fetchTtorangWithdrawal(userAccessToken);
+      const res = await apis.fetchTtorangWithdrawal(userAccessToken);
       if (res) {
         // 탈퇴가 성공한 경우 로그아웃 시도
         try {
-          await fetchKakaoLogOut(accessToken);
+          await apis.fetchKakaoLogOut(accessToken);
         } catch (logOutError) {
           console.error('Error LogOut:', logOutError);
         }
@@ -212,14 +212,14 @@ export default function Mypage() {
             <p className="mypage_title">{MYPAGE_TXT.title.myAnnounce}</p>
             <div className="myAnnounce_slide">
               <Slider {...settings}>
-                {reverseData(
+                {configs.reverseData(
                   myScripts?.data.data.map((item, index) => (
                     <div
                       className="myAnnounce"
                       key={item.id}
                     >
                       <div className="announce_title">
-                        <p>{sliceMyScriptTitle(item.topic)}</p>
+                        <p>{configs.sliceMyScriptTitle(item.topic)}</p>
                         <div
                           onClick={() => setDeleteAnnounce({ show: true, id: item.id })}
                           className="delteBtn"
@@ -237,7 +237,7 @@ export default function Mypage() {
                         className="announce_content flex_xBetween"
                       >
                         <p>{sliceMyScript(item.content)}</p>
-                        <p className="date">{sliceMyScriptDateOnly(item.regTime)}</p>
+                        <p className="date">{configs.sliceMyScriptDateOnly(item.regTime)}</p>
                       </Link>
                     </div>
                   )),

@@ -3,7 +3,6 @@ import { isMobile } from 'react-device-detect';
 import ShapeBg from './ShapeBg';
 import Header from './Header';
 import Footer from './Footer';
-import MoblieNoneService from './MoblieNoneService';
 import { usePathname } from 'next/navigation';
 import { useIsMobileStore } from '@/store/store';
 import HeaderMobile from './HeaderMobile';

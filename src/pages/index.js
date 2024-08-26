@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as LocalImages from '@/utils/imageImports';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useLoginModalStore, useUserStore, useNextMoveBtnStore, useSettingStore, useFinalScriptStore, useIsMobileStore } from '@/store/store';
+import * as stores from '@/store/store';
 
 const guideContent = [
   {
@@ -29,17 +29,17 @@ const guideContent = [
 ];
 
 export default function Home() {
-  const { isMobileDevice } = useIsMobileStore();
-  const { userEmail } = useUserStore();
-  const { setLogin } = useLoginModalStore();
   const outerDivRef = useRef();
   const maxPage = 4;
+  const { isMobileDevice } = stores.useIsMobileStore();
+  const { userEmail } = stores.useUserStore();
+  const { setLogin } = stores.useLoginModalStore();
+  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
+  const { clearSettings } = stores.useSettingStore();
+  const { clearFinal } = stores.useFinalScriptStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [isScrolling, setIsScrolling] = useState(false);
   const [scrollTimeout, setScrollTimeout] = useState(null);
-  const { setNextMoveBtn } = useNextMoveBtnStore();
-  const { clearSettings } = useSettingStore();
-  const { clearFinal } = useFinalScriptStore();
 
   // 초기화
   useEffect(() => {

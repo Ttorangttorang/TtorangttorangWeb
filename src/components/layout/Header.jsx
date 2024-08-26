@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cls } from '@/utils/config';
 import { useRouter } from 'next/router';
-import { useLoginModalStore, useSettingStore, useNextMoveBtnStore, useUserStore, useFinalScriptStore } from '@/store/store';
+import * as stores from '@/store/store';
 import { authorizationCodeLink } from '@/api/fetchData';
 import { HEADER_TXT } from '@/utils/constants';
 import Modal from './Modal';
@@ -13,11 +13,11 @@ import Modal from './Modal';
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const { login, setLogin } = useLoginModalStore();
-  const { setNextMoveBtn } = useNextMoveBtnStore();
-  const { userEmail } = useUserStore();
-  const { clearSettings } = useSettingStore();
-  const { clearFinal } = useFinalScriptStore();
+  const { login, setLogin } = stores.useLoginModalStore();
+  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
+  const { userEmail } = stores.useUserStore();
+  const { clearSettings } = stores.useSettingStore();
+  const { clearFinal } = stores.useFinalScriptStore();
 
   useEffect(() => {
     if (userEmail && pathname !== HEADER_TXT.announce.link) {

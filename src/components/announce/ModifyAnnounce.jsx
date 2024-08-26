@@ -3,7 +3,7 @@ import GuideMent from './GuideMent';
 import { cls } from '@/utils/config';
 import { fetchAnnounceData } from '@/api/fetchData';
 import { diffChars } from 'diff';
-import { useNextMoveBtnStore, useSettingStore, useInitialSettingStore, useFinalScriptStore, useScriptLoadingStore, useCompareScriptStore, useSubjectCharCountStore } from '@/store/store';
+import * as stores from '@/store/store';
 import AnnouncContent from './Draft/AnnouncContent';
 import ScriptInfo from './Draft/ScriptInfo';
 import ScriptFunc from './Draft/ScriptFunc';
@@ -11,24 +11,23 @@ import DetailSetting from './Draft/DetailSetting';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 
 export default function ModifyAnnounce({ userEmail }) {
-  const { setNextMoveBtn } = useNextMoveBtnStore();
-  const { setFinalScript } = useFinalScriptStore();
-  const { setScriptLoading } = useScriptLoadingStore();
+  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
+  const { setFinalScript } = stores.useFinalScriptStore();
+  const { setScriptLoading } = stores.useScriptLoadingStore();
   // setting
-  const { clearSettings, originScript, setOriginScript, newScript, setNewScript, subject, setSubject, presentPurpose, setPresentPurpose, endingTxt, setEndingTxt, repeat, setRepeat } =
-    useSettingStore();
-  const { initialSubject, setInitialSubject, initialPresentPurpose, setInitialPresentPurpose, initialEndingTxt, setInitialEndingTxt, initialrepeat, setInitialRepeat } = useInitialSettingStore();
+  const settings = stores.useSettingStore();
+  const initialSettings = stores.useInitialSettingStore();
   // 초안
   const [charCountOrigin, setCharCountOrigin] = useState(0);
   const [modifyBtn, setModifyBtn] = useState(false);
   // 주제
-  const { subjectCharCount, setSubjectCharCount } = useSubjectCharCountStore();
+  const { setSubjectCharCount } = stores.useSubjectCharCountStore();
   // 개선내용
   const [improvementMent, setImprovementMent] = useState('없음');
   //교정문
   const [initialNewScript, setInitialNewScript] = useState('');
   const [charCountNew, setCharCountNew] = useState(0);
-  const { compareScriptToggle, setcompareScriptToggle } = useCompareScriptStore();
+  const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
   const [highlightedText, setHighlightedText] = useState([]);
   const scriptWriteBoxRef = useRef(null);
   // 예상 발표 시간
@@ -41,12 +40,12 @@ export default function ModifyAnnounce({ userEmail }) {
       // 로컬 스토리지에서 설정을 불러오기
       const { originScript = '', subject = '', newScript = '', presentPurpose = '회사 컨퍼런스', endingTxt = '합니다체', repeat = false } = JSON.parse(savedSettings);
 
-      setOriginScript(originScript);
-      setSubject(subject);
-      setNewScript(newScript);
-      setPresentPurpose(presentPurpose);
-      setEndingTxt(endingTxt);
-      setRepeat(repeat);
+      settings.setOriginScript(originScript);
+      settings.setSubject(subject);
+      settings.setNewScript(newScript);
+      settings.setPresentPurpose(presentPurpose);
+      settings.setEndingTxt(endingTxt);
+      settings.setRepeat(repeat);
 
       if (newScript) {
         setNextMoveBtn(true);
@@ -63,7 +62,7 @@ export default function ModifyAnnounce({ userEmail }) {
     if (draft.length > MAX_LENGTH) {
       draft = event.target.value.slice(0, MAX_LENGTH);
     }
-    setOriginScript(draft);
+    settings.setOriginScript(draft);
     setCharCountOrigin(draft.length);
   };
 
@@ -73,11 +72,11 @@ export default function ModifyAnnounce({ userEmail }) {
     const minutes = Math.floor(estimatedTime / 60);
     const seconds = estimatedTime % 60;
     setEstimatedPresentTime(`${minutes < 10 ? '0' + minutes : minutes}분 ${seconds < 10 ? '0' + seconds : seconds}초`);
-  }, [charCountOrigin, charCountNew, originScript, compareScriptToggle]);
+  }, [charCountOrigin, charCountNew, settings.originScript, compareScriptToggle]);
 
   // script 초기화 버튼
   const deleteAllScript = () => {
-    clearSettings();
+    settings.clearSettings();
     setCharCountOrigin(0);
     setSubjectCharCount(0);
     setEstimatedPresentTime('0분 0초');
@@ -89,17 +88,30 @@ export default function ModifyAnnounce({ userEmail }) {
     if (compareScriptToggle) {
       // 초안, 교정문 변경,세팅값 변경 있을경우 true
       setModifyBtn(
-        (originScript && newScript && initialNewScript !== newScript) ||
-          initialSubject !== subject ||
-          initialPresentPurpose !== presentPurpose ||
-          initialEndingTxt !== endingTxt ||
-          initialrepeat !== repeat,
+        (settings.originScript && settings.newScript && initialSettings.initialNewScript !== settings.newScript) ||
+          initialSettings.initialSubject !== settings.subject ||
+          initialSettings.initialPresentPurpose !== settings.presentPurpose ||
+          initialSettings.initialEndingTxt !== settings.endingTxt ||
+          initialSettings.initialrepeat !== settings.repeat,
       );
     } else {
       // 초안, 주제 있을경우 true
-      setModifyBtn(originScript && subject);
+      setModifyBtn(settings.originScript && settings.subject);
     }
-  }, [originScript, subject, newScript, initialNewScript, initialSubject, compareScriptToggle, initialPresentPurpose, presentPurpose, initialEndingTxt, endingTxt, initialrepeat, repeat]);
+  }, [
+    settings.originScript,
+    settings.subject,
+    settings.newScript,
+    settings.presentPurpose,
+    settings.endingTxt,
+    settings.repeat,
+    compareScriptToggle,
+    initialSettings.initialNewScript,
+    initialSettings.initialSubject,
+    initialSettings.initialPresentPurpose,
+    initialSettings.initialEndingTxt,
+    initialSettings.initialrepeat,
+  ]);
 
   const highlightDiffs = (oldStr, newStr) => {
     const diff = diffChars(oldStr, newStr);
@@ -132,10 +144,10 @@ export default function ModifyAnnounce({ userEmail }) {
       };
 
       // 비교값 저장
-      setInitialSubject(subject);
-      setInitialPresentPurpose(presentPurpose);
-      setInitialEndingTxt(endingTxt);
-      setInitialRepeat(repeat);
+      initialSettings.setInitialSubject(subject);
+      initialSettings.setInitialPresentPurpose(presentPurpose);
+      initialSettings.setInitialEndingTxt(endingTxt);
+      initialSettings.setInitialRepeat(repeat);
       //data
       const response = await fetchAnnounceData(data);
       const redData = response.data.replace(/data:/g, '');
@@ -191,16 +203,16 @@ export default function ModifyAnnounce({ userEmail }) {
         const updatedScript = extractedScriptText;
 
         // 2회차 새로운 교정본을 newScript로 설정 1회차는 구
-        setOriginScript(oldScript);
-        setInitialNewScript(updatedScript);
-        setNewScript(updatedScript);
+        settings.setOriginScript(oldScript);
+        settings.setInitialNewScript(updatedScript);
+        settings.setNewScript(updatedScript);
         setFinalScript(updatedScript);
         highlightDiffs(oldScript, updatedScript);
       } else {
         // 첫 번째 교정
         highlightDiffs(originScript, extractedScriptText);
-        setInitialNewScript(extractedScriptText);
-        setNewScript(extractedScriptText);
+        initialSettings.setInitialNewScript(extractedScriptText);
+        settings.setNewScript(extractedScriptText);
         setFinalScript(extractedScriptText);
       }
 
@@ -262,7 +274,7 @@ export default function ModifyAnnounce({ userEmail }) {
                       deleteAllScript();
                     }
                   }}
-                  className={getButtonClass(originScript.length > 0 || subject.length > 0)}
+                  className={getButtonClass(settings.originScript.length > 0 || settings.subject.length > 0)}
                 >
                   {ANNOUNCE_TXT.modifyBtn.reset}
                 </button>
