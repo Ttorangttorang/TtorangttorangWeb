@@ -14,24 +14,20 @@ export default function ModifyAnnounce({ userEmail }) {
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
   const { setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
-  // setting
   const settings = stores.useSettingStore();
   const initialSettings = stores.useInitialSettingStore();
-  // 초안
-  const [charCountOrigin, setCharCountOrigin] = useState(0);
+  const { charCountOrigin, setCharCountOrigin } = stores.useCharCountOriginStore();
   const [modifyBtn, setModifyBtn] = useState(false);
-  // 주제
   const { setSubjectCharCount } = stores.useSubjectCharCountStore();
   // 개선내용
   const [improvementMent, setImprovementMent] = useState('없음');
   //교정문
-  const [initialNewScript, setInitialNewScript] = useState('');
   const [charCountNew, setCharCountNew] = useState(0);
   const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
   const [highlightedText, setHighlightedText] = useState([]);
   const scriptWriteBoxRef = useRef(null);
   // 예상 발표 시간
-  const [estimatedPresentTime, setEstimatedPresentTime] = useState('0분 0초');
+  const { estimatedPresentTime, setEstimatedPresentTime } = stores.useEstimatedPresentTimeStore();
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
@@ -72,6 +68,7 @@ export default function ModifyAnnounce({ userEmail }) {
     const minutes = Math.floor(estimatedTime / 60);
     const seconds = estimatedTime % 60;
     setEstimatedPresentTime(`${minutes < 10 ? '0' + minutes : minutes}분 ${seconds < 10 ? '0' + seconds : seconds}초`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charCountOrigin, charCountNew, settings.originScript, compareScriptToggle]);
 
   // script 초기화 버튼
@@ -204,7 +201,7 @@ export default function ModifyAnnounce({ userEmail }) {
 
         // 2회차 새로운 교정본을 newScript로 설정 1회차는 구
         settings.setOriginScript(oldScript);
-        settings.setInitialNewScript(updatedScript);
+        initialSettings.setInitialNewScript(updatedScript);
         settings.setNewScript(updatedScript);
         setFinalScript(updatedScript);
         highlightDiffs(oldScript, updatedScript);

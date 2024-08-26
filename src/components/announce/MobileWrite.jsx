@@ -9,7 +9,7 @@ export default function MobileWrite({ userEmail }) {
   const scriptWriteBoxRef = useRef(null);
   const settings = stores.useSettingStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
-  const { charCountOrigin } = stores.useCharCountOriginStore();
+  const { charCountOrigin, setCharCountOrigin } = stores.useCharCountOriginStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
   const { estimatedPresentTime, setEstimatedPresentTime } = stores.useEstimatedPresentTimeStore();
   const [charCountNew, setCharCountNew] = useState(0);
@@ -45,7 +45,7 @@ export default function MobileWrite({ userEmail }) {
       draft = event.target.value.slice(0, MAX_LENGTH);
     }
     settings.setOriginScript(draft);
-    settings.setCharCountOrigin(draft.length);
+    setCharCountOrigin(draft.length);
   };
 
   // 예상 발표 시간
