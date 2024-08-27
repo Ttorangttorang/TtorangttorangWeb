@@ -11,11 +11,11 @@ import DetailSetting from './Draft/DetailSetting';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 
 export default function ModifyAnnounce({ userEmail }) {
+  const settings = stores.useSettingStore();
+  const initialSettings = stores.useInitialSettingStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
   const { setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
-  const settings = stores.useSettingStore();
-  const initialSettings = stores.useInitialSettingStore();
   const [modifyBtn, setModifyBtn] = useState(false);
   // 개선내용
   const [improvementMent, setImprovementMent] = useState('없음');

@@ -404,7 +404,7 @@ section.main_container {
       @apply h-full pt-[20px];
 
       div.step_area {
-        @apply !flex flex-col justify-between h-full px-4 pb-[5px];
+        @apply relative !flex flex-col justify-between h-full px-4 pb-[5px];
 
         /* common */
         .required {
@@ -413,10 +413,10 @@ section.main_container {
 
         /* GuideMent */
         .ment_box {
-          @apply w-full pb-4;
+          @apply w-[80%] pb-4;
 
           p {
-            @apply text-sm font-normal gray_colorTxt;
+            @apply text-sm font-normal break-keep gray_colorTxt;
 
             &:first-of-type {
               @apply text-lg font-bold;
@@ -490,10 +490,10 @@ section.main_container {
 
         /* 초안 작성 */
         .scriptWrite_box {
-          @apply w-full h-full pb-[20px];
+          @apply relative w-full h-full pb-[20px];
 
           > div:last-of-type {
-            @apply flex flex-col w-full h-[calc(100%-84px)] py-[8px] px-3 area_border;
+            @apply flex flex-col w-full h-[calc(100%-84px)] py-[8px] px-3 overflow-hidden area_border;
 
             .scriptMain_area {
               @apply flex-1 h-auto;
@@ -510,7 +510,7 @@ section.main_container {
                 @apply relative w-full h-full overflow-hidden;
               }
               textarea {
-                @apply w-full h-full text-[14px] leading-[1.6] pr-[0] pt-[0] font-medium gray_colorTxt;
+                @apply bg-red-200 w-full h-full text-[14px] leading-[1.6] pr-[0] pt-[0] font-medium gray_colorTxt;
                 &::-webkit-input-placeholder {
                   font-size: 14px;
                 }
@@ -536,7 +536,7 @@ section.main_container {
               }
 
               .newScript {
-                @apply w-full h-full pr-[14px] pt-3 overflow-y-auto;
+                @apply w-full h-full pr-[0] pt-0 overflow-y-auto bg-red-200;
 
                 span {
                   @apply text-[14px] leading-[1.6] font-medium gray_colorTxt;
@@ -600,6 +600,7 @@ section.main_container {
           }
         }
 
+        /* 이전 버튼 */
         /* 다음 슬라이드 이동하는 버튼 */
         .slideMove_btn_area {
           @apply flex gap-2 flex_center h-[45px];
@@ -608,7 +609,15 @@ section.main_container {
             @apply h-full text-sm rounded-lg flex_center;
 
             &.small_btn {
-              @apply w-[80px];
+              @apply w-[45px];
+            }
+
+            &.back_slide {
+              @apply pr-1;
+            }
+
+            &.next_step {
+              @apply flex-1 h-full;
             }
           }
         }

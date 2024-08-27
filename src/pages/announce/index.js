@@ -193,11 +193,11 @@ export default function Announce() {
               />
             </Slider>
           </div>
-          {/* loading */}
-          {scriptLoading && <Modal type="announceLoading" />}
-          {qaLoading && <Modal type="qaLoading" />}
         </>
       )}
+      {/* loading */}
+      {scriptLoading && <Modal type="announceLoading" />}
+      {qaLoading && <Modal type="qaLoading" />}
     </>
   );
 }

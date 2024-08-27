@@ -294,6 +294,111 @@ header.h_mobile {
   }
 }
 
+/* mobile modal */
+@media (max-width: 1023px) {
+  .modal_box {
+    @apply flex_center flex-col absolute_center z-[80] w-[34.5vmin] h-[23.1vmin] rounded bg-white;
+
+    > p {
+      @apply text-base font-medium text-center gray_colorTxt;
+    }
+
+    .character_box {
+      @apply flex_center bg-[#EBF2FA];
+    }
+
+    img {
+      @apply w-full h-full object-cover;
+    }
+
+    &.modal_loading {
+      @apply w-[257px] h-[172px] py-5 !bg-[#F9F9F9];
+      .character_box {
+        @apply w-[68px] h-[68px] mb-[8px];
+      }
+
+      .loader_area {
+        @apply my-[14px] w-full;
+
+        .loader {
+          @apply block relative w-[10px] h-[10px] mx-auto rounded-full bg-[#EDEDED];
+          animation: loadingAni 1s infinite linear alternate;
+        }
+      }
+    }
+
+    &.modal_select {
+      @apply w-[48.7vmin] h-[42.34vmin] py-[3.36vmin];
+
+      .character_box {
+        @apply w-[13.01vmin] h-[13.01vmin] overflow-hidden mb-[2.6vmin];
+      }
+
+      .selectMent_box {
+        p:first-of-type {
+          @apply mb-[1.3vmin] text-[2.6vmin] font-medium text-center text-[#424242];
+        }
+        p:last-of-type {
+          @apply text-[2.19vmin] font-medium text-center gray_colorTxt;
+        }
+      }
+
+      .modalBtn_area {
+        @apply flex gap-[1.41vmin] mt-[3.04vmin];
+
+        button {
+          @apply flex_center w-[15.29vmin] h-[6.5vmin];
+
+          &:first-of-type {
+            @apply active_color text-[1.95vmin];
+          }
+
+          &:last-of-type {
+            @apply area_border text-[1.95vmin];
+          }
+        }
+      }
+    }
+
+    /* &.login_box {
+    @apply w-[43.37vmin] h-[41.68vmin] p-[2.17vmin];
+
+    .modal_close {
+      @apply absolute top-[1.7vmin] right-[2.07vmin] z-10 w-[2.6vmin] h-[2.6vmin] cursor-pointer;
+    }
+
+    .character_box {
+      @apply w-[14.61vmin] h-[14.61vmin] mb-[1vmin];
+    }
+
+    .login_ment {
+      > p {
+        @apply text-[2.17vmin] font-medium text-center text-[#424242];
+      }
+    }
+
+    .modalBtn_area {
+      @apply flex flex-col w-full;
+      .kakoLogin {
+        @apply flex_center relative w-full h-[6.72vmin] my-[2.6vmin] bg-[#FEE404];
+
+        .kakoLogo {
+          @apply absolute_yHalf left-[2.07vmin] w-[2.56vmin] h-[2.56vmin];
+        }
+
+        span {
+          @apply text-[2.07vmin] font-normal text-[#000000];
+        }
+      }
+
+      .noneLogin {
+        @apply cursor-pointer text-[2.19vmin] font-medium gray_colorTxt;
+      }
+    }
+  } */
+  }
+}
+
 @keyframes loadingAni {
   0% {
     box-shadow:
