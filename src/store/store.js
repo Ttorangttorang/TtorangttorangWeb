@@ -93,23 +93,23 @@ export const useFinalScriptStore = create(
   ),
 );
 
-//// 예상 발표시간 ////
-export const useEstimatedPresentTimeStore = create((set) => ({
+//// 발표문 정보 ////
+export const useScriptInfoStore = create((set) => ({
+  // 예상 발표시간
   estimatedPresentTime: '0분 0초',
   setEstimatedPresentTime: (value) => set({ estimatedPresentTime: value }),
-}));
-
-//// 글자 수 ////
-// 초안
-export const useCharCountOriginStore = create((set) => ({
+  // 글자 수 - 초안
   charCountOrigin: 0,
   setCharCountOrigin: (value) => set({ charCountOrigin: value }),
-}));
-
-// 주제
-export const useSubjectCharCountStore = create((set) => ({
+  // 글자 수 - 주제
   subjectCharCount: 0,
   setSubjectCharCount: (value) => set({ subjectCharCount: value }),
+  resetScriptInfo: () =>
+    set({
+      estimatedPresentTime: '0분 0초',
+      charCountOrigin: 0,
+      subjectCharCount: 0,
+    }),
 }));
 
 /// ======================================================================= ///

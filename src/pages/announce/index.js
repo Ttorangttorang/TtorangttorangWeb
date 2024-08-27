@@ -17,14 +17,9 @@ export default function Announce() {
   const { nextMoveBtn } = stores.useNextMoveBtnStore();
   const { qaLoading } = stores.useQaLoadingStore();
   const { scriptLoading } = stores.useScriptLoadingStore();
-  const { clearSettings, originScript, newScript } = stores.useSettingStore();
   const { setCurrentSlide } = stores.useCurrentSlideStore();
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
-  const { setcompareScriptToggle } = stores.useCompareScriptStore();
   const { subject } = stores.useSettingStore();
-  const { setEstimatedPresentTime } = stores.useEstimatedPresentTimeStore();
-  const { setCharCountOrigin } = stores.useCharCountOriginStore();
-  const { setSubjectCharCount } = stores.useSubjectCharCountStore();
 
   function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -118,15 +113,6 @@ export default function Announce() {
     setCurrentMobileSlide(0);
   }, []);
 
-  // script 초기화 버튼
-  const deleteAllScript = () => {
-    clearSettings();
-    setCharCountOrigin(0);
-    setSubjectCharCount(0);
-    setEstimatedPresentTime('0분 0초');
-    setcompareScriptToggle(false);
-  };
-
   return (
     <>
       {isMobileDevice ? (
@@ -152,54 +138,7 @@ export default function Announce() {
                 </div>
               </div>
               <div className="step_area">
-                <MobileWrite />
-                <div className="slideMove_btn_area">
-                  <div
-                    className="active_color small_btn"
-                    onClick={() => {
-                      setCurrentMobileSlide(0);
-                      sliderMobileRef.current.slickGoTo(0);
-                    }}
-                  >
-                    이전
-                  </div>
-                  <div
-                    className={cls('small_btn', originScript.length > 0 ? 'active_color' : 'disabled_color')}
-                    onClick={() => {
-                      if (originScript.length > 0) {
-                        deleteAllScript();
-                        setCurrentMobileSlide(0);
-                        sliderMobileRef.current.slickGoTo(0);
-                      }
-                    }}
-                  >
-                    초기화
-                  </div>
-                  <div
-                    onClick={() => {
-                      if (subject.length > 0) {
-                        setCurrentMobileSlide(2);
-                        sliderMobileRef.current.slickGoTo(2);
-                      }
-                    }}
-                    className={cls('next_step', originScript.length > 0 ? 'active_color' : 'disabled_color')}
-                  >
-                    {newScript.length > 0 ? '재 교정하기' : '교정하기'}
-                  </div>
-                  {newScript.length > 0 && (
-                    <div
-                      onClick={() => {
-                        if (subject.length > 0) {
-                          setCurrentMobileSlide(2);
-                          sliderMobileRef.current.slickGoTo(2);
-                        }
-                      }}
-                      className="next_step active_color"
-                    >
-                      완성 발표문 확인하기
-                    </div>
-                  )}
-                </div>
+                <MobileWrite sliderMobileRef={sliderMobileRef} />
               </div>
               <div className="step_area">
                 <div className="slideMove_btn_area">

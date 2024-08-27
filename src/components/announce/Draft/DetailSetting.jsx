@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
-import { useSettingStore, useSubjectCharCountStore } from '@/store/store';
+import { useScriptInfoStore, useSettingStore } from '@/store/store';
 import { cls } from '@/utils/config';
 import { ANNOUNCE_TXT, GLOBAL_TXT } from '@/utils/constants';
 
 export default function DetailSetting() {
   // setting
   const settings = useSettingStore();
-  const { subjectCharCount, setSubjectCharCount } = useSubjectCharCountStore();
+  const { subjectCharCount, setSubjectCharCount } = useScriptInfoStore();
   const MAX_SUBJECT_LENGTH = 100;
 
   // 주제 작성

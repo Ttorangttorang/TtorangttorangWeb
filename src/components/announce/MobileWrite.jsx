@@ -4,16 +4,18 @@ import * as stores from '@/store/store';
 import GuideMent from './GuideMent';
 import AnnouncContent from './Draft/AnnouncContent';
 import ScriptFunc from './Draft/ScriptFunc';
+import { cls } from '@/utils/config';
 
-export default function MobileWrite({ userEmail }) {
+export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const scriptWriteBoxRef = useRef(null);
   const settings = stores.useSettingStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
-  const { charCountOrigin, setCharCountOrigin } = stores.useCharCountOriginStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { estimatedPresentTime, setEstimatedPresentTime } = stores.useEstimatedPresentTimeStore();
+  const { setcompareScriptToggle } = stores.useCompareScriptStore();
+  const { resetScriptInfo, estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
   const [charCountNew, setCharCountNew] = useState(0);
   const [highlightedText] = useState([]);
+  const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
@@ -57,33 +59,89 @@ export default function MobileWrite({ userEmail }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charCountOrigin, charCountNew, settings.originScript, compareScriptToggle]);
 
+  // script 초기화 버튼
+  const deleteAllScript = () => {
+    settings.clearSettings();
+    resetScriptInfo();
+    setcompareScriptToggle(false);
+  };
+
   return (
-    <div className="scriptWrite_box">
-      <GuideMent
-        firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.firstMent}
-        secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.secondMent}
-      />
-      <div>
-        <div className="scriptMain_area">
-          <AnnouncContent
-            scriptWriteBoxRef={scriptWriteBoxRef}
-            writeOriginScript={writeOriginScript}
-            charCountOrigin={charCountOrigin}
-            highlightedText={highlightedText}
-            charCountNew={charCountNew}
-            setCharCountNew={setCharCountNew}
-          />
-          <div className="improve_area">
-            <span>개선내용(0)</span>
+    <>
+      <div className="scriptWrite_box">
+        <GuideMent
+          firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.firstMent}
+          secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.secondMent}
+        />
+        <div>
+          <div className="scriptMain_area">
+            <AnnouncContent
+              scriptWriteBoxRef={scriptWriteBoxRef}
+              writeOriginScript={writeOriginScript}
+              charCountOrigin={charCountOrigin}
+              highlightedText={highlightedText}
+              charCountNew={charCountNew}
+              setCharCountNew={setCharCountNew}
+            />
+            <div className="improve_area">
+              <span>개선내용(0)</span>
+            </div>
+          </div>
+          <div className="contentInfo_area">
+            <p className="estimatedPresentTime">
+              {estimatedPresentTime} ({ANNOUNCE_TXT.scriptWrite.estimatedPresentTime})
+            </p>
+            <ScriptFunc />
           </div>
         </div>
-        <div className="contentInfo_area">
-          <p className="estimatedPresentTime">
-            {estimatedPresentTime} ({ANNOUNCE_TXT.scriptWrite.estimatedPresentTime})
-          </p>
-          <ScriptFunc />
-        </div>
       </div>
-    </div>
+      <div className="slideMove_btn_area">
+        <div
+          className="active_color small_btn"
+          onClick={() => {
+            setCurrentMobileSlide(0);
+            sliderMobileRef.current.slickGoTo(0);
+          }}
+        >
+          이전
+        </div>
+        <div
+          className={cls('small_btn', settings.originScript.length > 0 ? 'active_color' : 'disabled_color')}
+          onClick={() => {
+            if (settings.originScript.length > 0) {
+              deleteAllScript();
+              setCurrentMobileSlide(0);
+              sliderMobileRef.current.slickGoTo(0);
+            }
+          }}
+        >
+          초기화
+        </div>
+        <div
+          onClick={() => {
+            if (settings.subject.length > 0) {
+              setCurrentMobileSlide(2);
+              sliderMobileRef.current.slickGoTo(2);
+            }
+          }}
+          className={cls('next_step', settings.originScript.length > 0 ? 'active_color' : 'disabled_color')}
+        >
+          {settings.newScript.length > 0 ? '재 교정하기' : '교정하기'}
+        </div>
+        {settings.newScript.length > 0 && (
+          <div
+            onClick={() => {
+              if (settings.subject.length > 0) {
+                setCurrentMobileSlide(2);
+                sliderMobileRef.current.slickGoTo(2);
+              }
+            }}
+            className="next_step active_color"
+          >
+            완성 발표문 확인하기
+          </div>
+        )}
+      </div>
+    </>
   );
 }

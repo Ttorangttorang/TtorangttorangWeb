@@ -16,9 +16,7 @@ export default function ModifyAnnounce({ userEmail }) {
   const { setScriptLoading } = stores.useScriptLoadingStore();
   const settings = stores.useSettingStore();
   const initialSettings = stores.useInitialSettingStore();
-  const { charCountOrigin, setCharCountOrigin } = stores.useCharCountOriginStore();
   const [modifyBtn, setModifyBtn] = useState(false);
-  const { setSubjectCharCount } = stores.useSubjectCharCountStore();
   // 개선내용
   const [improvementMent, setImprovementMent] = useState('없음');
   //교정문
@@ -27,8 +25,7 @@ export default function ModifyAnnounce({ userEmail }) {
   const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
   const [highlightedText, setHighlightedText] = useState([]);
   const scriptWriteBoxRef = useRef(null);
-  // 예상 발표 시간
-  const { estimatedPresentTime, setEstimatedPresentTime } = stores.useEstimatedPresentTimeStore();
+  const { resetScriptInfo, estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
@@ -75,10 +72,9 @@ export default function ModifyAnnounce({ userEmail }) {
   // script 초기화 버튼
   const deleteAllScript = () => {
     settings.clearSettings();
-    setCharCountOrigin(0);
-    setSubjectCharCount(0);
-    setEstimatedPresentTime('0분 0초');
     setcompareScriptToggle(false);
+    setNextMoveBtn(false);
+    resetScriptInfo();
   };
 
   // 교정하기 버튼 활성화
