@@ -174,3 +174,62 @@
     }
   }
 }
+
+/* 완성 발표문 mobile */
+@media (max-width: 1023px) {
+  .userModify_box {
+    @apply relative w-full h-[calc(100%-45px)] pb-[20px];
+
+    .scriptFinal_area {
+      @apply w-full h-[calc(100%-84px)] area_border py-[8px] px-3;
+
+      > p.title {
+        @apply mb-2 text-[14px] font-medium gray_colorTxt;
+      }
+
+      > .scriptTxt {
+        @apply relative h-[calc(100%-69px)] pb-0 pl-0 border-0;
+
+        textarea {
+          @apply w-full h-full text-[14px] leading-[1.8]  pr-[0] pt-[0];
+          &::-webkit-input-placeholder {
+            font-size: 14px;
+          }
+          &::-webkit-textarea {
+            font-size: 14px;
+          }
+
+          /* scrollbar */
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+        }
+
+        /* 글자수 */
+        > p.charCount {
+          @apply absolute right-[-4px] top-[-28px] flex justify-end text-[12px] pr-3 font-medium gray_colorTxt;
+        }
+      }
+
+      /* 복사하기 */
+      .contentInfo_area {
+        @apply flex_vertical_center justify-end w-full pt-3 pb-2 border-t border-[#C4C4C4] mt-[0];
+
+        > div {
+          @apply gap-0 cursor-pointer flex_vertical_center;
+          .icon {
+            @apply w-3 h-3;
+
+            img {
+              @apply object-cover w-full h-full;
+            }
+          }
+
+          p {
+            @apply text-[12px] font-medium gray_colorTxt;
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,8 @@ import { cls } from '@/utils/config';
 import { useEffect, useRef } from 'react';
 import MobileSetting from '@/components/announce/MobileSetting';
 import MobileWrite from '@/components/announce/MobileWrite';
+import BackSlideBtn from '@/components/layout/BackSlideBtn';
+import MobileFinalAnnounce from '@/components/announce/MobileFinalAnnounce';
 
 export default function Announce() {
   const { isMobileDevice } = stores.useIsMobileStore();
@@ -143,16 +145,12 @@ export default function Announce() {
                   <MobileWrite sliderMobileRef={sliderMobileRef} />
                 </div>
                 <div className="step_area">
+                  <MobileFinalAnnounce />
                   <div className="slideMove_btn_area">
-                    <div
-                      className="active_color small_btn"
-                      onClick={() => {
-                        setCurrentMobileSlide(1);
-                        sliderMobileRef.current.slickGoTo(1);
-                      }}
-                    >
-                      이전
-                    </div>
+                    <BackSlideBtn
+                      backSlideNum={1}
+                      sliderMobileRef={sliderMobileRef}
+                    />
                     <div
                       onClick={() => {
                         if (subject.length > 0) {
@@ -168,15 +166,10 @@ export default function Announce() {
                 </div>
                 <div className="step_area">
                   <div className="slideMove_btn_area">
-                    <div
-                      className="active_color small_btn"
-                      onClick={() => {
-                        setCurrentMobileSlide(2);
-                        sliderMobileRef.current.slickGoTo(2);
-                      }}
-                    >
-                      이전
-                    </div>
+                    <BackSlideBtn
+                      backSlideNum={2}
+                      sliderMobileRef={sliderMobileRef}
+                    />
                     <div className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}>저장하기</div>
                   </div>
                 </div>

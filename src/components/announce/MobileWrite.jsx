@@ -10,6 +10,7 @@ import { fetchAnnounceData } from '@/api/fetchData';
 import { PiArrowClockwiseBold } from 'react-icons/pi';
 import { IoIosArrowBack } from 'react-icons/io';
 import Modal from '../layout/Modal';
+import BackSlideBtn from '../layout/BackSlideBtn';
 
 export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const scriptWriteBoxRef = useRef(null);
@@ -213,15 +214,10 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
         </div>
       </div>
       <div className="slideMove_btn_area">
-        <div
-          className="active_color small_btn back_slide"
-          onClick={() => {
-            setCurrentMobileSlide(0);
-            sliderMobileRef.current.slickGoTo(0);
-          }}
-        >
-          <IoIosArrowBack fontSize={20} />
-        </div>
+        <BackSlideBtn
+          backSlideNum={0}
+          sliderMobileRef={sliderMobileRef}
+        />
         {/* 초기화 */}
         <div
           className={cls('small_btn', settings.originScript.length > 0 ? 'active_color' : 'disabled_color')}
@@ -245,7 +241,18 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
         >
           {settings.newScript.length > 0 ? '재 교정하기' : '교정하기'}
         </div>
-        {settings.newScript.length > 0 && (
+        {
+          <div
+            onClick={() => {
+              setCurrentMobileSlide(2);
+              sliderMobileRef.current.slickGoTo(2);
+            }}
+            className="next_step active_color"
+          >
+            완성발표문 확인
+          </div>
+        }
+        {/* {settings.newScript.length > 0 && (
           <div
             onClick={() => {
               if (settings.subject.length > 0) {
@@ -257,7 +264,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
           >
             완성발표문 확인
           </div>
-        )}
+        )} */}
       </div>
     </>
   );
