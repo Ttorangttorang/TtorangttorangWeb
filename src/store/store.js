@@ -71,6 +71,14 @@ export const useCompareScriptStore = create((set) => ({
   setcompareScriptToggle: (value) => set({ compareScriptToggle: value }),
 }));
 
+// 개선내용 //
+export const useImprovementStore = create((set) => ({
+  improvementMent: [],
+  setImprovementMent: (value) => set({ improvementMent: value }),
+  improveModal: false,
+  setImproveModal: (value) => set({ improveModal: value }),
+}));
+
 // pc 2step 이동 //
 export const useNextMoveBtnStore = create((set) => ({
   nextMoveBtn: false,

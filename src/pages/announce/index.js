@@ -20,6 +20,7 @@ export default function Announce() {
   const { setCurrentSlide } = stores.useCurrentSlideStore();
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
   const { subject } = stores.useSettingStore();
+  const { improvementMent, improveModal, setImproveModal } = stores.useImprovementStore();
 
   function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -116,71 +117,81 @@ export default function Announce() {
   return (
     <>
       {isMobileDevice ? (
-        <div className="slider-container announce_mobile">
-          <ProgressBar />
-          <form>
-            <Slider
-              ref={sliderMobileRef}
-              {...settingsMobile}
-            >
-              <div className="step_area">
-                <MobileSetting />
-                <div
-                  onClick={() => {
-                    if (subject.length > 0) {
-                      setCurrentMobileSlide(1);
-                      sliderMobileRef.current.slickGoTo(1);
-                    }
-                  }}
-                  className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
-                >
-                  발표문 초안 작성하기
-                </div>
-              </div>
-              <div className="step_area">
-                <MobileWrite sliderMobileRef={sliderMobileRef} />
-              </div>
-              <div className="step_area">
-                <div className="slideMove_btn_area">
-                  <div
-                    className="active_color small_btn"
-                    onClick={() => {
-                      setCurrentMobileSlide(1);
-                      sliderMobileRef.current.slickGoTo(1);
-                    }}
-                  >
-                    이전
-                  </div>
+        <>
+          <div className="slider-container announce_mobile">
+            <ProgressBar />
+            <form>
+              <Slider
+                ref={sliderMobileRef}
+                {...settingsMobile}
+              >
+                <div className="step_area">
+                  <MobileSetting />
                   <div
                     onClick={() => {
                       if (subject.length > 0) {
-                        setCurrentMobileSlide(3);
-                        sliderMobileRef.current.slickGoTo(3);
+                        setCurrentMobileSlide(1);
+                        sliderMobileRef.current.slickGoTo(1);
                       }
                     }}
                     className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
                   >
-                    예상 질문 받기
+                    발표문 초안 작성하기
                   </div>
                 </div>
-              </div>
-              <div className="step_area">
-                <div className="slideMove_btn_area">
-                  <div
-                    className="active_color small_btn"
-                    onClick={() => {
-                      setCurrentMobileSlide(2);
-                      sliderMobileRef.current.slickGoTo(2);
-                    }}
-                  >
-                    이전
-                  </div>
-                  <div className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}>저장하기</div>
+                <div className="step_area">
+                  <MobileWrite sliderMobileRef={sliderMobileRef} />
                 </div>
-              </div>
-            </Slider>
-          </form>
-        </div>
+                <div className="step_area">
+                  <div className="slideMove_btn_area">
+                    <div
+                      className="active_color small_btn"
+                      onClick={() => {
+                        setCurrentMobileSlide(1);
+                        sliderMobileRef.current.slickGoTo(1);
+                      }}
+                    >
+                      이전
+                    </div>
+                    <div
+                      onClick={() => {
+                        if (subject.length > 0) {
+                          setCurrentMobileSlide(3);
+                          sliderMobileRef.current.slickGoTo(3);
+                        }
+                      }}
+                      className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}
+                    >
+                      예상 질문 받기
+                    </div>
+                  </div>
+                </div>
+                <div className="step_area">
+                  <div className="slideMove_btn_area">
+                    <div
+                      className="active_color small_btn"
+                      onClick={() => {
+                        setCurrentMobileSlide(2);
+                        sliderMobileRef.current.slickGoTo(2);
+                      }}
+                    >
+                      이전
+                    </div>
+                    <div className={cls('next_step', subject.length > 0 ? 'active_color' : 'disabled_color')}>저장하기</div>
+                  </div>
+                </div>
+              </Slider>
+            </form>
+          </div>
+          {/* 개선내용 모달 */}
+          {improveModal && (
+            <Modal
+              type={'improvementMent'}
+              improvementMent={improvementMent}
+              onClose={() => setImproveModal(false)}
+            />
+          )}
+        </>
       ) : (
         <>
           <div className="slider-container">

@@ -328,18 +328,33 @@ header.h_mobile {
     }
 
     &.modal_select {
-      @apply w-[48.7vmin] h-[42.34vmin] py-[3.36vmin];
+      @apply w-[263px] h-auto min-h-[215px] py-[25px] px-4;
+
+      .modal_close {
+        @apply absolute top-[10px] right-[10px] z-10 w-[20px] h-[20px] cursor-pointer;
+      }
 
       .character_box {
-        @apply w-[13.01vmin] h-[13.01vmin] overflow-hidden mb-[2.6vmin];
+        @apply w-[68px] h-[68px] mb-[8px] overflow-hidden;
       }
 
       .selectMent_box {
-        p:first-of-type {
-          @apply mb-[1.3vmin] text-[2.6vmin] font-medium text-center text-[#424242];
+        p.title {
+          @apply mb-[9px] text-base font-medium text-center text-[#424242];
         }
-        p:last-of-type {
-          @apply text-[2.19vmin] font-medium text-center gray_colorTxt;
+        p.description {
+          @apply text-sm font-medium text-center gray_colorTxt;
+        }
+
+        ul.improveList {
+          @apply flex flex-col gap-1 text-xs pt-3 border-t border-[#757575]/50;
+          li {
+            @apply flex_vertical_center gap-1;
+
+            span {
+              @apply break-keep;
+            }
+          }
         }
       }
 

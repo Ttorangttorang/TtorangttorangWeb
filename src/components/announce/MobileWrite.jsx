@@ -9,6 +9,7 @@ import { diffChars } from 'diff';
 import { fetchAnnounceData } from '@/api/fetchData';
 import { PiArrowClockwiseBold } from 'react-icons/pi';
 import { IoIosArrowBack } from 'react-icons/io';
+import Modal from '../layout/Modal';
 
 export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const scriptWriteBoxRef = useRef(null);
@@ -16,7 +17,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const initialSettings = stores.useInitialSettingStore();
   const { setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
-  const [improvementMent, setImprovementMent] = useState('없음');
+  const { improvementMent, setImprovementMent, setImproveModal } = stores.useImprovementStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
   const { setcompareScriptToggle } = stores.useCompareScriptStore();
   const { resetScriptInfo, estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
@@ -149,7 +150,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
           .map((item) => item.replace(/[-:*]/g, '').trim()); // 각 줄에서 불필요한 문자 제거
 
         const firstImprovement = improvementPairs.filter((text) => text.length !== 0);
-        setImprovementMent(firstImprovement[0]);
+        setImprovementMent(firstImprovement);
       } else {
         setImprovementMent('발표 흐름 매끄럽게 이어지도록 구성 변경'); // 개선 내용이 없는 경우에는 빈 문자열로 설정
       }
@@ -200,7 +201,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
               setCharCountNew={setCharCountNew}
             />
             <div className="improve_area">
-              <span>개선내용(0)</span>
+              <span onClick={() => setImproveModal(true)}>개선내용({improvementMent.length || 0})</span>
             </div>
           </div>
           <div className="contentInfo_area">
@@ -211,7 +212,6 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
           </div>
         </div>
       </div>
-
       <div className="slideMove_btn_area">
         <div
           className="active_color small_btn back_slide"

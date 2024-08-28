@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
 import { cls } from '@/utils/config';
+import { BsCheck } from 'react-icons/bs';
 
 const modalContentConfig = {
   login: {
@@ -31,9 +32,14 @@ const modalContentConfig = {
     image: LocalImages.ImageModalScriptIcon,
     title: '예상 질문을 받아오고 있어요',
   },
+  improvementMent: {
+    closeImage: LocalImages.ImageModalClose,
+    title: '개선 내용을 확인하세요',
+    image: LocalImages.ImageModalScriptIcon,
+  },
 };
 
-export default function Modal({ type, onClose, onConfirm, onLogin, movePage }) {
+export default function Modal({ type, onClose, onConfirm, onLogin, movePage, improvementMent }) {
   const content = modalContentConfig[type];
 
   const renderLoginModal = () => (
@@ -92,6 +98,19 @@ export default function Modal({ type, onClose, onConfirm, onLogin, movePage }) {
 
   const renderDefaultModal = () => (
     <div className="modal_box modal_select">
+      {type === 'improvementMent' && (
+        <div
+          className="modal_close"
+          onClick={onClose}
+        >
+          <Image
+            src={content.closeImage}
+            alt="ImageModalClose"
+            width={24}
+            height={24}
+          />
+        </div>
+      )}
       <div className="character_box">
         <Image
           src={content.image}
@@ -101,23 +120,40 @@ export default function Modal({ type, onClose, onConfirm, onLogin, movePage }) {
         />
       </div>
       <div className="selectMent_box">
-        <p>{content.title}</p>
-        <p>{content.description}</p>
+        <p className="title">{content.title}</p>
+        {content.description && <p className="description">{content.description}</p>}
+        {type === 'improvementMent' && (
+          <ul className="improveList">
+            {improvementMent.map((improve, index) => (
+              <li key={index}>
+                <span className="mt-[1px]">
+                  <BsCheck
+                    fontSize={18}
+                    color="#509BF8"
+                  />
+                </span>
+                <span>{improve}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-      <div className="modalBtn_area">
-        <button
-          type="button"
-          onClick={onClose}
-        >
-          아니요
-        </button>
-        <button
-          type="button"
-          onClick={onConfirm}
-        >
-          {content.confirmText}
-        </button>
-      </div>
+      {content.confirmText && (
+        <div className="modalBtn_area">
+          <button
+            type="button"
+            onClick={onClose}
+          >
+            아니요
+          </button>
+          <button
+            type="button"
+            onClick={onConfirm}
+          >
+            {content.confirmText}
+          </button>
+        </div>
+      )}
     </div>
   );
 
@@ -145,7 +181,7 @@ export default function Modal({ type, onClose, onConfirm, onLogin, movePage }) {
         onClick={onClose}
       />
       {type === 'login' && renderLoginModal()}
-      {(type === 'delete' || type === 'withdrawal') && renderDefaultModal()}
+      {(type === 'delete' || type === 'withdrawal' || type === 'improvementMent') && renderDefaultModal()}
       {(type === 'announceLoading' || type === 'qaLoading') && renderLoading()}
     </>
   );

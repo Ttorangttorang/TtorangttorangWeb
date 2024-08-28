@@ -490,13 +490,13 @@ section.main_container {
 
         /* 초안 작성 */
         .scriptWrite_box {
-          @apply relative w-full h-full pb-[20px];
+          @apply relative w-full h-[calc(100%-45px)] pb-[20px];
 
           > div:last-of-type {
             @apply flex flex-col w-full h-[calc(100%-84px)] py-[8px] px-3 overflow-hidden area_border;
 
             .scriptMain_area {
-              @apply flex-1 h-auto;
+              @apply h-[calc(100%-38px)] overflow-hidden;
             }
 
             p.title {
@@ -510,7 +510,7 @@ section.main_container {
                 @apply relative w-full h-full overflow-hidden;
               }
               textarea {
-                @apply bg-red-200 w-full h-full text-[14px] leading-[1.6] pr-[0] pt-[0] font-medium gray_colorTxt;
+                @apply w-full h-full text-[14px] leading-[1.8] pr-[0] pt-[0] font-medium gray_colorTxt;
                 &::-webkit-input-placeholder {
                   font-size: 14px;
                 }
@@ -536,7 +536,7 @@ section.main_container {
               }
 
               .newScript {
-                @apply w-full h-full pr-[0] pt-0 overflow-y-auto bg-red-200;
+                @apply w-full h-full pr-[0] pt-0 overflow-y-auto;
 
                 span {
                   @apply text-[14px] leading-[1.6] font-medium gray_colorTxt;
@@ -566,7 +566,7 @@ section.main_container {
               @apply h-[31px] flex_vertical_center;
 
               span {
-                @apply text-sm;
+                @apply flex_center h-full pr-2 text-sm;
               }
             }
 
@@ -575,7 +575,7 @@ section.main_container {
               @apply flex_xBetween w-full pt-3 pb-2 border-t border-[#C4C4C4] mt-[0];
 
               .script_fun {
-                @apply w-1/2 flex_vertical_center justify-end gap-3 h-full mb-[0];
+                @apply w-1/2 flex_vertical_center justify-end gap-2 h-full mb-[0];
 
                 > div {
                   @apply gap-3 cursor-pointer flex_vertical_center;
@@ -590,6 +590,10 @@ section.main_container {
                   p {
                     @apply text-[12px] font-medium gray_colorTxt;
                   }
+                }
+
+                > div.compare_box {
+                  @apply gap-1;
                 }
               }
 
