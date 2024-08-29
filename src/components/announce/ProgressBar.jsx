@@ -8,9 +8,9 @@ const PROGRESS_BAR_WIDTH = {
 };
 
 const PROGRESS_BAR_WIDTH_MOBILE = {
-  stepOne: 'w-[21%]',
-  stepTwo: 'w-[51%]',
-  stepThree: 'w-[71%]',
+  stepOne: 'w-[24%]',
+  stepTwo: 'w-[48%]',
+  stepThree: 'w-[73%]',
   stepFour: 'w-[100%]',
 };
 

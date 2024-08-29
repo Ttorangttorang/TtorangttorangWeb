@@ -346,13 +346,13 @@ section.main_container {
         @apply absolute_yHalf;
 
         &.step0 {
-          @apply left-[20%];
+          @apply left-[23%];
         }
         &.step1 {
-          @apply left-[50%];
+          @apply left-[47%];
         }
         &.step2 {
-          @apply left-[70%];
+          @apply left-[72%];
         }
         &.step3 {
           @apply left-[calc(100%-12px)];
