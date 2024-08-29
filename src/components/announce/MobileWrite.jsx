@@ -178,6 +178,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
       setCharCountNew(extractedScriptText.length);
       setcompareScriptToggle(true);
       setScriptLoading(false);
+      setImproveModal(false);
     } catch (error) {
       console.error('Error fetching modified script:', error);
       setScriptLoading(false);

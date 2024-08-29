@@ -203,6 +203,14 @@
           &::-webkit-scrollbar {
             width: 4px;
           }
+
+          &::-webkit-scrollbar-thumb {
+            background: #509bf8;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: #ededed;
+          }
         }
 
         /* 글자수 */
@@ -228,6 +236,90 @@
           p {
             @apply text-[12px] font-medium gray_colorTxt;
           }
+        }
+      }
+    }
+  }
+}
+
+/* 예상질문 답변 mobile */
+@media (max-width: 1023px) {
+  .qa_box {
+    @apply w-full h-[calc(100%-45px)] mx-0 my-auto pb-[20px];
+
+    > div:last-of-type {
+      @apply w-full h-[calc(100%-84px)];
+
+      .qa_area {
+        @apply w-full h-full border-t border-b border-[#509BF8];
+
+        .none_qa {
+          @apply hidden;
+        }
+
+        ul {
+          @apply w-full h-full overflow-y-auto;
+
+          /* scrollbar */
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          li {
+            @apply border-b;
+
+            &:first-of-type {
+              @apply border-none;
+            }
+
+            .question_area {
+              @apply w-full min-h-[100px] flex-1 pr-3 flex_xBetween;
+
+              > p:first-of-type {
+                @apply text-base font-bold text-[#424242];
+              }
+
+              > p.question {
+                @apply w-[78%] text-left break-words text-sm gray_colorTxt leading-[1.4];
+              }
+
+              .list_arrow {
+                @apply w-[14px] h-[14px];
+
+                img {
+                  @apply object-cover w-full h-full;
+                }
+              }
+            }
+
+            .answer_area {
+              @apply flex items-start justify-between pr-3 invisible w-full overflow-hidden transition-all duration-300 max-h-0;
+
+              &.on {
+                @apply visible max-h-[120px] mt-[10px] pb-[20px];
+              }
+
+              > p:first-of-type {
+                @apply text-sm font-bold text-[#424242];
+              }
+
+              > p.answer {
+                @apply w-[78%] break-words text-sm gray_colorTxt font-medium leading-[1.6];
+              }
+
+              .list_arrow {
+                @apply w-[14px] h-[14px] opacity-0;
+              }
+            }
+          }
+        }
+      }
+
+      .finalBtn_box {
+        @apply flex_xBetween gap-[2.17vmin] w-full h-[6.5vmin] mt-[3.04vmin];
+
+        button {
+          @apply flex_center flex-1 h-full area_border text-[1.73vmin] font-medium rounded;
         }
       }
     }

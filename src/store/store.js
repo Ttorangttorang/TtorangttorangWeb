@@ -120,6 +120,12 @@ export const useScriptInfoStore = create((set) => ({
     }),
 }));
 
+//// 예상질문 및 답변 ////
+export const useAskListStateStore = create((set) => ({
+  askListState: [false, false, false, false],
+  setAskListState: (value) => set({ askListState: value }),
+}));
+
 /// ======================================================================= ///
 
 //// Loading ////

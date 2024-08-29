@@ -2,6 +2,7 @@ import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import { cls } from '@/utils/config';
+import { useIsMobileStore } from '@/store/store';
 
 const ARROW_SIZE = 24;
 
@@ -17,13 +18,15 @@ function ArrowIcon() {
 }
 
 function QuestionArea({ announcePage, question, isActive }) {
+  const { isMobileDevice } = useIsMobileStore();
   // 조건별 css
-  const questionClass = cls('question_area', announcePage ? 'min-h-[12.8vmin]' : 'min-h-[13.7vmin]');
+  const questionPcClass = cls('question_area', announcePage ? 'min-h-[12.8vmin]' : 'min-h-[13.7vmin]');
+  const questionMobileClass = cls('question_area');
   const fontClass = cls('question', isActive ? 'font-bold' : 'font-medium');
   const arrowClass = cls('list_arrow', isActive ? 'scale-y-[-1]' : 'scale-y-[1]');
 
   return (
-    <div className={questionClass}>
+    <div className={isMobileDevice ? questionMobileClass : questionPcClass}>
       <p>{ANNOUNCE_TXT.scriptFinal.question}</p>
       <p className={fontClass}>{question}</p>
       <div className={arrowClass}>

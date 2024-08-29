@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { useFinalScriptStore, useSettingStore, useQaLoadingStore } from '@/store/store';
+import { useFinalScriptStore, useSettingStore, useQaLoadingStore, useAskListStateStore } from '@/store/store';
 import { cls } from '@/utils/config';
 import { fetchModifyScript, fetchQnAData, fetchSaveScript, getDetailScript } from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { ANNOUNCE_TXT, MYPAGE_TXT } from '@/utils/constants';
 import GuideMent from './GuideMent';
-import DisplayQnA from './ExpectedQnA/DisplayQnA';
-import NoneQnA from './ExpectedQnA/NoneQnA';
-import BtnsQnA from './ExpectedQnA/BtnsQnA';
 import FinalAnnounce from './ExpectedQnA/FinalAnnounce';
+import QnABox from './ExpectedQnA/QnABox';
 
 export default function SaveAnnounce({ userEmail, userAccessToken }) {
   const pathname = usePathname();
@@ -18,8 +16,7 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
   const [announcePage, setAnnouncePage] = useState(true);
   const { finalScript, setFinalScript, qaArray, setQaArray } = useFinalScriptStore();
   const [charCountFinal, setCharCountFinal] = useState(0);
-  const [askListState, setAskListState] = useState([false, false, false, false]);
-  // 로딩
+  const { setAskListState } = useAskListStateStore();
   const { setQaLoading } = useQaLoadingStore();
   // 저장한 발표문
   const [modifySaveAnnounce, setModifySaveAnnounce] = useState(false);
@@ -69,17 +66,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
       setSaveAnnounceCharCount(draft.length);
     }
   };
-
-  // 클릭 시 질문 펼침/접기 처리
-  const toggleQAItem = (index) => {
-    setAskListState((prevState) => prevState.map((item, i) => (i === index ? !item : item)));
-  };
-
-  // 질문 펼침 초기화
-  useEffect(() => {
-    setAskListState([false, false, false, false]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     setCharCountFinal(finalScript.length);
@@ -235,7 +221,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
   const containerClass = cls('main_container', announcePage ? '' : 'myAnnounce_detail_container');
   const announceFormClass = cls(announcePage ? 'pt-[3.36vmin]' : 'pt-0');
   const myAnnounceClass = cls('scriptSave_btn', modifySaveAnnounce ? 'active_color' : 'gray_colorTxt area_border', announcePage ? 'mt-[3.04vmin]' : 'mt-[2.28vmin]');
-  const qnaAreaClass = cls('qa_area', announcePage ? 'h-[52vmin]' : 'h-[55.55vmin]');
 
   // 마이페이지 발표문 수정 여부 버튼 텍스트 변경
   const changeAnnounceBtnTxt = modifySaveAnnounce ? MYPAGE_TXT.detailMyScript.saveBtn : MYPAGE_TXT.detailMyScript.modifyBtn;
@@ -296,42 +281,13 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
             )}
           </div>
           {/* 예상 질문 답변 영역 */}
-          <div className="qa_box">
-            <GuideMent
-              firstMent={ANNOUNCE_TXT.GuideTxt.twoStep.right.firstMent}
-              secondMent={ANNOUNCE_TXT.GuideTxt.twoStep.right.secondMent}
-              saveMentStyle={announcePage ? '' : 'saveMentStyle'}
-            />
-            <div>
-              <div className={qnaAreaClass}>
-                {qaArray?.length === 0 && announcePage ? (
-                  <NoneQnA />
-                ) : (
-                  <ul>
-                    {qaItems?.map((item, index) => (
-                      <li
-                        key={index}
-                        onClick={() => toggleQAItem(index)}
-                      >
-                        <DisplayQnA
-                          announcePage={announcePage}
-                          item={item}
-                          index={index}
-                          askListState={askListState}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <BtnsQnA
-                announcePage={announcePage}
-                getQAList={getQAList}
-                userEmail={userEmail}
-                saveScriptToAccount={saveScriptToAccount}
-              />
-            </div>
-          </div>
+          <QnABox
+            userEmail={userEmail}
+            userAccessToken={userAccessToken}
+            announcePage={announcePage}
+            qaItems={qaItems}
+            getQAList={getQAList}
+          />
         </form>
       </section>
     </section>
