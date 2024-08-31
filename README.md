@@ -21,8 +21,9 @@
 **팀구성** - FE 1명, BE 1명, 디자이너 1명, 기획자 2명
 
 - [또랑또랑](https://www.ttorang.site/)
-- [고도화 서비스 소개서](https://drive.google.com/file/d/1KZk_mwY65ydV1TKN7F1UNat-uy_lvvfm/view)
 - [서비스 소개서](https://drive.google.com/file/d/1rtE8eVL8l9gB7KzA06shHdTQpuRtSsv6/view)
+- [고도화 서비스 소개서](https://drive.google.com/file/d/1KZk_mwY65ydV1TKN7F1UNat-uy_lvvfm/view)
+- [네이버클라우드공식블로그(고도화트랙 결선발표)](https://blog.naver.com/n_cloudplatform/223558202721)
 
 <!-- Screenshots -->
 
