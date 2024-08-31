@@ -5,7 +5,7 @@
 ## :notebook_with_decorative_cover: 목차
 
 - [About the Project](#star2-about-the-project)
-- [Tech Stack](#space_invader-tech-stack)
+- [Tech Stack & Architecture](#space_invader-tech-stack-&-Architecture)
 - [또랑또랑 특징](#dart-또랑또랑-특징)
 - [트러블 슈팅](#boom-트러블-슈팅)
 - [주요 색상](#art-주요-색상)
@@ -36,7 +36,15 @@
 
 <!-- TechStack -->
 
-## :space_invader: Tech Stack
+## :space_invader: Tech Stack & Architecture
+
+### ⚙️ Service Architecture
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/b2687677-351f-46c0-8940-c5ddec54de6d"  width="488" height="200">
+</p>
+
+### 🔨 Tech Stack
 
 - **Frontend** : Javsscript, Next.js, React.js, axios, TanStack Query, zustand, TailwindCSS
 - **Backend** : SpringBoot 3.2, MySQL 8.0, Docker, Github Actions, Ncloud Server, Clova Studio
@@ -76,7 +84,7 @@
 
 - 이 문제를 해결하기 위해 백엔드에서 비동기 방식인 Flux를 도입하여 처리했습니다. 이를 통해 적은 리소스로 더 많은 요청을 효율적으로 처리할 수 있게 되었고, 프론트엔드에서는 text/event-stream 형식의 데이터를 받아 화면 구성에 맞게 파싱하여 사용자가 교정본과 예상 질문 및 답변을 확인할 수 있도록 했습니다. 이러한 방식을 적용한 결과, 사용자 요청이 길어지더라도 timeout 에러가 발생하지 않게 되었습니다.
 
----
+<hr style="border: none; border-bottom: 1px solid #ccc;">
 
 ### 2. 서비스 안정화
 
