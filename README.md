@@ -7,6 +7,7 @@
 - [About the Project](#star2-about-the-project)
 - [Tech Stack](#space_invader-tech-stack)
 - [또랑또랑 특징](#dart-또랑또랑-특징)
+- [트러블 슈팅](#boom-트러블-슈팅)
 - [주요 색상](#art-주요-색상)
 - [페이지별 기능](#hammer_and_wrench-페이지별-기능)
 
@@ -52,6 +53,47 @@
 - **카카오 로그인** : 카카오 OAuth2.0을 사용하여 인가 코드를 받아오고, 이를 통해 서버와 통신하여 DB에 유저 정보를 저장합니다. 또한, Zustand를 사용하여 로컬 스토리지에 토큰과 유저 정보를 저장해 로그인 유지 기능을 구현했습니다.
 - **하이라이팅 기능** : diff 라이브러리를 활용하여 초안과 교정본을 비교해 차이점을 하이라이팅 처리했습니다.
 - **복사하기 기능** : clipboard 라이브러리를 활용해 초안, 교정문, 완성된 발표문을 복사할 수 있는 기능을 구현했습니다.
+
+<!-- 트러블 슈팅 -->
+
+## :boom: 트러블 슈팅
+
+### **HyperCLOVA X 적용**
+
+### 1. timeout 에러
+
+❗️배경
+
+- 서비스 특성상 사용자 요청이 2~3천 자 이상이면 요청시간이 너무 길어져 **Caused by: io.netty.handler.timeout.ReadTimeoutException: null** 에러가 발생했습니다. 동기식 처리 방식으로 인해 모든 응답이 완료될때까지 시간이 너무 길어져 에러가 발생하고 있다고 판단했습니다.
+
+<br>
+
+🎉해결
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/a63e662b-ee85-4784-b837-675e1228fe38"  width="60%" height="120">
+</p>
+
+- 이 문제를 해결하기 위해 백엔드에서 비동기 방식인 Flux를 도입하여 처리했습니다. 이를 통해 적은 리소스로 더 많은 요청을 효율적으로 처리할 수 있게 되었고, 프론트엔드에서는 text/event-stream 형식의 데이터를 받아 화면 구성에 맞게 파싱하여 사용자가 교정본과 예상 질문 및 답변을 확인할 수 있도록 했습니다. 이러한 방식을 적용한 결과, 사용자 요청이 길어지더라도 timeout 에러가 발생하지 않게 되었습니다.
+
+---
+
+### 2. 서비스 안정화
+
+❗️배경
+
+- 초기 서비스 단계에서는 "교정하기" 버튼을 클릭하면 교정문, 개선사항, 예상 질문 및 답변을 한 번에 도출하는 프로세스로 구성되었습니다. 그러나 다량의 텍스트가 입력 및 출력될 때 응답 시간이 길어지는 문제가 발생했고, 동시에 3개 이상의 요청을 처리할 경우 일정한 패턴으로 결과를 얻지 못하는 문제가 있었습니다.
+
+<br>
+
+🎉해결
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0a47e335-51d0-4682-b4d0-44aeab1eb6bf" alt="process"  width="55%"  height="100" style="margin-right: 10px;">
+  <img src="https://github.com/user-attachments/assets/ac9b2298-fa0a-4261-a780-ad34c5573f32" alt="speed"   width="35%"  height="100">
+</p>
+
+- 서비스 고도화 과정에서 팀원들과 논의하여, 추가 기능보다는 서비스 안정화와 사용자 편의성 확보에 중점을 두기로 했습니다. 이에 따라 발표문 교정과 예상 질문 도출 API를 분리하여 2단계로 UI를 개편하고, 답변의 정확도를 높이며 응답 시간을 단축할 수 있었습니다.
 
 <!-- Color Reference -->
 
