@@ -5,7 +5,7 @@
 ## :notebook_with_decorative_cover: 목차
 
 - [About the Project](#star2-about-the-project)
-- [Tech Stack & Architecture](#tech-stack--architecture)
+- [Tech Stack & Architecture](#space_invader-tech-stack--architecture)
 - [또랑또랑 특징](#dart-또랑또랑-특징)
 - [트러블 슈팅](#boom-트러블-슈팅)
 - [주요 색상](#art-주요-색상)
