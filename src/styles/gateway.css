@@ -9,8 +9,12 @@
   .inner {
     @apply relative flex_center w-full h-screen py-[5.64vmin];
 
+    > div {
+      @apply relative;
+    }
+
     > div:last-of-type {
-      @apply flex_center content_w_size h-full overflow-hidden mx-auto;
+      @apply flex_center content_w_size h-full mx-auto;
 
       &.gate_main {
         @apply pt-[7.3vmin] pb-[5.23vmin];
@@ -64,6 +68,13 @@
             @apply absolute right-[-3.41vmin] w-[38vmax] h-full scale-[1.1];
           }
         }
+      }
+    }
+
+    .answerImg_area {
+      @apply absolute top-[6vmin] -left-[3.8vmin] z-20 w-[78.09vmin] h-[15.94vmin];
+      img {
+        @apply w-full object-cover;
       }
     }
   }

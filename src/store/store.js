@@ -1,13 +1,27 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// 교정하기 현재 페이지
+// 모바일디바이스 여부
+export const useIsMobileStore = create((set) => ({
+  isMobileDevice: false,
+  setIsMobileDevice: (value) => set({ isMobileDevice: value }),
+}));
+
+//// 교정하기 현재 페이지 ////
+// pc
 export const useCurrentSlideStore = create((set) => ({
   currentSlide: 0,
   setCurrentSlide: (value) => set({ currentSlide: value }),
 }));
+// Mobile
+export const useCurrentSlideMobileStore = create((set) => ({
+  currentMobileSlide: 0,
+  setCurrentMobileSlide: (value) => set({ currentMobileSlide: value }),
+}));
 
-// 초안 정보
+/// ======================================================================= ///
+
+//// 초안 정보 - 로컬 스토리지 저장(settings) ////
 export const useSettingStore = create(
   persist(
     (set) => ({
@@ -31,7 +45,7 @@ export const useSettingStore = create(
   ),
 );
 
-// 최초 초안 정보
+//// 최초 초안 정보 - 로컬 스토리지 저장(initialSettings) ////
 export const useInitialSettingStore = create(
   persist(
     (set) => ({
@@ -51,17 +65,27 @@ export const useInitialSettingStore = create(
   ),
 );
 
-// 원문 교정문 비교
+// 원문 <-> 교정문 비교 //
 export const useCompareScriptStore = create((set) => ({
   compareScriptToggle: false,
   setcompareScriptToggle: (value) => set({ compareScriptToggle: value }),
 }));
 
+// 개선내용 //
+export const useImprovementStore = create((set) => ({
+  improvementMent: [],
+  setImprovementMent: (value) => set({ improvementMent: value }),
+  improveModal: false,
+  setImproveModal: (value) => set({ improveModal: value }),
+}));
+
+// pc 2step 이동 //
 export const useNextMoveBtnStore = create((set) => ({
   nextMoveBtn: false,
   setNextMoveBtn: (value) => set({ nextMoveBtn: value }),
 }));
 
+//// 완성본 - 로컬 스토리지 저장(final) ////
 export const useFinalScriptStore = create(
   persist(
     (set) => ({
@@ -77,7 +101,34 @@ export const useFinalScriptStore = create(
   ),
 );
 
-// Loading
+//// 발표문 정보 ////
+export const useScriptInfoStore = create((set) => ({
+  // 예상 발표시간
+  estimatedPresentTime: '0분 0초',
+  setEstimatedPresentTime: (value) => set({ estimatedPresentTime: value }),
+  // 글자 수 - 초안
+  charCountOrigin: 0,
+  setCharCountOrigin: (value) => set({ charCountOrigin: value }),
+  // 글자 수 - 주제
+  subjectCharCount: 0,
+  setSubjectCharCount: (value) => set({ subjectCharCount: value }),
+  resetScriptInfo: () =>
+    set({
+      estimatedPresentTime: '0분 0초',
+      charCountOrigin: 0,
+      subjectCharCount: 0,
+    }),
+}));
+
+//// 예상질문 및 답변 ////
+export const useAskListStateStore = create((set) => ({
+  askListState: [false, false, false, false],
+  setAskListState: (value) => set({ askListState: value }),
+}));
+
+/// ======================================================================= ///
+
+//// Loading ////
 export const useScriptLoadingStore = create((set) => ({
   scriptLoading: false,
   setScriptLoading: (value) => set({ scriptLoading: value }),
@@ -87,12 +138,13 @@ export const useQaLoadingStore = create((set) => ({
   setQaLoading: (value) => set({ qaLoading: value }),
 }));
 
-// login
+//// login ////
 export const useLoginModalStore = create((set) => ({
   login: false,
   setLogin: (value) => set({ login: value }),
 }));
 
+//// 유저정보 - 로컬 스토리지 저장(user) ////
 export const useUserStore = create(
   persist(
     (set) => ({

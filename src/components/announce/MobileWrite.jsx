@@ -1,31 +1,31 @@
-import { useEffect, useState, useRef } from 'react';
-import GuideMent from './GuideMent';
-import { cls } from '@/utils/config';
-import { fetchAnnounceData } from '@/api/fetchData';
-import { diffChars } from 'diff';
-import * as stores from '@/store/store';
-import AnnouncContent from './Draft/AnnouncContent';
-import ScriptInfo from './Draft/ScriptInfo';
-import ScriptFunc from './Draft/ScriptFunc';
-import DetailSetting from './Draft/DetailSetting';
+import { useEffect, useRef, useState } from 'react';
 import { ANNOUNCE_TXT } from '@/utils/constants';
+import * as stores from '@/store/store';
+import GuideMent from './GuideMent';
+import AnnouncContent from './Draft/AnnouncContent';
+import ScriptFunc from './Draft/ScriptFunc';
+import { cls } from '@/utils/config';
+import { diffChars } from 'diff';
+import { fetchAnnounceData } from '@/api/fetchData';
+import { PiArrowClockwiseBold } from 'react-icons/pi';
+import { IoIosArrowBack } from 'react-icons/io';
+import Modal from '../layout/Modal';
+import BackSlideBtn from '../layout/BackSlideBtn';
 
-export default function ModifyAnnounce({ userEmail }) {
+export default function MobileWrite({ userEmail, sliderMobileRef }) {
+  const scriptWriteBoxRef = useRef(null);
   const settings = stores.useSettingStore();
   const initialSettings = stores.useInitialSettingStore();
-  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
   const { setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
-  const [modifyBtn, setModifyBtn] = useState(false);
-  // 개선내용
-  const [improvementMent, setImprovementMent] = useState('없음');
-  //교정문
-  const [initialNewScript, setInitialNewScript] = useState('');
-  const [charCountNew, setCharCountNew] = useState(0);
-  const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
-  const [highlightedText, setHighlightedText] = useState([]);
-  const scriptWriteBoxRef = useRef(null);
+  const { improvementMent, setImprovementMent, setImproveModal } = stores.useImprovementStore();
+  const { compareScriptToggle } = stores.useCompareScriptStore();
+  const { setcompareScriptToggle } = stores.useCompareScriptStore();
   const { resetScriptInfo, estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
+  const [charCountNew, setCharCountNew] = useState(0);
+  const [highlightedText, setHighlightedText] = useState([]);
+  const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
+  const [initialNewScript, setInitialNewScript] = useState('');
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
@@ -40,10 +40,6 @@ export default function ModifyAnnounce({ userEmail }) {
       settings.setPresentPurpose(presentPurpose);
       settings.setEndingTxt(endingTxt);
       settings.setRepeat(repeat);
-
-      if (newScript) {
-        setNextMoveBtn(true);
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEmail]);
@@ -72,40 +68,9 @@ export default function ModifyAnnounce({ userEmail }) {
   // script 초기화 버튼
   const deleteAllScript = () => {
     settings.clearSettings();
-    setcompareScriptToggle(false);
-    setNextMoveBtn(false);
     resetScriptInfo();
+    setcompareScriptToggle(false);
   };
-
-  // 교정하기 버튼 활성화
-  useEffect(() => {
-    if (compareScriptToggle) {
-      // 초안, 교정문 변경,세팅값 변경 있을경우 true
-      setModifyBtn(
-        (settings.originScript && settings.newScript && initialSettings.initialNewScript !== settings.newScript) ||
-          initialSettings.initialSubject !== settings.subject ||
-          initialSettings.initialPresentPurpose !== settings.presentPurpose ||
-          initialSettings.initialEndingTxt !== settings.endingTxt ||
-          initialSettings.initialrepeat !== settings.repeat,
-      );
-    } else {
-      // 초안, 주제 있을경우 true
-      setModifyBtn(settings.originScript && settings.subject);
-    }
-  }, [
-    settings.originScript,
-    settings.subject,
-    settings.newScript,
-    settings.presentPurpose,
-    settings.endingTxt,
-    settings.repeat,
-    compareScriptToggle,
-    initialSettings.initialNewScript,
-    initialSettings.initialSubject,
-    initialSettings.initialPresentPurpose,
-    initialSettings.initialEndingTxt,
-    initialSettings.initialrepeat,
-  ]);
 
   const highlightDiffs = (oldStr, newStr) => {
     const diff = diffChars(oldStr, newStr);
@@ -186,7 +151,7 @@ export default function ModifyAnnounce({ userEmail }) {
           .map((item) => item.replace(/[-:*]/g, '').trim()); // 각 줄에서 불필요한 문자 제거
 
         const firstImprovement = improvementPairs.filter((text) => text.length !== 0);
-        setImprovementMent(firstImprovement[0]);
+        setImprovementMent(firstImprovement);
       } else {
         setImprovementMent('발표 흐름 매끄럽게 이어지도록 구성 변경'); // 개선 내용이 없는 경우에는 빈 문자열로 설정
       }
@@ -213,81 +178,95 @@ export default function ModifyAnnounce({ userEmail }) {
       setCharCountNew(extractedScriptText.length);
       setcompareScriptToggle(true);
       setScriptLoading(false);
-      setNextMoveBtn(true);
+      setImproveModal(false);
     } catch (error) {
       console.error('Error fetching modified script:', error);
       setScriptLoading(false);
     }
   };
 
-  // 버튼활성화 조건
-  const getButtonClass = (condition) => cls(condition ? 'active_color cursor-pointer' : 'cursor-default');
-
   return (
-    <section className="main_container">
-      <div className="progress_bar"></div>
-      <section className="correction_area">
-        <form>
-          <div className="scriptWrite_box">
-            <GuideMent
-              firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.firstMent}
-              secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.secondMent}
+    <>
+      <div className="scriptWrite_box">
+        <GuideMent
+          firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.firstMent}
+          secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.left.secondMent}
+        />
+        <div>
+          <div className="scriptMain_area">
+            <AnnouncContent
+              scriptWriteBoxRef={scriptWriteBoxRef}
+              writeOriginScript={writeOriginScript}
+              charCountOrigin={charCountOrigin}
+              highlightedText={highlightedText}
+              charCountNew={charCountNew}
+              setCharCountNew={setCharCountNew}
             />
-            <div>
-              <div className="scriptMain_area">
-                <AnnouncContent
-                  scriptWriteBoxRef={scriptWriteBoxRef}
-                  writeOriginScript={writeOriginScript}
-                  charCountOrigin={charCountOrigin}
-                  highlightedText={highlightedText}
-                  charCountNew={charCountNew}
-                  setCharCountNew={setCharCountNew}
-                />
-              </div>
-              <div className="contentInfo_area">
-                <ScriptFunc />
-                <ScriptInfo
-                  improvementMent={improvementMent}
-                  estimatedPresentTime={estimatedPresentTime}
-                />
-              </div>
+            <div className="improve_area">
+              <span onClick={() => setImproveModal(true)}>개선내용({improvementMent.length || 0})</span>
             </div>
           </div>
-          <div className="scriptSetting_box">
-            <GuideMent
-              firstMent={ANNOUNCE_TXT.GuideTxt.oneStep.right.firstMent}
-              secondMent={ANNOUNCE_TXT.GuideTxt.oneStep.right.secondMent}
-            />
-            <div>
-              <DetailSetting />
-              <div className="modifyBtn_box">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (settings.originScript.length > 0 || settings.subject.length > 0) {
-                      deleteAllScript();
-                    }
-                  }}
-                  className={getButtonClass(settings.originScript.length > 0 || settings.subject.length > 0)}
-                >
-                  {ANNOUNCE_TXT.modifyBtn.reset}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (modifyBtn) {
-                      modifyScript();
-                    }
-                  }}
-                  className={getButtonClass(modifyBtn)}
-                >
-                  {ANNOUNCE_TXT.modifyBtn.modify}
-                </button>
-              </div>
-            </div>
+          <div className="contentInfo_area">
+            <p className="estimatedPresentTime">
+              {estimatedPresentTime} ({ANNOUNCE_TXT.scriptWrite.estimatedPresentTime})
+            </p>
+            <ScriptFunc />
           </div>
-        </form>
-      </section>
-    </section>
+        </div>
+      </div>
+      <div className="slideMove_btn_area">
+        <BackSlideBtn
+          backSlideNum={0}
+          sliderMobileRef={sliderMobileRef}
+        />
+        {/* 초기화 */}
+        <div
+          className={cls('small_btn', settings.originScript.length > 0 ? 'active_color' : 'disabled_color')}
+          onClick={() => {
+            if (settings.originScript.length > 0) {
+              deleteAllScript();
+              setCurrentMobileSlide(0);
+              sliderMobileRef.current.slickGoTo(0);
+            }
+          }}
+        >
+          <PiArrowClockwiseBold fontSize={18} />
+        </div>
+        <div
+          onClick={() => {
+            if (settings.originScript.length > 0) {
+              modifyScript();
+            }
+          }}
+          className={cls('next_step', settings.originScript.length > 0 ? 'active_color' : 'disabled_color')}
+        >
+          {settings.newScript.length > 0 ? '재 교정하기' : '교정하기'}
+        </div>
+        {
+          <div
+            onClick={() => {
+              setCurrentMobileSlide(2);
+              sliderMobileRef.current.slickGoTo(2);
+            }}
+            className="next_step active_color"
+          >
+            완성발표문 확인
+          </div>
+        }
+        {/* {settings.newScript.length > 0 && (
+          <div
+            onClick={() => {
+              if (settings.subject.length > 0) {
+                setCurrentMobileSlide(2);
+                sliderMobileRef.current.slickGoTo(2);
+              }
+            }}
+            className="next_step active_color"
+          >
+            완성발표문 확인
+          </div>
+        )} */}
+      </div>
+    </>
   );
 }

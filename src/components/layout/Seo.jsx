@@ -4,9 +4,11 @@ export default function Seo() {
   return (
     <Head>
       <title>또랑또랑</title>
+      {/* 모바일 입력시 화면확대 방지 */}
       <meta
         name="viewport"
-        content="initial-scale=1.0, width=device-width"
+        content="width=device-width, initial-scale=1, maximum-scale=1.0, 
+    user-scalable=0"
       />
       <meta
         name="author"

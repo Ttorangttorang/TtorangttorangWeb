@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     plugin(function ({ addUtilities }) {
       const newCssUtilities = {
+        '.realmobile_screen': { height: 'calc(var(--vh, 1vh) * 100)' },
         '.absolute_xHalf': {
           position: 'absolute',
           left: '50%',

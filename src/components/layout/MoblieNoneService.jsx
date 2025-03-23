@@ -3,7 +3,7 @@ import * as LocalImages from '@/utils/imageImports';
 
 export default function MoblieNoneService() {
   return (
-    <div className="moblie_container">
+    <div className="moblie_noneService_container">
       <div className="logo_area">
         <Image
           src={LocalImages.ImageMobileLogo}

@@ -1,31 +1,32 @@
-import { useCompareScriptStore, useFinalScriptStore, useSettingStore } from '@/store/store';
-import { formatNumber } from '@/utils/config';
+import * as stores from '@/store/store';
+import { cls, formatNumber } from '@/utils/config';
 import { ANNOUNCE_TXT, GLOBAL_TXT } from '@/utils/constants';
 import HighlightWithinTextarea from 'react-highlight-within-textarea';
 
 export default function AnnouncContent(props) {
-  const { scriptWriteBoxRef, writeOriginScript, charCountOrigin, highlightedText, charCountNew, setCharCountNew } = props;
-  const { compareScriptToggle } = useCompareScriptStore();
-  const { originScript, newScript, setNewScript } = useSettingStore();
-  const { setFinalScript } = useFinalScriptStore();
+  const { highlightedText } = props;
+  const { isMobileDevice } = stores.useIsMobileStore();
+  const { compareScriptToggle } = stores.useCompareScriptStore();
+  const { originScript, newScript, setNewScript } = stores.useSettingStore();
+  const { setFinalScript } = stores.useFinalScriptStore();
   const MAX_LENGTH = 3000;
   const filterOut = ['-', '"', '"', '!.', '!', '[', ']', ':'];
 
   const normalTxtArea = () => (
     <>
       <div
-        ref={scriptWriteBoxRef}
+        ref={props.scriptWriteBoxRef}
         className="textSize"
       >
         <textarea
           placeholder={ANNOUNCE_TXT.scriptWrite.inputDescription}
           maxLength={MAX_LENGTH}
           value={originScript}
-          onChange={writeOriginScript}
+          onChange={props.writeOriginScript}
         />
       </div>
       <p>
-        {formatNumber(charCountOrigin)} / {MAX_LENGTH}
+        {formatNumber(props.charCountOrigin)} / {MAX_LENGTH}
       </p>
     </>
   );
@@ -45,19 +46,21 @@ export default function AnnouncContent(props) {
             onChange={(value) => {
               setNewScript(value);
               setFinalScript(value);
-              setCharCountNew(value.length);
+              props.setCharCountNew(value.length);
               if (value.length > MAX_LENGTH) {
-                setCharCountNew(MAX_LENGTH);
+                props.setCharCountNew(MAX_LENGTH);
               }
             }}
           />
         </div>
       </div>
       <p>
-        {formatNumber(charCountNew)} / {MAX_LENGTH}
+        {formatNumber(props.charCountNew)} / {MAX_LENGTH}
       </p>
     </>
   );
+
+  const textareaHeight = isMobileDevice ? 'h-[calc(100%-60px)]' : 'h-[calc(100%-3.06vmin)]';
 
   return (
     <>
@@ -65,7 +68,7 @@ export default function AnnouncContent(props) {
         <span className="required">{GLOBAL_TXT.required}</span>
         {ANNOUNCE_TXT.scriptWrite.title}
       </p>
-      <div className="scriptTxt h-[calc(100%-3.06vmin)]">{!compareScriptToggle ? normalTxtArea() : modifyTxtArea()}</div>
+      <div className={cls('scriptTxt', textareaHeight)}>{!compareScriptToggle ? normalTxtArea() : modifyTxtArea()}</div>
     </>
   );
 }

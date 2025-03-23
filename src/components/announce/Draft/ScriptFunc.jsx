@@ -15,7 +15,10 @@ export default function ScriptFunc() {
         <CopyAnnounce compareScriptToggle={compareScriptToggle} />
       </div>
       {newScript.length > 0 && (
-        <div onClick={() => setcompareScriptToggle(!compareScriptToggle)}>
+        <div
+          className="compare_box"
+          onClick={() => setcompareScriptToggle(!compareScriptToggle)}
+        >
           <div className="icon">
             <Image
               src={LocalImages.ImageIconSyncAlt}

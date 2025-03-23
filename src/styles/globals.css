@@ -20,6 +20,11 @@ body,
   @apply w-full h-full bg-[#fefefe];
 }
 
+.mobile_layout {
+  @apply w-full bg-[#FEFEFE] overflow-hidden;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
 input,
 input:focus,
 textarea,
@@ -36,7 +41,7 @@ textarea {
 }
 
 /* header */
-header {
+header.h_pc {
   @apply absolute top-0 left-0 right-0 z-20 flex_center w-full h-[5.64vmin] main_colorBg;
 
   > .header_container {
@@ -137,7 +142,20 @@ footer {
 }
 
 /* mobile */
-.moblie_container {
+/* mobile header */
+header.h_mobile {
+  @apply absolute top-0 left-0 right-0 z-20 flex_center w-full h-10 bg-white;
+
+  .logo_area {
+    @apply block w-[98px] h-[30px];
+
+    img {
+      @apply w-full h-full scale-[1.4];
+    }
+  }
+}
+
+.moblie_noneService_container {
   @apply flex_center flex-col w-full h-screen bg-[#FEFEFE];
 
   .logo_area {
@@ -273,6 +291,126 @@ footer {
         @apply cursor-pointer text-[2.19vmin] font-medium gray_colorTxt;
       }
     }
+  }
+}
+
+/* mobile modal */
+@media (max-width: 1023px) {
+  .modal_box {
+    @apply flex_center flex-col absolute_center z-[80] w-[34.5vmin] h-[23.1vmin] rounded bg-white;
+
+    > p {
+      @apply text-base font-medium text-center gray_colorTxt;
+    }
+
+    .character_box {
+      @apply flex_center bg-[#EBF2FA];
+    }
+
+    img {
+      @apply w-full h-full object-cover;
+    }
+
+    &.modal_loading {
+      @apply w-[257px] h-[172px] py-5 !bg-[#F9F9F9];
+      .character_box {
+        @apply w-[68px] h-[68px] mb-[8px];
+      }
+
+      .loader_area {
+        @apply my-[14px] w-full;
+
+        .loader {
+          @apply block relative w-[10px] h-[10px] mx-auto rounded-full bg-[#EDEDED];
+          animation: loadingAni 1s infinite linear alternate;
+        }
+      }
+    }
+
+    &.modal_select {
+      @apply w-[263px] h-auto min-h-[215px] py-[25px] px-4;
+
+      .modal_close {
+        @apply absolute top-[10px] right-[10px] z-10 w-[20px] h-[20px] cursor-pointer;
+      }
+
+      .character_box {
+        @apply w-[68px] h-[68px] mb-[8px] overflow-hidden;
+      }
+
+      .selectMent_box {
+        p.title {
+          @apply mb-[9px] text-base font-medium text-center text-[#424242];
+        }
+        p.description {
+          @apply text-sm font-medium text-center gray_colorTxt;
+        }
+
+        ul.improveList {
+          @apply flex flex-col gap-1 text-xs pt-3 border-t border-[#757575]/50;
+          li {
+            @apply flex_vertical_center gap-1;
+
+            span {
+              @apply break-keep;
+            }
+          }
+        }
+      }
+
+      .modalBtn_area {
+        @apply flex gap-[1.41vmin] mt-[3.04vmin];
+
+        button {
+          @apply flex_center w-[15.29vmin] h-[6.5vmin];
+
+          &:first-of-type {
+            @apply active_color text-[1.95vmin];
+          }
+
+          &:last-of-type {
+            @apply area_border text-[1.95vmin];
+          }
+        }
+      }
+    }
+
+    /* &.login_box {
+    @apply w-[43.37vmin] h-[41.68vmin] p-[2.17vmin];
+
+    .modal_close {
+      @apply absolute top-[1.7vmin] right-[2.07vmin] z-10 w-[2.6vmin] h-[2.6vmin] cursor-pointer;
+    }
+
+    .character_box {
+      @apply w-[14.61vmin] h-[14.61vmin] mb-[1vmin];
+    }
+
+    .login_ment {
+      > p {
+        @apply text-[2.17vmin] font-medium text-center text-[#424242];
+      }
+    }
+
+    .modalBtn_area {
+      @apply flex flex-col w-full;
+      .kakoLogin {
+        @apply flex_center relative w-full h-[6.72vmin] my-[2.6vmin] bg-[#FEE404];
+
+        .kakoLogo {
+          @apply absolute_yHalf left-[2.07vmin] w-[2.56vmin] h-[2.56vmin];
+        }
+
+        span {
+          @apply text-[2.07vmin] font-normal text-[#000000];
+        }
+      }
+
+      .noneLogin {
+        @apply cursor-pointer text-[2.19vmin] font-medium gray_colorTxt;
+      }
+    }
+  } */
   }
 }
 
