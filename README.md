@@ -108,12 +108,12 @@
 
 ## :art: 주요 색상
 
-| Color           | Hex                                                              |
-| --------------- | ---------------------------------------------------------------- |
-| Primary Color   | ![#fff](https://via.placeholder.com/10/fbfbfa?text=+) #fff       |
-| Secondary Color | ![#FEFEFE](https://via.placeholder.com/10/f3f4f6?text=+) #FEFEFE |
-| Accent Color    | ![#509BF8](https://via.placeholder.com/10/2c82f2?text=+) #509BF8 |
-| Text Color      | ![#757575](https://via.placeholder.com/10/000000?text=+) #757575 |
+| Color           | Hex                                                       |
+| --------------- | --------------------------------------------------------- |
+| Primary Color   | ![#fff](https://placehold.co/10x10/fbfbfa/png) #fff       |
+| Secondary Color | ![#FEFEFE](https://placehold.co/10x10/f3f4f6/png) #FEFEFE |
+| Accent Color    | ![#509BF8](https://placehold.co/10x10/2c82f2/png) #509BF8 |
+| Text Color      | ![#757575](https://placehold.co/10x10/000000/png) #757575 |
 
 ## :hammer_and_wrench: 페이지별 기능
 
