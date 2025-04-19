@@ -21,24 +21,22 @@ const STEP_INFO = [
 
 const STEP_INFO_MOBILE = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
 
+const stepMobileMap = {
+  0: PROGRESS_BAR_WIDTH_MOBILE.stepOne,
+  1: PROGRESS_BAR_WIDTH_MOBILE.stepTwo,
+  2: PROGRESS_BAR_WIDTH_MOBILE.stepThree,
+  3: PROGRESS_BAR_WIDTH_MOBILE.stepFour,
+};
+
 export default function ProgressBar() {
   const { isMobileDevice } = useIsMobileStore();
-  const { currentMobileSlide, setCurrentMobileSlide } = useCurrentSlideMobileStore();
+  const { currentMobileSlide } = useCurrentSlideMobileStore();
   const { currentSlide } = useCurrentSlideStore();
 
   //pc
   const progressBarClass = currentSlide === 1 ? PROGRESS_BAR_WIDTH.active : PROGRESS_BAR_WIDTH.default;
   //mobile
-  let mobileProgressBarClass;
-  if (currentMobileSlide === 0) {
-    mobileProgressBarClass = PROGRESS_BAR_WIDTH_MOBILE.stepOne;
-  } else if (currentMobileSlide === 1) {
-    mobileProgressBarClass = PROGRESS_BAR_WIDTH_MOBILE.stepTwo;
-  } else if (currentMobileSlide === 2) {
-    mobileProgressBarClass = PROGRESS_BAR_WIDTH_MOBILE.stepThree;
-  } else if (currentMobileSlide === 3) {
-    mobileProgressBarClass = PROGRESS_BAR_WIDTH_MOBILE.stepFour;
-  }
+  const mobileProgressBarClass = stepMobileMap[currentMobileSlide] || '';
   const activeBar = isMobileDevice ? mobileProgressBarClass : progressBarClass;
 
   return (
