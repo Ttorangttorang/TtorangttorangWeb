@@ -20,7 +20,7 @@ export default function BtnsQnA(props) {
   // 저장시 로그인 여부
   const handleSaveClick = () => {
     if (userEmail && qaArray.length > 0) {
-      saveScriptToAccount();
+      //saveScriptToAccount();
       router.push('/mypage');
     } else if (qaArray.length > 0) {
       setLogin(true);

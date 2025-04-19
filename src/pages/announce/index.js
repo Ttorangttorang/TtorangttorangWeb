@@ -6,11 +6,9 @@ import SaveAnnounce from '@/components/announce/SaveAnnounce';
 import ProgressBar from '@/components/announce/ProgressBar';
 import * as stores from '@/store/store';
 import Modal from '@/components/layout/Modal';
-import { cls } from '@/utils/config';
 import { useEffect, useRef } from 'react';
 import MobileSetting from '@/components/announce/MobileSetting';
 import MobileWrite from '@/components/announce/MobileWrite';
-import BackSlideBtn from '@/components/layout/BackSlideBtn';
 import MobileFinalAnnounce from '@/components/announce/MobileFinalAnnounce';
 import QnABox from '@/components/announce/ExpectedQnA/QnABox';
 

@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/utils": ["./utils/*"],
-      "@/public/*": ["./public/*"]
+      "@/*": ["*"],
+      "@/hooks": ["hooks/*"],
+      "@/utils": ["utils/*"],
+      "@/public/*": ["public/*"]
     }
   }
 }

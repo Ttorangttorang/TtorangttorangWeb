@@ -26,7 +26,7 @@ function CopyIcon() {
 export default function CopyAnnounce(props) {
   const { compareScriptToggle, saveAnnounce } = props;
   const pathname = usePathname();
-  const { originScript, newScript } = useSettingStore();
+  const { originScript } = useSettingStore();
   const { currentSlide } = useCurrentSlideStore();
   const { finalScript } = useFinalScriptStore();
   let textToCopy;
@@ -38,7 +38,7 @@ export default function CopyAnnounce(props) {
   // announce(currentSlide), mypage 별 변경
   if (pathname === '/announce') {
     if (currentSlide === 0) {
-      textToCopy = compareScriptToggle ? newScript : originScript;
+      textToCopy = compareScriptToggle ? finalScript : originScript;
       copyMessage = GLOBAL_TXT.copy.aleretModifyCopy;
     } else if (currentSlide === 1) {
       textToCopy = finalScript;

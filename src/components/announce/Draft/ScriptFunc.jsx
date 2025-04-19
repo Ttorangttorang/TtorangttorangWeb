@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
-import { useCompareScriptStore, useSettingStore } from '@/store/store';
+import { useCompareScriptStore, useFinalScriptStore } from '@/store/store';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import CopyAnnounce from '../CopyAnnounce';
 
 export default function ScriptFunc() {
-  const { newScript } = useSettingStore();
+  const { finalScript } = useFinalScriptStore();
   const { compareScriptToggle, setcompareScriptToggle } = useCompareScriptStore();
   const scriptFuncTxt = ANNOUNCE_TXT.scriptWrite;
 
@@ -14,7 +14,7 @@ export default function ScriptFunc() {
       <div className="copy_box">
         <CopyAnnounce compareScriptToggle={compareScriptToggle} />
       </div>
-      {newScript.length > 0 && (
+      {finalScript.length > 0 && (
         <div
           className="compare_box"
           onClick={() => setcompareScriptToggle(!compareScriptToggle)}

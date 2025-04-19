@@ -32,6 +32,7 @@ export default function QnABox(props) {
 
   // 최종 저장
   const saveScriptToAccount = async () => {
+    console.log('저장');
     try {
       const data = {
         content: finalScript,
@@ -113,7 +114,6 @@ export default function QnABox(props) {
               announcePage={announcePage}
               getQAList={getQAList}
               userEmail={userEmail}
-              saveScri
               ptToAccount={saveScriptToAccount}
             />
           )}

@@ -35,8 +35,6 @@ export const useSettingStore = create(
       setEndingTxt: (value) => set({ endingTxt: value }),
       repeat: false,
       setRepeat: (value) => set({ repeat: value }),
-      newScript: '',
-      setNewScript: (value) => set({ newScript: value }),
       clearSettings: () => set({ originScript: '', subject: '', presentPurpose: '회사 컨퍼런스', endingTxt: '합니다체', repeat: false, newScript: '' }),
     }),
     {

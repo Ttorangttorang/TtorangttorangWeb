@@ -7,7 +7,7 @@ export default function AnnouncContent(props) {
   const { highlightedText } = props;
   const { isMobileDevice } = stores.useIsMobileStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
-  const { originScript, newScript, setNewScript } = stores.useSettingStore();
+  const { originScript } = stores.useSettingStore();
   const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const MAX_LENGTH = 3000;
   const filterOut = ['-', '"', '"', '!.', '!', '[', ']', ':'];
@@ -24,6 +24,7 @@ export default function AnnouncContent(props) {
           value={originScript}
           onChange={props.writeOriginScript}
           readOnly={finalScript.length > 0}
+          className={cls(finalScript.length > 0 && 'cursor-default')}
         />
       </div>
       <p>
@@ -45,7 +46,6 @@ export default function AnnouncContent(props) {
             ]}
             value={finalScript}
             onChange={(value) => {
-              setNewScript(value);
               setFinalScript(value);
               props.setCharCountNew(value.length);
               if (value.length > MAX_LENGTH) {
