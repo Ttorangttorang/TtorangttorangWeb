@@ -12,9 +12,8 @@ import { ANNOUNCE_TXT } from '@/utils/constants';
 
 export default function ModifyAnnounce({ userEmail }) {
   const settings = stores.useSettingStore();
-  const initialSettings = stores.useInitialSettingStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { setFinalScript } = stores.useFinalScriptStore();
+  const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
   const [modifyBtn, setModifyBtn] = useState(false);
   // 개선내용
@@ -29,21 +28,8 @@ export default function ModifyAnnounce({ userEmail }) {
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
-    const savedSettings = localStorage.getItem('settings');
-    if (userEmail && savedSettings) {
-      // 로컬 스토리지에서 설정을 불러오기
-      const { originScript = '', subject = '', newScript = '', presentPurpose = '회사 컨퍼런스', endingTxt = '합니다체', repeat = false } = JSON.parse(savedSettings);
-
-      settings.setOriginScript(originScript);
-      settings.setSubject(subject);
-      settings.setNewScript(newScript);
-      settings.setPresentPurpose(presentPurpose);
-      settings.setEndingTxt(endingTxt);
-      settings.setRepeat(repeat);
-
-      if (newScript) {
-        setNextMoveBtn(true);
-      }
+    if (userEmail && finalScript) {
+      setNextMoveBtn(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEmail]);
@@ -79,33 +65,8 @@ export default function ModifyAnnounce({ userEmail }) {
 
   // 교정하기 버튼 활성화
   useEffect(() => {
-    if (compareScriptToggle) {
-      // 초안, 교정문 변경,세팅값 변경 있을경우 true
-      setModifyBtn(
-        (settings.originScript && settings.newScript && initialSettings.initialNewScript !== settings.newScript) ||
-          initialSettings.initialSubject !== settings.subject ||
-          initialSettings.initialPresentPurpose !== settings.presentPurpose ||
-          initialSettings.initialEndingTxt !== settings.endingTxt ||
-          initialSettings.initialrepeat !== settings.repeat,
-      );
-    } else {
-      // 초안, 주제 있을경우 true
-      setModifyBtn(settings.originScript && settings.subject);
-    }
-  }, [
-    settings.originScript,
-    settings.subject,
-    settings.newScript,
-    settings.presentPurpose,
-    settings.endingTxt,
-    settings.repeat,
-    compareScriptToggle,
-    initialSettings.initialNewScript,
-    initialSettings.initialSubject,
-    initialSettings.initialPresentPurpose,
-    initialSettings.initialEndingTxt,
-    initialSettings.initialrepeat,
-  ]);
+    setModifyBtn(settings.originScript && settings.subject);
+  }, [settings.originScript, settings.subject]);
 
   const highlightDiffs = (oldStr, newStr) => {
     const diff = diffChars(oldStr, newStr);
@@ -137,11 +98,6 @@ export default function ModifyAnnounce({ userEmail }) {
         duplicate: settings.repeat === true ? 'Y' : 'N',
       };
 
-      // 비교값 저장
-      initialSettings.setInitialSubject(settings.subject);
-      initialSettings.setInitialPresentPurpose(settings.presentPurpose);
-      initialSettings.setInitialEndingTxt(settings.endingTxt);
-      initialSettings.setInitialRepeat(settings.repeat);
       //data
       const response = await fetchAnnounceData(data);
       const redData = response.data.replace(/data:/g, '');

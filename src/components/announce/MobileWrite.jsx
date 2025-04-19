@@ -13,7 +13,6 @@ import BackSlideBtn from '../layout/BackSlideBtn';
 export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const scriptWriteBoxRef = useRef(null);
   const settings = stores.useSettingStore();
-  const initialSettings = stores.useInitialSettingStore();
   const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
   const { improvementMent, setImprovementMent, setImproveModal } = stores.useImprovementStore();
@@ -101,11 +100,6 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
         duplicate: settings.repeat === true ? 'Y' : 'N',
       };
 
-      // 비교값 저장
-      initialSettings.setInitialSubject(settings.subject);
-      initialSettings.setInitialPresentPurpose(settings.presentPurpose);
-      initialSettings.setInitialEndingTxt(settings.endingTxt);
-      initialSettings.setInitialRepeat(settings.repeat);
       //data
       const response = await fetchAnnounceData(data);
       const redData = response.data.replace(/data:/g, '');

@@ -45,26 +45,6 @@ export const useSettingStore = create(
   ),
 );
 
-//// 최초 초안 정보 - 로컬 스토리지 저장(initialSettings) ////
-export const useInitialSettingStore = create(
-  persist(
-    (set) => ({
-      initialSubject: '',
-      setInitialSubject: (value) => set({ initialSubject: value }),
-      initialPresentPurpose: '회사 컨퍼런스',
-      setInitialPresentPurpose: (value) => set({ initialPresentPurpose: value }),
-      initialEndingTxt: '합니다체',
-      setInitialEndingTxt: (value) => set({ initialEndingTxt: value }),
-      initialrepeat: false,
-      setInitialRepeat: (value) => set({ initialrepeat: value }),
-      clearInitialSettings: () => set({ initialSubject: '', initialPresentPurpose: '회사 컨퍼런스', initialEndingTxt: '합니다체', initialrepeat: false }),
-    }),
-    {
-      name: 'initialSettings', // 로컬 스토리지 키
-    },
-  ),
-);
-
 // 원문 <-> 교정문 비교 //
 export const useCompareScriptStore = create((set) => ({
   compareScriptToggle: false,
