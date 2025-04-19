@@ -150,7 +150,11 @@ section.main_container {
               @apply relative w-full h-[calc(100%-1.94vmin)] overflow-hidden;
             }
             textarea {
-              @apply w-full h-full text-[1.520vmin] leading-[2.87vmin] pr-[2.17vmin] pt-[2.17vmin] font-medium gray_colorTxt;
+              @apply w-full h-full overflow-y-auto text-[1.520vmin] leading-[2.87vmin] pr-[2.17vmin] pt-[2.17vmin] font-medium gray_colorTxt;
+              /* 사용자의 터치 동작 */
+              touch-action: auto;
+              -webkit-overflow-scrolling: touch;
+
               &::-webkit-input-placeholder {
                 font-size: 1.52vmin;
               }

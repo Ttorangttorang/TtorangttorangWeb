@@ -32,6 +32,12 @@ export default function Layout({ children }) {
   };
 
   const removeEvent = (e) => {
+    const el = e.target;
+
+    const isScrollable = el.tagName === 'TEXTAREA' || el.tagName === 'INPUT';
+
+    if (isScrollable) return; // 이 영역은 스크롤 허용
+
     e.preventDefault();
     e.stopPropagation();
   };

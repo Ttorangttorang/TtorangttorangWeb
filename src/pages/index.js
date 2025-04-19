@@ -258,6 +258,7 @@ export default function Home() {
                     width={item.width}
                     height={item.height}
                   />
+                  {/* 3번째 이미지 추가 */}
                   {item.img === LocalImages.ImageGateway_three && (
                     <div className="answerImg_area">
                       <Image
@@ -272,6 +273,7 @@ export default function Home() {
               </div>
             </div>
           ))}
+          {/* TOP 버튼튼 */}
           <div
             onClick={() => setCurrentPage(1)}
             className="moveToTop_area"
