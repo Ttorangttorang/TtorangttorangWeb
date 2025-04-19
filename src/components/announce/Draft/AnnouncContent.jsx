@@ -23,6 +23,7 @@ export default function AnnouncContent(props) {
           maxLength={MAX_LENGTH}
           value={originScript}
           onChange={props.writeOriginScript}
+          readOnly={finalScript.length > 0}
         />
       </div>
       <p>

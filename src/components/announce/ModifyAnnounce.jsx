@@ -19,7 +19,6 @@ export default function ModifyAnnounce({ userEmail }) {
   // 개선내용
   const [improvementMent, setImprovementMent] = useState('없음');
   //교정문
-  const [initialNewScript, setInitialNewScript] = useState('');
   const [charCountNew, setCharCountNew] = useState(0);
   const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
   const [highlightedText, setHighlightedText] = useState([]);
@@ -28,7 +27,7 @@ export default function ModifyAnnounce({ userEmail }) {
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
-    if (userEmail && finalScript) {
+    if (userEmail && settings.originScript && settings.subject && finalScript) {
       setNextMoveBtn(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,7 +92,7 @@ export default function ModifyAnnounce({ userEmail }) {
       const data = {
         topic: settings.subject,
         purpose: settings.presentPurpose,
-        content: settings.originScript,
+        content: finalScript.length > 0 ? finalScript : settings.originScript,
         word: settings.endingTxt,
         duplicate: settings.repeat === true ? 'Y' : 'N',
       };
@@ -148,20 +147,18 @@ export default function ModifyAnnounce({ userEmail }) {
       }
 
       // 재교정 시 (2회차 이상)
-      if (settings.newScript.length > 0 && modifyBtn && compareScriptToggle) {
-        const oldScript = newScript.slice(0, 3000);
+      if (finalScript.length > 0 && modifyBtn && compareScriptToggle) {
+        const oldScript = finalScript.slice(0, 3000);
         const updatedScript = extractedScriptText;
 
         // 2회차 새로운 교정본을 newScript로 설정 1회차는 구
         settings.setOriginScript(oldScript);
-        setInitialNewScript(updatedScript);
         settings.setNewScript(updatedScript);
         setFinalScript(updatedScript);
         highlightDiffs(oldScript, updatedScript);
       } else {
         // 첫 번째 교정
         highlightDiffs(settings.originScript, extractedScriptText);
-        setInitialNewScript(extractedScriptText);
         settings.setNewScript(extractedScriptText);
         setFinalScript(extractedScriptText);
       }

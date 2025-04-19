@@ -22,25 +22,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
   const [charCountNew, setCharCountNew] = useState(0);
   const [highlightedText, setHighlightedText] = useState([]);
-  const [setInitialNewScript] = useState('');
   const scriptFuncTxt = ANNOUNCE_TXT.scriptWrite;
-
-  // 선 작성 후 로그인 시 작성문 유지
-  useEffect(() => {
-    const savedSettings = localStorage.getItem('settings');
-    if (userEmail && savedSettings) {
-      // 로컬 스토리지에서 설정을 불러오기
-      const { originScript = '', subject = '', newScript = '', presentPurpose = '회사 컨퍼런스', endingTxt = '합니다체', repeat = false } = JSON.parse(savedSettings);
-
-      settings.setOriginScript(originScript);
-      settings.setSubject(subject);
-      settings.setNewScript(newScript);
-      settings.setPresentPurpose(presentPurpose);
-      settings.setEndingTxt(endingTxt);
-      settings.setRepeat(repeat);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userEmail]);
 
   // 초안 작성
   const writeOriginScript = (event) => {
@@ -156,14 +138,12 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
 
         // 2회차 새로운 교정본을 newScript로 설정 1회차는 구
         settings.setOriginScript(oldScript);
-        setInitialNewScript(updatedScript);
         settings.setNewScript(updatedScript);
         setFinalScript(updatedScript);
         highlightDiffs(oldScript, updatedScript);
       } else {
         // 첫 번째 교정
         highlightDiffs(settings.originScript, extractedScriptText);
-        setInitialNewScript(extractedScriptText);
         settings.setNewScript(extractedScriptText);
         setFinalScript(extractedScriptText);
       }
