@@ -8,7 +8,7 @@ export default function AnnouncContent(props) {
   const { isMobileDevice } = stores.useIsMobileStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
   const { originScript, newScript, setNewScript } = stores.useSettingStore();
-  const { setFinalScript } = stores.useFinalScriptStore();
+  const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const MAX_LENGTH = 3000;
   const filterOut = ['-', '"', '"', '!.', '!', '[', ']', ':'];
 
@@ -42,7 +42,7 @@ export default function AnnouncContent(props) {
                 className: '!bg-[#cbeaff]',
               },
             ]}
-            value={newScript}
+            value={finalScript}
             onChange={(value) => {
               setNewScript(value);
               setFinalScript(value);
