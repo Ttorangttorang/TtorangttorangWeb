@@ -7,7 +7,7 @@ import BtnsQnA from './BtnsQnA';
 import BackSlideBtn from '@/components/layout/BackSlideBtn';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import { cls } from '@/utils/config';
-import { fetchQnAData, fetchSaveScript } from '@/api/fetchData';
+import { fetchSaveScript } from '@/api/fetchData';
 
 export default function QnABox(props) {
   const { userEmail, userAccessToken, announcePage, qaItems, sliderMobileRef, getQAList } = props;
@@ -15,6 +15,7 @@ export default function QnABox(props) {
   const { finalScript, qaArray } = stores.useFinalScriptStore();
   const { subject } = stores.useSettingStore();
   const { askListState, setAskListState } = stores.useAskListStateStore();
+  const { setLogin } = stores.useLoginModalStore();
 
   // 클릭 시 질문 펼침/접기 처리
   const toggleQAItem = (index) => {
@@ -46,6 +47,16 @@ export default function QnABox(props) {
   // 조건별 css
   //pc
   const qnaAreaClass = cls('qa_area', announcePage ? 'h-[52vmin]' : 'h-[55.55vmin]');
+
+  // 저장시 로그인 여부
+  const handleSaveClick = () => {
+    if (userEmail && qaArray.length > 0) {
+      saveScriptToAccount();
+      router.push('/mypage');
+    } else if (qaArray.length > 0) {
+      setLogin(true);
+    }
+  };
 
   return (
     <>
@@ -114,8 +125,12 @@ export default function QnABox(props) {
             backSlideNum={2}
             sliderMobileRef={sliderMobileRef}
           />
-          <div className="next_step active_color">질문 다시 받기</div>
-          <div className="next_step active_color">저장하기</div>
+          <div
+            onClick={handleSaveClick}
+            className="next_step active_color"
+          >
+            저장하기
+          </div>
         </div>
       )}
     </>
