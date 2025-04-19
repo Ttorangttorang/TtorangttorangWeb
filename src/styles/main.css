@@ -181,6 +181,9 @@ section.main_container {
 
             .newScript {
               @apply w-full h-full pr-[2.17vmin] pt-[2.17vmin] overflow-y-auto;
+              /* 사용자의 터치 동작 */
+              touch-action: auto;
+              -webkit-overflow-scrolling: touch;
 
               span {
                 @apply text-[1.520vmin] leading-[2.87vmin] font-medium gray_colorTxt;
@@ -567,10 +570,10 @@ section.main_container {
 
             /* 개선내용 */
             .improve_area {
-              @apply h-[31px] flex_vertical_center;
+              @apply h-[31px] flex_vertical_center justify-between;
 
               span {
-                @apply flex_center h-full pr-2 text-sm;
+                @apply flex_center h-full text-sm;
               }
             }
 

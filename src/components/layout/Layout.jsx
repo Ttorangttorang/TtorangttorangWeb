@@ -34,7 +34,7 @@ export default function Layout({ children }) {
   const removeEvent = (e) => {
     const el = e.target;
 
-    const isScrollable = el.tagName === 'TEXTAREA' || el.tagName === 'INPUT';
+    const isScrollable = el.tagName === 'TEXTAREA' || el.tagName === 'INPUT' || el.closest('.newScript');
 
     if (isScrollable) return; // 이 영역은 스크롤 허용
 

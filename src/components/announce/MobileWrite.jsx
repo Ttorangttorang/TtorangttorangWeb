@@ -8,24 +8,23 @@ import { cls } from '@/utils/config';
 import { diffChars } from 'diff';
 import { fetchAnnounceData } from '@/api/fetchData';
 import { PiArrowClockwiseBold } from 'react-icons/pi';
-import { IoIosArrowBack } from 'react-icons/io';
-import Modal from '../layout/Modal';
 import BackSlideBtn from '../layout/BackSlideBtn';
 
 export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const scriptWriteBoxRef = useRef(null);
   const settings = stores.useSettingStore();
   const initialSettings = stores.useInitialSettingStore();
-  const { setFinalScript } = stores.useFinalScriptStore();
+  const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
   const { improvementMent, setImprovementMent, setImproveModal } = stores.useImprovementStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
   const { setcompareScriptToggle } = stores.useCompareScriptStore();
   const { resetScriptInfo, estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
+  const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
   const [charCountNew, setCharCountNew] = useState(0);
   const [highlightedText, setHighlightedText] = useState([]);
-  const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
-  const [initialNewScript, setInitialNewScript] = useState('');
+  const [setInitialNewScript] = useState('');
+  const scriptFuncTxt = ANNOUNCE_TXT.scriptWrite;
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
@@ -204,6 +203,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
             />
             <div className="improve_area">
               <span onClick={() => setImproveModal(true)}>개선내용({improvementMent.length || 0})</span>
+              <span onClick={() => setcompareScriptToggle(!compareScriptToggle)}>{compareScriptToggle ? scriptFuncTxt.showOriginScript : scriptFuncTxt.showModifyScript}</span>
             </div>
           </div>
           <div className="contentInfo_area">
@@ -215,6 +215,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
         </div>
       </div>
       <div className="slideMove_btn_area">
+        {/* 뒤로가기 */}
         <BackSlideBtn
           backSlideNum={0}
           sliderMobileRef={sliderMobileRef}
@@ -232,6 +233,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
         >
           <PiArrowClockwiseBold fontSize={18} />
         </div>
+        {/* 교정하기 */}
         <div
           onClick={() => {
             if (settings.originScript.length > 0) {
@@ -240,9 +242,10 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
           }}
           className={cls('next_step', settings.originScript.length > 0 ? 'active_color' : 'disabled_color')}
         >
-          {settings.newScript.length > 0 ? '재 교정하기' : '교정하기'}
+          {finalScript.length > 0 ? '재 교정하기' : '교정하기'}
         </div>
-        {
+        {/* 완성본 */}
+        {finalScript.length > 0 && (
           <div
             onClick={() => {
               setCurrentMobileSlide(2);
@@ -252,20 +255,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
           >
             완성발표문 확인
           </div>
-        }
-        {/* {settings.newScript.length > 0 && (
-          <div
-            onClick={() => {
-              if (settings.subject.length > 0) {
-                setCurrentMobileSlide(2);
-                sliderMobileRef.current.slickGoTo(2);
-              }
-            }}
-            className="next_step active_color"
-          >
-            완성발표문 확인
-          </div>
-        )} */}
+        )}
       </div>
     </>
   );
