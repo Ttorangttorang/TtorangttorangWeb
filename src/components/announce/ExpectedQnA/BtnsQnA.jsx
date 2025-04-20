@@ -1,13 +1,17 @@
-import { useFinalScriptStore, useLoginModalStore } from '@/store/store';
+import { useFinalScriptStore, useLoginModalStore, useSettingStore } from '@/store/store';
 import { cls } from '@/utils/config';
 import { ANNOUNCE_TXT, MYPAGE_TXT } from '@/utils/constants';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useGenerateQnA } from '@/hooks/useGenerateQnA';
+import { fetchSaveScript } from '@/api/fetchData';
 
 export default function BtnsQnA(props) {
-  const { announcePage, getQAList, userEmail, saveScriptToAccount } = props;
+  const { announcePage, userEmail, userAccessToken } = props;
   const { finalScript, qaArray } = useFinalScriptStore();
   const { setLogin } = useLoginModalStore();
+  const { subject } = useSettingStore();
+  const { getQAList } = useGenerateQnA();
   const router = useRouter();
 
   // 조건별 css
@@ -16,6 +20,20 @@ export default function BtnsQnA(props) {
 
   // 예상질문 여부 버튼 텍스트 변경
   const getQnaBtnTxt = qaArray?.length > 0 ? ANNOUNCE_TXT.scriptFinal.AgainGetQna : ANNOUNCE_TXT.scriptFinal.initialGetQna;
+
+  // 최종 저장
+  const saveScriptToAccount = async () => {
+    try {
+      const data = {
+        content: finalScript,
+        topic: subject,
+        qnaList: qaArray,
+      };
+      await fetchSaveScript(data, userAccessToken);
+    } catch (error) {
+      console.error('Error fetching save script:', error);
+    }
+  };
 
   // 저장시 로그인 여부
   const handleSaveClick = () => {

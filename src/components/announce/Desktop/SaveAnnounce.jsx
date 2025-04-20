@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { useFinalScriptStore, useSettingStore, useQaLoadingStore, useAskListStateStore } from '@/store/store';
+import { useFinalScriptStore } from '@/store/store';
 import { cls } from '@/utils/config';
-import { fetchModifyScript, fetchQnAData, fetchSaveScript, getDetailScript } from '@/api/fetchData';
+import { fetchModifyScript, getDetailScript } from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { ANNOUNCE_TXT, MYPAGE_TXT } from '@/utils/constants';
 import GuideMent from '../Shared/GuideMent';
@@ -15,8 +15,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
   const [announcePage, setAnnouncePage] = useState(true);
   const [charCountFinal, setCharCountFinal] = useState(0);
   const { finalScript, setFinalScript, qaArray, setQaArray } = useFinalScriptStore();
-  const { setAskListState } = useAskListStateStore();
-  const { setQaLoading } = useQaLoadingStore();
   // 저장한 발표문
   const [modifySaveAnnounce, setModifySaveAnnounce] = useState(false);
   const [saveAnnounce, setSaveAnnounce] = useState('');
@@ -69,69 +67,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
   useEffect(() => {
     setCharCountFinal(finalScript.length);
   }, [finalScript]);
-
-  // 예상질문 답변
-  const getQAList = async () => {
-    setQaLoading(true);
-    try {
-      const data = {
-        content: finalScript.replace(/\n/g, ''),
-      };
-
-      //data
-      const response = await fetchQnAData(data);
-      const redData = response.data.replace(/data:/g, '');
-      const events = redData.split('\n\n'); // 이벤트 분리
-      const newQnaContentQueue = [];
-      events.forEach((event) => {
-        if (event.trim()) {
-          try {
-            const jsonData = JSON.parse(event);
-            const content = jsonData.message?.content || '';
-
-            if (content) {
-              // 상태를 업데이트하여 새 content 값을 배열에 추가
-              newQnaContentQueue.push(content);
-            }
-          } catch (error) {
-            console.error('Failed to parse JSON:', error);
-          }
-        }
-      });
-      const finaldata = newQnaContentQueue.join('');
-
-      // Q&A 데이터 파싱
-      const qnaArray = [];
-      const qnaPairs = finaldata.split(/\n{2,}|\\n{2,}/);
-
-      qnaPairs.forEach((pair) => {
-        const [question, answer] = pair.split(/\nA|\\nA/);
-        if (question && answer) {
-          qnaArray.push({
-            question: question
-              .trim()
-              .replace('Q', '')
-              .replace(/^\d+\.\s*/, '')
-              .trim(),
-            answer: answer
-              .trim()
-              .replace('A', '')
-              .replace(/^\d+\.\s*/, '')
-              .trim(),
-          });
-        }
-      });
-
-      if (qnaArray.length > 0) {
-        setQaArray(qnaArray);
-      }
-      setQaLoading(false);
-      setAskListState([false, false, false, false]);
-    } catch (error) {
-      console.error('Error fetching modified script:', error);
-      setQaLoading(false);
-    }
-  };
 
   // 저장한 내 발표문 제목
   const userModifyTitle = (event) => {
@@ -271,7 +206,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
             userAccessToken={userAccessToken}
             announcePage={announcePage}
             qaItems={qaItems}
-            getQAList={getQAList}
           />
         </form>
       </section>

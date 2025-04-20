@@ -7,15 +7,13 @@ import BtnsQnA from './BtnsQnA';
 import BackSlideBtn from '@/components/layout/BackSlideBtn';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import { cls } from '@/utils/config';
-import { fetchSaveScript } from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { deleteAllScript } from '@/store/store';
 
 export default function QnABox(props) {
-  const { userEmail, userAccessToken, announcePage, qaItems, sliderMobileRef, getQAList } = props;
+  const { userEmail, userAccessToken, announcePage, qaItems, sliderMobileRef } = props;
   const { isMobileDevice } = stores.useIsMobileStore();
-  const { finalScript, qaArray } = stores.useFinalScriptStore();
-  const { subject } = stores.useSettingStore();
+  const { qaArray } = stores.useFinalScriptStore();
   const { askListState, setAskListState } = stores.useAskListStateStore();
   const router = useRouter();
 
@@ -31,20 +29,6 @@ export default function QnABox(props) {
     setAskListState([false, false, false, false]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // 최종 저장
-  const saveScriptToAccount = async () => {
-    try {
-      const data = {
-        content: finalScript,
-        topic: subject,
-        qnaList: qaArray,
-      };
-      await fetchSaveScript(data, userAccessToken);
-    } catch (error) {
-      console.error('Error fetching save script:', error);
-    }
-  };
 
   // 조건별 css
   //pc
@@ -110,9 +94,8 @@ export default function QnABox(props) {
           {!isMobileDevice && (
             <BtnsQnA
               announcePage={announcePage}
-              getQAList={getQAList}
               userEmail={userEmail}
-              saveScriptToAccount={saveScriptToAccount}
+              userAccessToken={userAccessToken}
             />
           )}
         </div>

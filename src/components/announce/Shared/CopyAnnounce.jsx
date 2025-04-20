@@ -38,8 +38,8 @@ export default function CopyAnnounce({ scriptValue }) {
   // 비활성화
   const isDisabled = pathname === '/announce' && originScript?.length === 0;
 
-  // announce(currentSlide), mypage 별 변경
-  if (pathname.startsWith('/mypage/announce')) {
+  // announce(교정 페이지), mypage 별 변경
+  if (pathname && pathname.startsWith('/mypage/announce')) {
     textToCopy = scriptValue;
     copyMessage = GLOBAL_TXT.copy.alertFinalCopy;
   } else if (pathname === '/announce') {
