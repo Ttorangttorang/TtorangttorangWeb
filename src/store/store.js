@@ -111,12 +111,14 @@ export const deleteAllScript = () => {
   const setNextMoveBtn = useNextMoveBtnStore.getState().setNextMoveBtn;
   const resetScriptInfo = useScriptInfoStore.getState().resetScriptInfo;
   const clearFinal = useFinalScriptStore.getState().clearFinal;
+  const setImprovementMent = useImprovementStore.getState().setImprovementMent;
 
   clearSettings();
   setcompareScriptToggle(false);
   setNextMoveBtn(false);
   resetScriptInfo();
   clearFinal();
+  setImprovementMent([]);
 
   // 로컬스토리지도 완전 삭제
   localStorage.removeItem('settings');
