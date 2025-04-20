@@ -1,6 +1,5 @@
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import GuideMent from './GuideMent';
-import FinalAnnounce from './ExpectedQnA/FinalAnnounce';
 import { cls, formatNumber } from '@/utils/config';
 import { useState } from 'react';
 import CopyAnnounce from './CopyAnnounce';
@@ -9,15 +8,12 @@ import BackSlideBtn from '../layout/BackSlideBtn';
 import { fetchQnAData } from '@/api/fetchData';
 
 export default function MobileFinalAnnounce({ sliderMobileRef }) {
-  const [saveAnnounce, setSaveAnnounce] = useState('');
   const [charCountFinal, setCharCountFinal] = useState(0);
-  const [modifySaveAnnounce, setModifySaveAnnounce] = useState(false);
-  const [saveAnnounceCharCount, setSaveAnnounceCharCount] = useState(0);
-  const MAX_LENGTH = 3000;
   const { finalScript, setFinalScript, setQaArray, qaArray } = stores.useFinalScriptStore();
   const { setQaLoading } = stores.useQaLoadingStore();
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
   const { setAskListState } = stores.useAskListStateStore();
+  const MAX_LENGTH = 3000;
 
   // 발표문 수정
   const userModifyScript = (event) => {
@@ -120,7 +116,7 @@ export default function MobileFinalAnnounce({ sliderMobileRef }) {
             </p>
           </div>
           <div className="contentInfo_area">
-            <CopyAnnounce saveAnnounce={saveAnnounce} />
+            <CopyAnnounce />
           </div>
         </div>
       </div>

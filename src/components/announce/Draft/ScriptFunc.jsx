@@ -12,7 +12,7 @@ export default function ScriptFunc() {
   return (
     <div className="script_fun">
       <div className="copy_box">
-        <CopyAnnounce compareScriptToggle={compareScriptToggle} />
+        <CopyAnnounce />
       </div>
       {finalScript.length > 0 && (
         <div

@@ -33,7 +33,7 @@ export default function FinalAnnounce(props) {
         </p>
       </div>
       <div className="copy_box mt-[1.3vmin]">
-        <CopyAnnounce saveAnnounce={saveAnnounce} />
+        <CopyAnnounce />
       </div>
     </>
   );

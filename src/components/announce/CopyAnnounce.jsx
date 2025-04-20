@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useCurrentSlideStore, useFinalScriptStore, useSettingStore } from '@/store/store';
+import { useIsMobileStore, useCompareScriptStore, useCurrentSlideStore, useFinalScriptStore, useSettingStore, useCurrentSlideMobileStore } from '@/store/store';
 import { usePathname } from 'next/navigation';
 import { GLOBAL_TXT } from '@/utils/constants';
 
@@ -23,12 +23,15 @@ function CopyIcon() {
   );
 }
 
-export default function CopyAnnounce(props) {
-  const { compareScriptToggle, saveAnnounce } = props;
+export default function CopyAnnounce() {
   const pathname = usePathname();
+  const { compareScriptToggle } = useCompareScriptStore();
   const { originScript } = useSettingStore();
   const { currentSlide } = useCurrentSlideStore();
   const { finalScript } = useFinalScriptStore();
+  const { isMobileDevice } = useIsMobileStore();
+  const { currentMobileSlide } = useCurrentSlideMobileStore();
+  const slideIndex = isMobileDevice ? currentMobileSlide : currentSlide;
   let textToCopy;
   let copyMessage;
 
@@ -37,16 +40,15 @@ export default function CopyAnnounce(props) {
 
   // announce(currentSlide), mypage 별 변경
   if (pathname === '/announce') {
-    if (currentSlide === 0) {
+    const isCorrectionStep = (!isMobileDevice && slideIndex === 0) || (isMobileDevice && slideIndex === 1);
+
+    if (isCorrectionStep) {
       textToCopy = compareScriptToggle ? finalScript : originScript;
       copyMessage = GLOBAL_TXT.copy.aleretModifyCopy;
-    } else if (currentSlide === 1) {
+    } else {
       textToCopy = finalScript;
       copyMessage = GLOBAL_TXT.copy.alertFinalCopy;
     }
-  } else {
-    textToCopy = saveAnnounce;
-    copyMessage = GLOBAL_TXT.copy.alertFinalCopy;
   }
 
   return (
