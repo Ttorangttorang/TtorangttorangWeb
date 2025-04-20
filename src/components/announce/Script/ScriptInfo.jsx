@@ -1,8 +1,9 @@
-import { useCompareScriptStore } from '@/store/store';
+import { useCompareScriptStore, useImprovementStore, useScriptInfoStore } from '@/store/store';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 
-export default function ScriptInfo(props) {
-  const { improvementMent, estimatedPresentTime } = props;
+export default function ScriptInfo() {
+  const { estimatedPresentTime } = useScriptInfoStore();
+  const { improvementMent } = useImprovementStore();
   const { compareScriptToggle } = useCompareScriptStore();
   const scriptInfoTxt = ANNOUNCE_TXT.scriptWrite;
 

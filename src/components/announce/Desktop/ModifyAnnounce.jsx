@@ -12,12 +12,11 @@ import { deleteAllScript } from '@/store/store';
 
 export default function ModifyAnnounce({ userEmail }) {
   const [modifyBtn, setModifyBtn] = useState(false);
-  const [improvementMent, setImprovementMent] = useState('없음');
   const [highlightedText, setHighlightedText] = useState([]);
   const settings = stores.useSettingStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
+  const { setImprovementMent } = stores.useImprovementStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
-  const { estimatedPresentTime } = stores.useScriptInfoStore();
   const scriptWriteBoxRef = useRef(null);
 
   // 선 작성 후 로그인 시 작성문 유지
@@ -68,10 +67,7 @@ export default function ModifyAnnounce({ userEmail }) {
               </div>
               <div className="contentInfo_area">
                 <ScriptFunc />
-                <ScriptInfo
-                  improvementMent={improvementMent}
-                  estimatedPresentTime={estimatedPresentTime}
-                />
+                <ScriptInfo />
               </div>
             </div>
           </div>

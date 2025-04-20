@@ -1,4 +1,4 @@
-import { useFinalScriptStore, useLoginModalStore, useSettingStore } from '@/store/store';
+import { useFinalScriptStore, useLoginModalStore, useSettingStore, useUserStore } from '@/store/store';
 import { cls } from '@/utils/config';
 import { ANNOUNCE_TXT, MYPAGE_TXT } from '@/utils/constants';
 import Link from 'next/link';
@@ -7,11 +7,12 @@ import { useGenerateQnA } from '@/hooks/useGenerateQnA';
 import { fetchSaveScript } from '@/api/fetchData';
 
 export default function BtnsQnA(props) {
-  const { announcePage, userEmail, userAccessToken } = props;
+  const { announcePage } = props;
   const { finalScript, qaArray } = useFinalScriptStore();
   const { setLogin } = useLoginModalStore();
   const { subject } = useSettingStore();
   const { getQAList } = useGenerateQnA();
+  const { userEmail, userAccessToken } = useUserStore();
   const router = useRouter();
 
   // 조건별 css

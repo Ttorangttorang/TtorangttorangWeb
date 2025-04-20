@@ -135,11 +135,7 @@ export default function Announce() {
                   <MobileFinalAnnounce sliderMobileRef={sliderMobileRef} />
                 </div>
                 <div className="step_area">
-                  <QnABox
-                    sliderMobileRef={sliderMobileRef}
-                    userEmail={userEmail}
-                    userAccessToken={userAccessToken}
-                  />
+                  <QnABox sliderMobileRef={sliderMobileRef} />
                 </div>
               </Slider>
             </form>

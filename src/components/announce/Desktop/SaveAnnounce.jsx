@@ -202,8 +202,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
           </div>
           {/* 예상 질문 답변 영역 */}
           <QnABox
-            userEmail={userEmail}
-            userAccessToken={userAccessToken}
             announcePage={announcePage}
             qaItems={qaItems}
           />

@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { deleteAllScript } from '@/store/store';
 
 export default function QnABox(props) {
-  const { userEmail, userAccessToken, announcePage, qaItems, sliderMobileRef } = props;
+  const { announcePage, qaItems, sliderMobileRef } = props;
   const { isMobileDevice } = stores.useIsMobileStore();
   const { qaArray } = stores.useFinalScriptStore();
   const { askListState, setAskListState } = stores.useAskListStateStore();
@@ -91,13 +91,7 @@ export default function QnABox(props) {
             </div>
           )}
           {/* Desktop 예상질문 & 저장 버튼 */}
-          {!isMobileDevice && (
-            <BtnsQnA
-              announcePage={announcePage}
-              userEmail={userEmail}
-              userAccessToken={userAccessToken}
-            />
-          )}
+          {!isMobileDevice && <BtnsQnA announcePage={announcePage} />}
         </div>
       </div>
       {/* Mobile 예상질문페이지영역 돌아가기 버튼 */}

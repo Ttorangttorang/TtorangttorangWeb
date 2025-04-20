@@ -17,7 +17,7 @@ export function sliceMyScript(txt) {
 }
 
 export function sliceMyScriptTitle(txt) {
-  return txt === null ? '미정' : txt.length > 10 ? txt.slice(0, 10) + '...' : txt;
+  return txt === null ? '미정' : txt.length > 8 ? txt.slice(0, 8) + '...' : txt;
 }
 
 export function sliceMyScriptDateOnly(dateString) {
