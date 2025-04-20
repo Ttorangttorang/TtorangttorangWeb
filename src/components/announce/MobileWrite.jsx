@@ -64,7 +64,9 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
             />
             <div className="improve_area">
               <span onClick={() => setImproveModal(true)}>개선내용({improvementMent.length || 0})</span>
-              <span onClick={() => setcompareScriptToggle(!compareScriptToggle)}>{compareScriptToggle ? scriptFuncTxt.showOriginScript : scriptFuncTxt.showModifyScript}</span>
+              {finalScript.length > 0 && (
+                <span onClick={() => setcompareScriptToggle(!compareScriptToggle)}>{compareScriptToggle ? scriptFuncTxt.showOriginScript : scriptFuncTxt.showModifyScript}</span>
+              )}
             </div>
           </div>
           <div className="contentInfo_area">
