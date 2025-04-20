@@ -9,6 +9,7 @@ import { ANNOUNCE_TXT } from '@/utils/constants';
 import { cls } from '@/utils/config';
 import { fetchSaveScript } from '@/api/fetchData';
 import { useRouter } from 'next/router';
+import { deleteAllScript } from '@/store/store';
 
 export default function QnABox(props) {
   const { userEmail, userAccessToken, announcePage, qaItems, sliderMobileRef, getQAList } = props;
@@ -54,10 +55,7 @@ export default function QnABox(props) {
 
   // 초기화
   const handleGoBack = () => {
-    clearSettings();
-    resetScriptInfo();
-    setcompareScriptToggle(false);
-    clearFinal();
+    deleteAllScript();
     router.push('/onboarding');
   };
 

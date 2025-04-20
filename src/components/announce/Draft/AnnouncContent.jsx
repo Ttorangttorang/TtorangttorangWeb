@@ -47,16 +47,12 @@ export default function AnnouncContent(props) {
             value={finalScript}
             onChange={(value) => {
               setFinalScript(value);
-              props.setCharCountNew(value.length);
-              if (value.length > MAX_LENGTH) {
-                props.setCharCountNew(MAX_LENGTH);
-              }
             }}
           />
         </div>
       </div>
       <p>
-        {formatNumber(props.charCountNew)} / {MAX_LENGTH}
+        {formatNumber(Math.min(finalScript.length, MAX_LENGTH))} / {MAX_LENGTH}
       </p>
     </>
   );

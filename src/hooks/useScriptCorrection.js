@@ -3,12 +3,13 @@ import { diffChars } from 'diff';
 import * as stores from '@/store/store';
 import { fetchAnnounceData } from '@/api/fetchData';
 
-export function useScriptCorrection(setCharCountNew, setHighlightedText, setImproveData) {
+export function useScriptCorrection(setHighlightedText, setImproveData) {
   const settings = stores.useSettingStore();
   const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
   const { setcompareScriptToggle } = stores.useCompareScriptStore();
+  const { setCharCountOrigin } = stores.useScriptInfoStore();
 
   // 변경된 부분 강조
   const highlightDiffs = useCallback(
@@ -87,6 +88,7 @@ export function useScriptCorrection(setCharCountNew, setHighlightedText, setImpr
         if (finalScript.length > 0 && modifyBtn && compareScriptToggle) {
           const oldScript = finalScript.slice(0, 3000);
           settings.setOriginScript(oldScript); // 원본 상태에 기존 교정문 저장
+          setCharCountOrigin(oldScript.length);
           setFinalScript(extractedScript); // 새로운 교정문 저장
           highlightDiffs(oldScript, extractedScript);
         } else {
@@ -95,7 +97,7 @@ export function useScriptCorrection(setCharCountNew, setHighlightedText, setImpr
           setFinalScript(extractedScript);
         }
 
-        setCharCountNew(extractedScript.length);
+        // setCharCountNew(extractedScript.length);
         setcompareScriptToggle(true);
         setNextMoveBtn(true); // 다음 이동 버튼 활성화
       } catch (err) {
@@ -104,7 +106,7 @@ export function useScriptCorrection(setCharCountNew, setHighlightedText, setImpr
         setScriptLoading(false);
       }
     },
-    [setScriptLoading, settings, finalScript, setImproveData, setCharCountNew, setcompareScriptToggle, setNextMoveBtn, setFinalScript, highlightDiffs],
+    [setScriptLoading, settings, finalScript, setImproveData, setcompareScriptToggle, setNextMoveBtn, setCharCountOrigin, setFinalScript, highlightDiffs],
   );
 
   return { modifyScript, highlightDiffs };

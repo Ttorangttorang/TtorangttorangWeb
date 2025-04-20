@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import * as stores from '@/store/store';
 import GuideMent from './GuideMent';
@@ -10,6 +10,7 @@ import BackSlideBtn from '../layout/BackSlideBtn';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
 import { useOriginInputHandler } from '@/hooks/useOriginInputHandler';
 import { useEstimateTime } from '@/hooks/useEstimateTime';
+import { deleteAllScript } from '@/store/store';
 
 export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const scriptWriteBoxRef = useRef(null);
@@ -17,12 +18,9 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const { finalScript } = stores.useFinalScriptStore();
   const { improvementMent, setImprovementMent, setImproveModal } = stores.useImprovementStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
-  const { setcompareScriptToggle } = stores.useCompareScriptStore();
-  const { resetScriptInfo, estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
+  const { estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
-  const [charCountNew, setCharCountNew] = useState(0);
   const [highlightedText, setHighlightedText] = useState([]);
-  const scriptFuncTxt = ANNOUNCE_TXT.scriptWrite;
 
   // 초안 작성
   const { handleOriginInput } = useOriginInputHandler(setCharCountOrigin);
@@ -30,20 +28,13 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
   // 예상 발표 시간
   useEstimateTime({
     charCountOrigin,
-    charCountNew,
+    charCountNew: finalScript.length,
     compareScriptToggle,
     setEstimatedPresentTime,
   });
 
-  // script 초기화 버튼
-  const deleteAllScript = () => {
-    settings.clearSettings();
-    resetScriptInfo();
-    setcompareScriptToggle(false);
-  };
-
   //  교정하기 버튼 클릭시
-  const { modifyScript } = useScriptCorrection(setCharCountNew, setHighlightedText, setImprovementMent);
+  const { modifyScript } = useScriptCorrection(setHighlightedText, setImprovementMent);
 
   return (
     <>
@@ -59,14 +50,9 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
               writeOriginScript={handleOriginInput}
               charCountOrigin={charCountOrigin}
               highlightedText={highlightedText}
-              charCountNew={charCountNew}
-              setCharCountNew={setCharCountNew}
             />
             <div className="improve_area">
               <span onClick={() => setImproveModal(true)}>개선내용({improvementMent.length || 0})</span>
-              {finalScript.length > 0 && (
-                <span onClick={() => setcompareScriptToggle(!compareScriptToggle)}>{compareScriptToggle ? scriptFuncTxt.showOriginScript : scriptFuncTxt.showModifyScript}</span>
-              )}
             </div>
           </div>
           <div className="contentInfo_area">

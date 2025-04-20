@@ -10,19 +10,19 @@ import { ANNOUNCE_TXT } from '@/utils/constants';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
 import { useOriginInputHandler } from '@/hooks/useOriginInputHandler';
 import { useEstimateTime } from '@/hooks/useEstimateTime';
+import { deleteAllScript } from '@/store/store';
 
 export default function ModifyAnnounce({ userEmail }) {
   const settings = stores.useSettingStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { setFinalScript } = stores.useFinalScriptStore();
+  const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const [modifyBtn, setModifyBtn] = useState(false);
   //교정문
   const scriptWriteBoxRef = useRef(null);
   const [improvementMent, setImprovementMent] = useState('없음');
-  const [charCountNew, setCharCountNew] = useState(0);
   const [highlightedText, setHighlightedText] = useState([]);
-  const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
-  const { resetScriptInfo, estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
+  const { compareScriptToggle } = stores.useCompareScriptStore();
+  const { estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
@@ -48,19 +48,10 @@ export default function ModifyAnnounce({ userEmail }) {
   // 예상 발표 시간
   useEstimateTime({
     charCountOrigin,
-    charCountNew,
+    charCountNew: finalScript.length,
     compareScriptToggle,
     setEstimatedPresentTime,
   });
-
-  // script 초기화 버튼
-  const deleteAllScript = () => {
-    settings.clearSettings();
-    setcompareScriptToggle(false);
-    setNextMoveBtn(false);
-    resetScriptInfo();
-    setFinalScript('');
-  };
 
   // 교정하기 버튼 활성화
   useEffect(() => {
@@ -68,7 +59,7 @@ export default function ModifyAnnounce({ userEmail }) {
   }, [settings.originScript, settings.subject]);
 
   //  교정하기 버튼 클릭시
-  const { modifyScript } = useScriptCorrection(setCharCountNew, setHighlightedText, setImprovementMent);
+  const { modifyScript } = useScriptCorrection(setHighlightedText, setImprovementMent);
 
   // 버튼활성화 조건
   const getButtonClass = (condition) => cls(condition ? 'active_color cursor-pointer' : 'cursor-default');
@@ -90,8 +81,6 @@ export default function ModifyAnnounce({ userEmail }) {
                   writeOriginScript={handleOriginInput}
                   charCountOrigin={charCountOrigin}
                   highlightedText={highlightedText}
-                  charCountNew={charCountNew}
-                  setCharCountNew={setCharCountNew}
                 />
               </div>
               <div className="contentInfo_area">

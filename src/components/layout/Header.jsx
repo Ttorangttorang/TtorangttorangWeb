@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import * as stores from '@/store/store';
 import { authorizationCodeLink } from '@/api/fetchData';
 import { HEADER_TXT } from '@/utils/constants';
+import { deleteAllScript } from '@/store/store';
 import Modal from './Modal';
 
 export default function Header() {
@@ -32,14 +33,19 @@ export default function Header() {
     router.push(authorizationCodeLink);
   };
 
+  const handleLogoClick = () => {
+    deleteAllScript(); // 상태 초기화
+    router.push(HEADER_TXT.mainHome.link); // 이동
+  };
+
   return (
     <>
       <header className="h_pc">
         <div className="header_container">
           <div className="header_menu">
             <h1>
-              <Link
-                href={HEADER_TXT.mainHome.link}
+              <button
+                onClick={handleLogoClick}
                 className="logo_area"
               >
                 <Image
@@ -48,7 +54,7 @@ export default function Header() {
                   width={98}
                   height={33}
                 />
-              </Link>
+              </button>
             </h1>
             <nav>
               <ul>

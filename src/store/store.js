@@ -104,6 +104,25 @@ export const useAskListStateStore = create((set) => ({
   setAskListState: (value) => set({ askListState: value }),
 }));
 
+//// 전체 초기화 ////
+export const deleteAllScript = () => {
+  const clearSettings = useSettingStore.getState().clearSettings;
+  const setcompareScriptToggle = useCompareScriptStore.getState().setcompareScriptToggle;
+  const setNextMoveBtn = useNextMoveBtnStore.getState().setNextMoveBtn;
+  const resetScriptInfo = useScriptInfoStore.getState().resetScriptInfo;
+  const clearFinal = useFinalScriptStore.getState().clearFinal;
+
+  clearSettings();
+  setcompareScriptToggle(false);
+  setNextMoveBtn(false);
+  resetScriptInfo();
+  clearFinal();
+
+  // 로컬스토리지도 완전 삭제
+  localStorage.removeItem('settings');
+  localStorage.removeItem('final');
+};
+
 /// ======================================================================= ///
 
 //// Loading ////
