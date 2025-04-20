@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import * as stores from '@/store/store';
-import GuideMent from './GuideMent';
-import AnnouncContent from './Draft/AnnouncContent';
-import ScriptFunc from './Draft/ScriptFunc';
+import GuideMent from '../GuideMent';
+import AnnouncContent from '../Draft/AnnouncContent';
+import ScriptFunc from '../Draft/ScriptFunc';
 import { cls } from '@/utils/config';
 import { PiArrowClockwiseBold } from 'react-icons/pi';
-import BackSlideBtn from '../layout/BackSlideBtn';
+import BackSlideBtn from '../../layout/BackSlideBtn';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
 import { useOriginInputHandler } from '@/hooks/useOriginInputHandler';
 import { useEstimateTime } from '@/hooks/useEstimateTime';

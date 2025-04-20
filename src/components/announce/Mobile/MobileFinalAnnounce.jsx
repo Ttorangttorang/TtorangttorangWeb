@@ -1,10 +1,10 @@
 import { ANNOUNCE_TXT } from '@/utils/constants';
-import GuideMent from './GuideMent';
+import GuideMent from '../GuideMent';
 import { cls, formatNumber } from '@/utils/config';
 import { useState } from 'react';
-import CopyAnnounce from './CopyAnnounce';
+import CopyAnnounce from '../CopyAnnounce';
 import * as stores from '@/store/store';
-import BackSlideBtn from '../layout/BackSlideBtn';
+import BackSlideBtn from '../../layout/BackSlideBtn';
 import { fetchQnAData } from '@/api/fetchData';
 
 export default function MobileFinalAnnounce({ sliderMobileRef }) {

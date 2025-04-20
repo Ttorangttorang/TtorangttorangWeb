@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import DetailSetting from './Draft/DetailSetting';
-import GuideMent from './GuideMent';
+import DetailSetting from '../Draft/DetailSetting';
+import GuideMent from '../GuideMent';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import { cls } from '@/utils/config';
 import { useCurrentSlideMobileStore, useSettingStore } from '@/store/store';

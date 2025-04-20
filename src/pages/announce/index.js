@@ -7,9 +7,9 @@ import ProgressBar from '@/components/announce/ProgressBar';
 import * as stores from '@/store/store';
 import Modal from '@/components/layout/Modal';
 import { useEffect, useRef } from 'react';
-import MobileSetting from '@/components/announce/MobileSetting';
-import MobileWrite from '@/components/announce/MobileWrite';
-import MobileFinalAnnounce from '@/components/announce/MobileFinalAnnounce';
+import MobileSetting from '@/components/announce/Mobile/MobileSetting';
+import MobileWrite from '@/components/announce/Mobile/MobileWrite';
+import MobileFinalAnnounce from '@/components/announce/Mobile/MobileFinalAnnounce';
 import QnABox from '@/components/announce/ExpectedQnA/QnABox';
 
 export default function Announce() {
