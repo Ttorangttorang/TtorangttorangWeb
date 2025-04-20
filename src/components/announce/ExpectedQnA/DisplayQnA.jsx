@@ -19,7 +19,7 @@ function ArrowIcon() {
 
 function QuestionArea({ announcePage, question, isActive }) {
   const { isMobileDevice } = useIsMobileStore();
-  // 조건별 css
+  // Desktop 예상 질문과 답변 교정페이지 / 마이페이지 조건별 css
   const questionPcClass = cls('question_area', announcePage ? 'min-h-[12.8vmin]' : 'min-h-[13.7vmin]');
   const questionMobileClass = cls('question_area');
   const fontClass = cls('question', isActive ? 'font-bold' : 'font-medium');

@@ -31,7 +31,7 @@ export default function QnABox(props) {
   }, []);
 
   // 조건별 css
-  //pc
+  // Desktop 예상 질문과 답변 교정페이지 / 마이페이지
   const qnaAreaClass = cls('qa_area', announcePage ? 'h-[52vmin]' : 'h-[55.55vmin]');
 
   // 초기화
