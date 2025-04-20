@@ -8,7 +8,6 @@ import BackSlideBtn from '../../layout/BackSlideBtn';
 import { fetchQnAData } from '@/api/fetchData';
 
 export default function MobileFinalAnnounce({ sliderMobileRef }) {
-  const [charCountFinal, setCharCountFinal] = useState(0);
   const { finalScript, setFinalScript, setQaArray, qaArray } = stores.useFinalScriptStore();
   const { setQaLoading } = stores.useQaLoadingStore();
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
@@ -25,7 +24,6 @@ export default function MobileFinalAnnounce({ sliderMobileRef }) {
     }
 
     setFinalScript(draft);
-    setCharCountFinal(draft.length);
   };
 
   // 예상질문 답변
@@ -112,7 +110,7 @@ export default function MobileFinalAnnounce({ sliderMobileRef }) {
               disabled={false}
             />
             <p className="charCount">
-              {formatNumber(charCountFinal)}/ {MAX_LENGTH}
+              {formatNumber(finalScript.length)}/ {MAX_LENGTH}
             </p>
           </div>
           <div className="contentInfo_area">
