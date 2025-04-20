@@ -7,7 +7,7 @@ import { fetchModifyScript, getDetailScript } from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { ANNOUNCE_TXT, MYPAGE_TXT } from '@/utils/constants';
 import GuideMent from '../Shared/GuideMent';
-import FinalAnnounce from '../ExpectedQnA/FinalAnnounce';
+import FinalAnnounce from './FinalAnnounce';
 import QnABox from '../ExpectedQnA/QnABox';
 
 export default function SaveAnnounce({ userEmail, userAccessToken }) {
