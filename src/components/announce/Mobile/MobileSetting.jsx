@@ -1,5 +1,5 @@
-import DetailSetting from '../Draft/DetailSetting';
-import GuideMent from '../GuideMent';
+import DetailSetting from '../Script/DetailSetting';
+import GuideMent from '../Shared/GuideMent';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import { cls } from '@/utils/config';
 import { useCurrentSlideMobileStore, useSettingStore } from '@/store/store';

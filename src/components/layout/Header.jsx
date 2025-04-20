@@ -59,20 +59,26 @@ export default function Header() {
             <nav>
               <ul>
                 <li>
-                  <Link
-                    href={HEADER_TXT.mainHome.link}
+                  <button
+                    onClick={() => {
+                      deleteAllScript();
+                      router.push(HEADER_TXT.mainHome.link);
+                    }}
                     className={cls(pathname === HEADER_TXT.mainHome.link ? 'on' : '')}
                   >
                     {HEADER_TXT.mainHome.title}
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link
-                    href={HEADER_TXT.announce.link}
+                  <button
+                    onClick={() => {
+                      deleteAllScript();
+                      router.push(HEADER_TXT.announce.link);
+                    }}
                     className={cls(pathname === HEADER_TXT.announce.link ? 'on' : '')}
                   >
                     {HEADER_TXT.announce.title}
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </nav>

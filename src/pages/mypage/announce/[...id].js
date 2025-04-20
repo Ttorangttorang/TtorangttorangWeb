@@ -1,4 +1,4 @@
-import SaveAnnounce from '@/components/announce/SaveAnnounce';
+import SaveAnnounce from '@/components/announce/Desktop/SaveAnnounce';
 import { useUserStore } from '@/store/store';
 
 export default function Announce() {

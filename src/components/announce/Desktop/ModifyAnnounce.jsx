@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import GuideMent from './GuideMent';
-import { cls } from '@/utils/config';
+import GuideMent from '../Shared/GuideMent';
+import AnnouncContent from '../Script/AnnouncContent';
+import ScriptInfo from '../Script/ScriptInfo';
+import ScriptFunc from '../Script/ScriptFunc';
+import DetailSetting from '../Script/DetailSetting';
 import * as stores from '@/store/store';
-import AnnouncContent from './Draft/AnnouncContent';
-import ScriptInfo from './Draft/ScriptInfo';
-import ScriptFunc from './Draft/ScriptFunc';
-import DetailSetting from './Draft/DetailSetting';
+import { cls } from '@/utils/config';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
 import { useOriginInputHandler } from '@/hooks/useOriginInputHandler';
@@ -13,16 +13,15 @@ import { useEstimateTime } from '@/hooks/useEstimateTime';
 import { deleteAllScript } from '@/store/store';
 
 export default function ModifyAnnounce({ userEmail }) {
-  const settings = stores.useSettingStore();
-  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const [modifyBtn, setModifyBtn] = useState(false);
-  //교정문
-  const scriptWriteBoxRef = useRef(null);
   const [improvementMent, setImprovementMent] = useState('없음');
   const [highlightedText, setHighlightedText] = useState([]);
+  const settings = stores.useSettingStore();
+  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
+  const { finalScript } = stores.useFinalScriptStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
   const { estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
+  const scriptWriteBoxRef = useRef(null);
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {

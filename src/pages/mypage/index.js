@@ -10,6 +10,8 @@ import * as configs from '@/utils/config';
 import * as apis from '@/api/fetchData';
 import { MYPAGE_TXT } from '@/utils/constants';
 import Modal from '@/components/layout/Modal';
+import { deleteAllScript } from '@/store/store';
+import { HEADER_TXT } from '@/utils/constants';
 
 export default function Mypage() {
   const router = useRouter();
@@ -17,15 +19,10 @@ export default function Mypage() {
   const [withdrawal, setWithdrawal] = useState(false);
   const [addListLength, setAddListLength] = useState(0);
   const { userEmail, accessToken, userAccessToken, clearUser } = stores.useUserStore();
-  const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { clearSettings } = stores.useSettingStore();
-  const { clearFinal } = stores.useFinalScriptStore();
 
   // 초기화
   useEffect(() => {
-    clearSettings();
-    clearFinal();
-    setNextMoveBtn(false);
+    deleteAllScript();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -115,8 +112,11 @@ export default function Mypage() {
       <div className="announce_title">
         <p>{MYPAGE_TXT.myAnnounce.emptyTitle}</p>
       </div>
-      <Link
-        href={`/announce`}
+      <button
+        onClick={() => {
+          deleteAllScript();
+          router.push(HEADER_TXT.announce.link);
+        }}
         className="announce_content flex_center"
       >
         <div className="plusBtn_area">
@@ -129,7 +129,7 @@ export default function Mypage() {
             />
           </div>
         </div>
-      </Link>
+      </button>
     </>
   );
 

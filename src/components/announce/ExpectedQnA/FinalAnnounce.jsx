@@ -1,7 +1,7 @@
 import { cls, formatNumber } from '@/utils/config';
 import { ANNOUNCE_TXT } from '@/utils/constants';
 import { useFinalScriptStore } from '@/store/store';
-import CopyAnnounce from '../CopyAnnounce';
+import CopyAnnounce from '../Shared/CopyAnnounce';
 
 export default function FinalAnnounce(props) {
   const { announcePage, saveAnnounce, userModifyScript, modifySaveAnnounce, charCountFinal, saveAnnounceCharCount } = props;
@@ -33,7 +33,7 @@ export default function FinalAnnounce(props) {
         </p>
       </div>
       <div className="copy_box mt-[1.3vmin]">
-        <CopyAnnounce />
+        <CopyAnnounce scriptValue={scriptValue} />
       </div>
     </>
   );

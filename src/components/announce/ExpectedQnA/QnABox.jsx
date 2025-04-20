@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import * as stores from '@/store/store';
-import GuideMent from '../GuideMent';
+import GuideMent from '../Shared/GuideMent';
 import NoneQnA from './NoneQnA';
 import DisplayQnA from './DisplayQnA';
 import BtnsQnA from './BtnsQnA';
@@ -14,11 +14,9 @@ import { deleteAllScript } from '@/store/store';
 export default function QnABox(props) {
   const { userEmail, userAccessToken, announcePage, qaItems, sliderMobileRef, getQAList } = props;
   const { isMobileDevice } = stores.useIsMobileStore();
-  const { finalScript, qaArray, clearFinal } = stores.useFinalScriptStore();
-  const { subject, clearSettings } = stores.useSettingStore();
+  const { finalScript, qaArray } = stores.useFinalScriptStore();
+  const { subject } = stores.useSettingStore();
   const { askListState, setAskListState } = stores.useAskListStateStore();
-  const { resetScriptInfo } = stores.useScriptInfoStore();
-  const { setcompareScriptToggle } = stores.useCompareScriptStore();
   const router = useRouter();
 
   // 클릭 시 질문 펼침/접기 처리
@@ -36,7 +34,6 @@ export default function QnABox(props) {
 
   // 최종 저장
   const saveScriptToAccount = async () => {
-    console.log('저장');
     try {
       const data = {
         content: finalScript,
@@ -77,7 +74,7 @@ export default function QnABox(props) {
                     onClick={() => toggleQAItem(index)}
                   >
                     <DisplayQnA
-                      // announcePage={announcePage}
+                      announcePage={announcePage}
                       item={item}
                       index={index}
                       askListState={askListState}
@@ -109,16 +106,18 @@ export default function QnABox(props) {
               )}
             </div>
           )}
+          {/* Desktop 예상질문 & 저장 버튼 */}
           {!isMobileDevice && (
             <BtnsQnA
               announcePage={announcePage}
               getQAList={getQAList}
               userEmail={userEmail}
-              ptToAccount={saveScriptToAccount}
+              saveScriptToAccount={saveScriptToAccount}
             />
           )}
         </div>
       </div>
+      {/* Mobile 예상질문페이지영역 돌아가기 버튼 */}
       {isMobileDevice && (
         <div className="slideMove_btn_area">
           <BackSlideBtn

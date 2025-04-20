@@ -6,16 +6,15 @@ import { cls } from '@/utils/config';
 import { fetchModifyScript, fetchQnAData, fetchSaveScript, getDetailScript } from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { ANNOUNCE_TXT, MYPAGE_TXT } from '@/utils/constants';
-import GuideMent from './GuideMent';
-import FinalAnnounce from './ExpectedQnA/FinalAnnounce';
-import QnABox from './ExpectedQnA/QnABox';
+import GuideMent from '../Shared/GuideMent';
+import FinalAnnounce from '../ExpectedQnA/FinalAnnounce';
+import QnABox from '../ExpectedQnA/QnABox';
 
 export default function SaveAnnounce({ userEmail, userAccessToken }) {
   const pathname = usePathname();
-  const { subject } = useSettingStore();
   const [announcePage, setAnnouncePage] = useState(true);
-  const { finalScript, setFinalScript, qaArray, setQaArray } = useFinalScriptStore();
   const [charCountFinal, setCharCountFinal] = useState(0);
+  const { finalScript, setFinalScript, qaArray, setQaArray } = useFinalScriptStore();
   const { setAskListState } = useAskListStateStore();
   const { setQaLoading } = useQaLoadingStore();
   // 저장한 발표문
@@ -26,7 +25,7 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
   const [modifyTitleCharCount, setModifyTitleCharCount] = useState(0);
   const [saveQaArray, setSaveQaArray] = useState([]);
 
-  // 교정하기 페이지 = true / 마이 발표문 상세 = false
+  // 교정하기 페이지 = true / 마이페이지 발표문 상세 = false
   useEffect(() => {
     if (pathname === '/announce') {
       setAnnouncePage(true);
@@ -131,20 +130,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
     } catch (error) {
       console.error('Error fetching modified script:', error);
       setQaLoading(false);
-    }
-  };
-
-  // 저장
-  const saveScriptToAccount = async () => {
-    try {
-      const data = {
-        content: finalScript,
-        topic: subject,
-        qnaList: qaArray,
-      };
-      await fetchSaveScript(data, userAccessToken);
-    } catch (error) {
-      console.error('Error fetching save script:', error);
     }
   };
 

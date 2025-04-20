@@ -23,7 +23,7 @@ function CopyIcon() {
   );
 }
 
-export default function CopyAnnounce() {
+export default function CopyAnnounce({ scriptValue }) {
   const pathname = usePathname();
   const { compareScriptToggle } = useCompareScriptStore();
   const { originScript } = useSettingStore();
@@ -39,7 +39,10 @@ export default function CopyAnnounce() {
   const isDisabled = pathname === '/announce' && originScript?.length === 0;
 
   // announce(currentSlide), mypage 별 변경
-  if (pathname === '/announce') {
+  if (pathname.startsWith('/mypage/announce')) {
+    textToCopy = scriptValue;
+    copyMessage = GLOBAL_TXT.copy.alertFinalCopy;
+  } else if (pathname === '/announce') {
     const isCorrectionStep = (!isMobileDevice && slideIndex === 0) || (isMobileDevice && slideIndex === 1);
 
     if (isCorrectionStep) {

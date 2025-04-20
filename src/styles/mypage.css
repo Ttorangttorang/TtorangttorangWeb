@@ -111,7 +111,7 @@
         }
 
         .announce_content {
-          @apply flex-col h-[calc(100%-5.86vmin)] px-[1.84vmin] pt-[1.95vmin] pb-[0.87vmin] overflow-hidden;
+          @apply flex-col w-full h-[calc(100%-5.86vmin)] px-[1.84vmin] pt-[1.95vmin] pb-[0.87vmin] overflow-hidden;
 
           > p:first-of-type {
             @apply text-[1.52vmin] font-medium leading-[3.47vmin] pb-[1.95vmin] gray_colorTxt;

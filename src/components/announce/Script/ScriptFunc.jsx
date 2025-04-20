@@ -2,7 +2,7 @@ import Image from 'next/image';
 import * as LocalImages from '@/utils/imageImports';
 import { useCompareScriptStore, useFinalScriptStore } from '@/store/store';
 import { ANNOUNCE_TXT } from '@/utils/constants';
-import CopyAnnounce from '../CopyAnnounce';
+import CopyAnnounce from '../Shared/CopyAnnounce';
 
 export default function ScriptFunc() {
   const { finalScript } = useFinalScriptStore();
