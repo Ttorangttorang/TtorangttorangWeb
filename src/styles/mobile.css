@@ -38,20 +38,12 @@
       @apply text-sm;
     }
 
-    > div.kakoLogin {
-      @apply flex_center relative w-full h-[48px] bg-[#FEE404] rounded-lg;
-
-      .kakoLogo {
-        @apply absolute_yHalf left-3 w-[21px] h-[21px];
-      }
+    > a.start {
+      @apply flex_center relative w-full h-[48px] main_colorBg rounded-lg;
 
       span {
-        @apply text-lg font-normal text-[#000000];
+        @apply text-lg font-normal text-white;
       }
-    }
-
-    > a {
-      @apply text-base;
     }
   }
 }

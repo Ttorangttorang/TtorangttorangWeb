@@ -167,19 +167,12 @@ export default function Home() {
               </div>
             </div>
             <div className="bottom">
-              <p>로그인 시 작성한 발표문을 저장할 수 있어요!</p>
-              <div className="kakoLogin">
-                <div className="kakoLogo">
-                  <Image
-                    src={LocalImages.ImageKakoLogo}
-                    alt="ImageKakoLogo"
-                    width={21}
-                    height={21}
-                  />
-                </div>
-                <span>카카오로 시작하기</span>
-              </div>
-              <Link href={'/onboarding'}>로그인없이 체험할게요</Link>
+              <Link
+                href={'/onboarding'}
+                className="start"
+              >
+                <span>시작하기</span>
+              </Link>
             </div>
           </div>
         </section>
