@@ -4,12 +4,10 @@ import AnnouncContent from '../Script/AnnouncContent';
 import ScriptInfo from '../Script/ScriptInfo';
 import ScriptFunc from '../Script/ScriptFunc';
 import DetailSetting from '../Script/DetailSetting';
-import * as stores from '@/store/store';
 import { cls } from '@/utils/config';
 import { ANNOUNCE_TXT } from '@/utils/constants';
+import * as stores from '@/store/store';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
-import { useOriginInputHandler } from '@/hooks/useOriginInputHandler';
-import { useEstimateTime } from '@/hooks/useEstimateTime';
 import { deleteAllScript } from '@/store/store';
 
 export default function ModifyAnnounce({ userEmail }) {
@@ -18,9 +16,8 @@ export default function ModifyAnnounce({ userEmail }) {
   const [highlightedText, setHighlightedText] = useState([]);
   const settings = stores.useSettingStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { finalScript } = stores.useFinalScriptStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
-  const { estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
+  const { estimatedPresentTime } = stores.useScriptInfoStore();
   const scriptWriteBoxRef = useRef(null);
 
   // 선 작성 후 로그인 시 작성문 유지
@@ -41,17 +38,6 @@ export default function ModifyAnnounce({ userEmail }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEmail]);
 
-  // 초안 작성
-  const { handleOriginInput } = useOriginInputHandler(setCharCountOrigin);
-
-  // 예상 발표 시간
-  useEstimateTime({
-    charCountOrigin,
-    charCountNew: finalScript.length,
-    compareScriptToggle,
-    setEstimatedPresentTime,
-  });
-
   // 교정하기 버튼 활성화
   useEffect(() => {
     setModifyBtn(settings.originScript && settings.subject);
@@ -60,7 +46,7 @@ export default function ModifyAnnounce({ userEmail }) {
   //  교정하기 버튼 클릭시
   const { modifyScript } = useScriptCorrection(setHighlightedText, setImprovementMent);
 
-  // 버튼활성화 조건
+  // 버튼활성화 조건 css
   const getButtonClass = (condition) => cls(condition ? 'active_color cursor-pointer' : 'cursor-default');
 
   return (
@@ -77,8 +63,6 @@ export default function ModifyAnnounce({ userEmail }) {
               <div className="scriptMain_area">
                 <AnnouncContent
                   scriptWriteBoxRef={scriptWriteBoxRef}
-                  writeOriginScript={handleOriginInput}
-                  charCountOrigin={charCountOrigin}
                   highlightedText={highlightedText}
                 />
               </div>

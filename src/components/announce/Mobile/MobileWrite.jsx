@@ -1,15 +1,13 @@
 import { useRef, useState } from 'react';
-import { ANNOUNCE_TXT } from '@/utils/constants';
-import * as stores from '@/store/store';
 import GuideMent from '../Shared/GuideMent';
 import AnnouncContent from '../Script/AnnouncContent';
 import ScriptFunc from '../Script/ScriptFunc';
-import { cls } from '@/utils/config';
-import { PiArrowClockwiseBold } from 'react-icons/pi';
 import BackSlideBtn from '../../layout/BackSlideBtn';
+import { cls } from '@/utils/config';
+import { ANNOUNCE_TXT } from '@/utils/constants';
+import { PiArrowClockwiseBold } from 'react-icons/pi';
+import * as stores from '@/store/store';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
-import { useOriginInputHandler } from '@/hooks/useOriginInputHandler';
-import { useEstimateTime } from '@/hooks/useEstimateTime';
 import { deleteAllScript } from '@/store/store';
 
 export default function MobileWrite({ userEmail, sliderMobileRef }) {
@@ -18,20 +16,9 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
   const { finalScript } = stores.useFinalScriptStore();
   const { improvementMent, setImprovementMent, setImproveModal } = stores.useImprovementStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();
-  const { estimatedPresentTime, setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
+  const { estimatedPresentTime } = stores.useScriptInfoStore();
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
   const [highlightedText, setHighlightedText] = useState([]);
-
-  // 초안 작성
-  const { handleOriginInput } = useOriginInputHandler(setCharCountOrigin);
-
-  // 예상 발표 시간
-  useEstimateTime({
-    charCountOrigin,
-    charCountNew: finalScript.length,
-    compareScriptToggle,
-    setEstimatedPresentTime,
-  });
 
   //  교정하기 버튼 클릭시
   const { modifyScript } = useScriptCorrection(setHighlightedText, setImprovementMent);
@@ -47,8 +34,6 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
           <div className="scriptMain_area">
             <AnnouncContent
               scriptWriteBoxRef={scriptWriteBoxRef}
-              writeOriginScript={handleOriginInput}
-              charCountOrigin={charCountOrigin}
               highlightedText={highlightedText}
             />
             <div className="improve_area">

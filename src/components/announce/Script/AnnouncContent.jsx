@@ -1,4 +1,6 @@
 import * as stores from '@/store/store';
+import { useEstimateTime } from '@/hooks/useEstimateTime';
+import { useOriginInputHandler } from '@/hooks/useOriginInputHandler';
 import { cls, formatNumber } from '@/utils/config';
 import { ANNOUNCE_TXT, GLOBAL_TXT } from '@/utils/constants';
 import HighlightWithinTextarea from 'react-highlight-within-textarea';
@@ -9,8 +11,20 @@ export default function AnnouncContent(props) {
   const { compareScriptToggle } = stores.useCompareScriptStore();
   const { originScript } = stores.useSettingStore();
   const { finalScript, setFinalScript } = stores.useFinalScriptStore();
+  const { setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
   const MAX_LENGTH = 3000;
   const filterOut = ['-', '"', '"', '!.', '!', '[', ']', ':'];
+
+  // 초안 작성
+  const { handleOriginInput } = useOriginInputHandler(setCharCountOrigin);
+
+  // 예상 발표 시간
+  useEstimateTime({
+    charCountOrigin,
+    charCountNew: finalScript.length,
+    compareScriptToggle,
+    setEstimatedPresentTime,
+  });
 
   const normalTxtArea = () => (
     <>
@@ -22,13 +36,13 @@ export default function AnnouncContent(props) {
           placeholder={ANNOUNCE_TXT.scriptWrite.inputDescription}
           maxLength={MAX_LENGTH}
           value={originScript}
-          onChange={props.writeOriginScript}
+          onChange={handleOriginInput}
           readOnly={finalScript.length > 0}
           className={cls(finalScript.length > 0 && 'cursor-default')}
         />
       </div>
       <p>
-        {formatNumber(props.charCountOrigin)} / {MAX_LENGTH}
+        {formatNumber(charCountOrigin)} / {MAX_LENGTH}
       </p>
     </>
   );
