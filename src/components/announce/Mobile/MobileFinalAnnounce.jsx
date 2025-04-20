@@ -125,19 +125,23 @@ export default function MobileFinalAnnounce({ sliderMobileRef }) {
         />
         <div
           onClick={() => {
-            if (qaArray.length > 0) {
-              // 이미 예상 질문을 받은 경우 바로 슬라이드 이동
-              setCurrentMobileSlide(3);
-              sliderMobileRef.current.slickGoTo(3);
-            } else {
-              // 예상 질문을 받은 적이 없는 경우
-              getQAList();
-            }
+            getQAList();
           }}
           className={cls('next_step', finalScript.length > 0 ? 'active_color' : 'disabled_color')}
         >
-          {qaArray.length > 0 ? '예상 질문 확인하기' : '예상 질문 받기'}
+          {qaArray.length > 0 ? '예상질문 다시 받기' : '예상질문 받기'}
         </div>
+        {qaArray.length > 0 && (
+          <div
+            onClick={() => {
+              setCurrentMobileSlide(3);
+              sliderMobileRef.current.slickGoTo(3);
+            }}
+            className="next_step active_color"
+          >
+            예상질문 확인하기
+          </div>
+        )}
       </div>
     </>
   );
