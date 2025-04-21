@@ -161,6 +161,13 @@ export default function Announce() {
               />
             </Slider>
           </div>
+          {improveModal && (
+            <Modal
+              type={'improvementMent'}
+              improvementMent={improvementMent}
+              onClose={() => setImproveModal(false)}
+            />
+          )}
         </>
       )}
       {/* loading */}

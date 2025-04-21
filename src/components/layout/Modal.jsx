@@ -42,6 +42,7 @@ const modalContentConfig = {
 export default function Modal({ type, onClose, onConfirm, onLogin, movePage, improvementMent }) {
   const content = modalContentConfig[type];
 
+  // 로그인 모달
   const renderLoginModal = () => (
     <div className="modal_box login_box">
       <div
@@ -96,6 +97,7 @@ export default function Modal({ type, onClose, onConfirm, onLogin, movePage, imp
     </div>
   );
 
+  // 삭제 & 탈퇴 & 개선내용 모달
   const renderDefaultModal = () => (
     <div className="modal_box modal_select">
       {type === 'improvementMent' && (
@@ -157,6 +159,7 @@ export default function Modal({ type, onClose, onConfirm, onLogin, movePage, imp
     </div>
   );
 
+  // 로딩 모달
   const renderLoading = () => (
     <div className="modal_box modal_loading">
       <div className="character_box">
