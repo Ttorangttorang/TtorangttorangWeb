@@ -14,7 +14,6 @@ import QnABox from '@/components/announce/ExpectedQnA/QnABox';
 
 export default function Announce() {
   const { isMobileDevice } = stores.useIsMobileStore();
-  const { userEmail, userAccessToken } = stores.useUserStore();
   const { nextMoveBtn } = stores.useNextMoveBtnStore();
   const { qaLoading } = stores.useQaLoadingStore();
   const { scriptLoading } = stores.useScriptLoadingStore();
@@ -140,35 +139,25 @@ export default function Announce() {
               </Slider>
             </form>
           </div>
-          {/* 개선내용 모달 */}
-          {improveModal && improvementMent.length > 0 && (
-            <Modal
-              type={'improvementMent'}
-              improvementMent={improvementMent}
-              onClose={() => setImproveModal(false)}
-            />
-          )}
         </>
       ) : (
         <>
           <div className="slider-container">
             <ProgressBar />
             <Slider {...settings}>
-              <ModifyAnnounce userEmail={userEmail} />
-              <SaveAnnounce
-                userEmail={userEmail}
-                userAccessToken={userAccessToken}
-              />
+              <ModifyAnnounce />
+              <SaveAnnounce />
             </Slider>
           </div>
-          {improveModal && (
-            <Modal
-              type={'improvementMent'}
-              improvementMent={improvementMent}
-              onClose={() => setImproveModal(false)}
-            />
-          )}
         </>
+      )}
+      {/* 개선 내용 모달 (공통) */}
+      {improveModal && improvementMent.length > 0 && (
+        <Modal
+          type="improvementMent"
+          improvementMent={improvementMent}
+          onClose={() => setImproveModal(false)}
+        />
       )}
       {/* loading */}
       {scriptLoading && <Modal type="announceLoading" />}

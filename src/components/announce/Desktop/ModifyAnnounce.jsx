@@ -10,10 +10,11 @@ import * as stores from '@/store/store';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
 import { deleteAllScript } from '@/store/store';
 
-export default function ModifyAnnounce({ userEmail }) {
+export default function ModifyAnnounce() {
   const [modifyBtn, setModifyBtn] = useState(false);
   const [highlightedText, setHighlightedText] = useState([]);
   const settings = stores.useSettingStore();
+  const { userEmail } = stores.useUserStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
   const { setImprovementMent } = stores.useImprovementStore();
   const { compareScriptToggle } = stores.useCompareScriptStore();

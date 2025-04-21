@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { useFinalScriptStore } from '@/store/store';
+import { useFinalScriptStore, useUserStore } from '@/store/store';
 import { cls } from '@/utils/config';
 import { fetchModifyScript, getDetailScript } from '@/api/fetchData';
 import { useRouter } from 'next/router';
@@ -10,9 +10,10 @@ import GuideMent from '../Shared/GuideMent';
 import FinalAnnounce from './FinalAnnounce';
 import QnABox from '../ExpectedQnA/QnABox';
 
-export default function SaveAnnounce({ userEmail, userAccessToken }) {
+export default function SaveAnnounce() {
   const pathname = usePathname();
   const { finalScript, setFinalScript, qaArray, setQaArray } = useFinalScriptStore();
+  const { userEmail, userAccessToken } = useUserStore();
   const [announcePage, setAnnouncePage] = useState(true);
   const [charCountFinal, setCharCountFinal] = useState(0);
   const [modifySaveAnnounce, setModifySaveAnnounce] = useState(false);
