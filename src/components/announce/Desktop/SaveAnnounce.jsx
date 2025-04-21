@@ -141,8 +141,7 @@ export default function SaveAnnounce() {
 
   return (
     <section className={containerClass}>
-      {announcePage && <div className="progress_bar"></div>}
-      <section className="saveQa_area">
+      <section className={cls('saveQa_area', announcePage ? 'pt-[7.16vmin]' : '')}>
         <form className={announceFormClass}>
           <div className="userModify_box">
             {announcePage && (

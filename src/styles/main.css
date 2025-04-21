@@ -119,13 +119,9 @@ section.main_container {
     }
   }
 
-  .progress_bar {
-    @apply w-full h-[7.16vmin];
-  }
-
   /* 발표 대본 교정 */
   section.correction_area {
-    @apply w-full h-[calc(100%-7.16vmin)];
+    @apply w-full h-[calc(100%-7.16vmin)] pt-[7.16vmin];
 
     > form {
       @apply flex items-start justify-between w-full h-full;

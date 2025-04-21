@@ -51,7 +51,6 @@ export default function ModifyAnnounce() {
 
   return (
     <section className="main_container">
-      <div className="progress_bar"></div>
       <section className="correction_area">
         <form>
           <div className="scriptWrite_box">
