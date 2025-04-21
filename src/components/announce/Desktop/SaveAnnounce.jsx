@@ -12,15 +12,13 @@ import QnABox from '../ExpectedQnA/QnABox';
 
 export default function SaveAnnounce({ userEmail, userAccessToken }) {
   const pathname = usePathname();
+  const { finalScript, setFinalScript, qaArray, setQaArray } = useFinalScriptStore();
   const [announcePage, setAnnouncePage] = useState(true);
   const [charCountFinal, setCharCountFinal] = useState(0);
-  const { finalScript, setFinalScript, qaArray, setQaArray } = useFinalScriptStore();
-  // 저장한 발표문
   const [modifySaveAnnounce, setModifySaveAnnounce] = useState(false);
   const [saveAnnounce, setSaveAnnounce] = useState('');
   const [saveAnnounceCharCount, setSaveAnnounceCharCount] = useState(0);
   const [modifyTitle, setModifyTitle] = useState('');
-  const [modifyTitleCharCount, setModifyTitleCharCount] = useState(0);
   const [saveQaArray, setSaveQaArray] = useState([]);
 
   // 교정하기 페이지 = true / 마이페이지 발표문 상세 = false
@@ -77,11 +75,6 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
       title = event.target.value.slice(0, MAX_LENGTH);
     }
     setModifyTitle(title);
-    setModifyTitleCharCount(title.length);
-  };
-
-  const sliceTitleOverThirty = (text) => {
-    return text.length > 30 ? text.slice(0, 30) + '...' : text;
   };
 
   // 저장한 내 발표문 data 가져오기
@@ -160,10 +153,10 @@ export default function SaveAnnounce({ userEmail, userAccessToken }) {
             {/* 마이페이지 상세 발표문 제목 변경 */}
             {!announcePage && (
               <div className="scriptTitle_area">
-                <p>({modifyTitleCharCount}/30)</p>
+                <p>({modifyTitle.length}/30)</p>
                 <input
                   maxLength="30"
-                  value={sliceTitleOverThirty(modifyTitle)}
+                  value={modifyTitle}
                   onChange={userModifyTitle}
                   disabled={modifySaveAnnounce ? false : true}
                 />
