@@ -16,8 +16,6 @@ export default function ModifyAnnounce() {
   const settings = stores.useSettingStore();
   const { userEmail } = stores.useUserStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { setImprovementMent } = stores.useImprovementStore();
-  const { compareScriptToggle } = stores.useCompareScriptStore();
   const scriptWriteBoxRef = useRef(null);
 
   // 선 작성 후 로그인 시 작성문 유지
@@ -44,7 +42,7 @@ export default function ModifyAnnounce() {
   }, [settings.originScript, settings.subject]);
 
   //  교정하기 버튼 클릭시
-  const { modifyScript } = useScriptCorrection(setHighlightedText, setImprovementMent);
+  const { modifyScript } = useScriptCorrection(setHighlightedText);
 
   // 버튼활성화 조건 css
   const getButtonClass = (condition) => cls(condition ? 'active_color cursor-pointer' : 'cursor-default');
@@ -94,7 +92,7 @@ export default function ModifyAnnounce() {
                   type="button"
                   onClick={() => {
                     if (modifyBtn) {
-                      modifyScript({ compareScriptToggle, modifyBtn });
+                      modifyScript({ modifyBtn });
                     }
                   }}
                   className={getButtonClass(modifyBtn)}

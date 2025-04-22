@@ -51,7 +51,7 @@ export const useCompareScriptStore = create((set) => ({
 
 // 개선내용 //
 export const useImprovementStore = create((set) => ({
-  improvementMent: ['없음'],
+  improvementMent: [],
   setImprovementMent: (value) => set({ improvementMent: value }),
   improveModal: false,
   setImproveModal: (value) => set({ improveModal: value }),

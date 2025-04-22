@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 import * as stores from '@/store/store';
 
-export function useOriginInputHandler(setCharCountOrigin) {
+export function useOriginInputHandler() {
   const settings = stores.useSettingStore();
+  const { setCharCountOrigin } = stores.useScriptInfoStore();
 
   // 초안 작성
   const handleOriginInput = useCallback(

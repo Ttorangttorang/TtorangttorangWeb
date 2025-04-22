@@ -8,23 +8,18 @@ import HighlightWithinTextarea from 'react-highlight-within-textarea';
 export default function AnnouncContent(props) {
   const { highlightedText } = props;
   const { isMobileDevice } = stores.useIsMobileStore();
-  const { compareScriptToggle } = stores.useCompareScriptStore();
   const { originScript } = stores.useSettingStore();
+  const { charCountOrigin } = stores.useScriptInfoStore();
+  const { compareScriptToggle } = stores.useCompareScriptStore();
   const { finalScript, setFinalScript } = stores.useFinalScriptStore();
-  const { setEstimatedPresentTime, charCountOrigin, setCharCountOrigin } = stores.useScriptInfoStore();
   const MAX_LENGTH = 3000;
   const filterOut = ['-', '"', '"', '!.', '!', '[', ']', ':'];
 
   // 초안 작성
-  const { handleOriginInput } = useOriginInputHandler(setCharCountOrigin);
+  const { handleOriginInput } = useOriginInputHandler();
 
   // 예상 발표 시간
-  useEstimateTime({
-    charCountOrigin,
-    charCountNew: finalScript.length,
-    compareScriptToggle,
-    setEstimatedPresentTime,
-  });
+  useEstimateTime();
 
   const normalTxtArea = () => (
     <>

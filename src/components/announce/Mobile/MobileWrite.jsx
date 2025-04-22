@@ -10,18 +10,17 @@ import * as stores from '@/store/store';
 import { useScriptCorrection } from '@/hooks/useScriptCorrection';
 import { deleteAllScript } from '@/store/store';
 
-export default function MobileWrite({ userEmail, sliderMobileRef }) {
+export default function MobileWrite({ sliderMobileRef }) {
   const scriptWriteBoxRef = useRef(null);
   const settings = stores.useSettingStore();
   const { finalScript } = stores.useFinalScriptStore();
-  const { improvementMent, setImprovementMent, setImproveModal } = stores.useImprovementStore();
-  const { compareScriptToggle } = stores.useCompareScriptStore();
+  const { improvementMent, setImproveModal } = stores.useImprovementStore();
   const { estimatedPresentTime } = stores.useScriptInfoStore();
   const { setCurrentMobileSlide } = stores.useCurrentSlideMobileStore();
   const [highlightedText, setHighlightedText] = useState([]);
 
   //  교정하기 버튼 클릭시
-  const { modifyScript } = useScriptCorrection(setHighlightedText, setImprovementMent);
+  const { modifyScript } = useScriptCorrection(setHighlightedText);
 
   return (
     <>
@@ -71,7 +70,7 @@ export default function MobileWrite({ userEmail, sliderMobileRef }) {
         <div
           onClick={() => {
             if (settings.originScript.length > 0) {
-              modifyScript({ compareScriptToggle, modifyBtn: true });
+              modifyScript({ modifyBtn: true });
             }
           }}
           className={cls('next_step', settings.originScript.length > 0 ? 'active_color' : 'disabled_color')}

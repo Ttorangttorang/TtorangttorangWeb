@@ -3,13 +3,14 @@ import { diffChars } from 'diff';
 import * as stores from '@/store/store';
 import { fetchAnnounceData } from '@/api/fetchData';
 
-export function useScriptCorrection(setHighlightedText, setImproveData) {
+export function useScriptCorrection(setHighlightedText) {
   const settings = stores.useSettingStore();
   const { finalScript, setFinalScript } = stores.useFinalScriptStore();
   const { setScriptLoading } = stores.useScriptLoadingStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
-  const { setcompareScriptToggle } = stores.useCompareScriptStore();
+  const { compareScriptToggle, setcompareScriptToggle } = stores.useCompareScriptStore();
   const { setCharCountOrigin } = stores.useScriptInfoStore();
+  const { setImprovementMent } = stores.useImprovementStore();
 
   // 변경된 부분 강조
   const highlightDiffs = useCallback(
@@ -30,7 +31,7 @@ export function useScriptCorrection(setHighlightedText, setImproveData) {
 
   // 교정하기 버튼 클릭시
   const modifyScript = useCallback(
-    async ({ compareScriptToggle, modifyBtn }) => {
+    async ({ modifyBtn }) => {
       setScriptLoading(true);
       try {
         const data = {
@@ -41,7 +42,7 @@ export function useScriptCorrection(setHighlightedText, setImproveData) {
           duplicate: settings.repeat === true ? 'Y' : 'N',
         };
 
-        // AI 교정 API 호출 (stream 형태 응답 처리)
+        // AI 교정 API 호출 (text/event-stream 형태 응답 처리)
         const response = await fetchAnnounceData(data);
         const raw = response.data.replace(/data:/g, '');
         const events = raw.split('\n\n');
@@ -82,7 +83,7 @@ export function useScriptCorrection(setHighlightedText, setImproveData) {
                 .filter(Boolean)
             : ['발표 흐름 매끄럽게 이어지도록 구성 변경']; // 개선 내용이 없는 경우에는 빈 문자열로 설정
 
-        setImproveData(improvementText);
+        setImprovementMent(improvementText);
 
         // 교정 이력이 존재할 경우
         if (finalScript.length > 0 && modifyBtn && compareScriptToggle) {
@@ -106,7 +107,7 @@ export function useScriptCorrection(setHighlightedText, setImproveData) {
         setScriptLoading(false);
       }
     },
-    [setScriptLoading, settings, finalScript, setImproveData, setcompareScriptToggle, setNextMoveBtn, setCharCountOrigin, setFinalScript, highlightDiffs],
+    [setScriptLoading, settings, finalScript, setImprovementMent, compareScriptToggle, setcompareScriptToggle, setNextMoveBtn, setCharCountOrigin, setFinalScript, highlightDiffs],
   );
 
   return { modifyScript, highlightDiffs };
