@@ -16,11 +16,14 @@ export default function ModifyAnnounce() {
   const settings = stores.useSettingStore();
   const { userEmail } = stores.useUserStore();
   const { setNextMoveBtn } = stores.useNextMoveBtnStore();
+  const { finalScript } = stores.useFinalScriptStore();
+  const { highlightDiffs } = useScriptCorrection(setHighlightedText);
   const scriptWriteBoxRef = useRef(null);
 
   // 선 작성 후 로그인 시 작성문 유지
   useEffect(() => {
     const savedSettings = localStorage.getItem('settings');
+
     if (userEmail && savedSettings) {
       const { originScript = '', subject = '', presentPurpose = '회사 컨퍼런스', endingTxt = '합니다체', repeat = false } = JSON.parse(savedSettings);
 
@@ -35,6 +38,12 @@ export default function ModifyAnnounce() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEmail]);
+
+  useEffect(() => {
+    if (settings.originScript && finalScript && userEmail) {
+      highlightDiffs(settings.originScript, finalScript);
+    }
+  }, [finalScript, highlightDiffs, settings.originScript, userEmail]);
 
   // 교정하기 버튼 활성화
   useEffect(() => {
